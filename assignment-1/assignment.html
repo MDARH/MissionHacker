@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Md. Abdur Razzaque">
+<meta name="description" content="Assignment 01 — Ethical Hacking &amp; Cybersecurity Practical, Batch-11, Mission Hacker Bangladesh. Mentor: Sha Jalal.">
+<meta name="keywords" content="Cybersecurity, Cyber Law, Kali Linux, VMware, Ethical Hacking, Batch-11, Mission Hacker Bangladesh">
+<title>Assignment 01 — Ethical Hacking &amp; Cybersecurity Practical, Batch-11</title>
+<style>
+@page {
+  size: A4;
+  margin: 22mm 18mm 20mm 18mm;
+  @top-right {
+    content: "Assignment 01  •  Md. Abdur Razzaque  •  Batch-11";
+    font-family: "Lato", sans-serif; font-size: 7.5pt; color: #8a8f98;
+  }
+  @bottom-center {
+    content: "Page " counter(page) " of " counter(pages);
+    font-family: "Lato", sans-serif; font-size: 8pt; color: #8a8f98;
+  }
+  @bottom-right {
+    content: "Mission Hacker Bangladesh";
+    font-family: "Lato", sans-serif; font-size: 7.5pt; color: #b6bac1;
+  }
+}
+@page cover { margin: 0; @top-right { content: none; } @bottom-center { content: none; } @bottom-right { content: none; } }
+
+html { font-size: 10.5pt; }
+body {
+  font-family: "Noto Serif", "Liberation Serif", serif;
+  color: #1c2027; line-height: 1.62; margin: 0;
+  hyphens: none;
+}
+h1,h2,h3,h4 { font-family: "Lato", "Liberation Sans", sans-serif; color: #0f1620; line-height: 1.25; }
+
+/* ---------- COVER ---------- */
+.cover { page: cover; height: 297mm; width: 210mm; position: relative; color: #fff;
+  background: linear-gradient(158deg, #071018 0%, #0d2233 42%, #10394a 72%, #0a1b26 100%); }
+.cover-inner { position: relative; z-index: 2; padding: 26mm 20mm 18mm; height: 297mm; box-sizing: border-box; }
+.brandrow { display: flex; align-items: center; gap: 5mm; }
+.mono-badge { width: 17mm; height: 17mm; border: 1.6pt solid #38d39f; border-radius: 3mm;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Lato", sans-serif; font-weight: 900; font-size: 15pt; color: #38d39f; letter-spacing: .5pt; }
+.brandtext .bt1 { font-family: "Lato", sans-serif; font-weight: 800; font-size: 13.5pt; letter-spacing: .6pt; color:#fff; }
+.brandtext .bt2 { font-family: "Lato", sans-serif; font-size: 8.5pt; letter-spacing: 2.6pt;
+  text-transform: uppercase; color: #7fd7c4; margin-top: 1.2mm; }
+.rule { height: 1.2pt; background: linear-gradient(90deg,#38d39f 0%, #38d39f 22%, rgba(255,255,255,.14) 22%); margin: 9mm 0 0; }
+
+.cover-mid { margin-top: 34mm; }
+.eyebrow { font-family:"Lato",sans-serif; font-size: 9pt; letter-spacing: 3.4pt; text-transform: uppercase;
+  color: #38d39f; font-weight: 700; }
+.cover h1 { font-size: 33pt; font-weight: 900; color: #fff; margin: 5mm 0 0; line-height: 1.1; letter-spacing: -.4pt; }
+.cover .subtitle { font-family:"Lato",sans-serif; font-size: 13pt; color: #b9c8d2; margin-top: 5mm; font-weight: 400; }
+.cover .batchpill { display: inline-block; margin-top: 7mm; padding: 2.2mm 6mm; border-radius: 20mm;
+  background: rgba(56,211,159,.13); border: .8pt solid rgba(56,211,159,.5);
+  font-family:"Lato",sans-serif; font-size: 10pt; font-weight: 700; color: #6fe3bd; letter-spacing: .8pt; }
+
+.cover-foot { position: absolute; left: 20mm; right: 20mm; bottom: 16mm; }
+.metagrid { display: flex; flex-wrap: wrap; border-top: .8pt solid rgba(255,255,255,.18); padding-top: 7mm; }
+.metacell { width: 50%; margin-bottom: 6.5mm; box-sizing: border-box; padding-right: 6mm; }
+.metacell .k { font-family:"Lato",sans-serif; font-size: 7.5pt; letter-spacing: 2pt; text-transform: uppercase;
+  color: #6d8697; font-weight: 700; }
+.metacell .v { font-family:"Lato",sans-serif; font-size: 11.5pt; color: #ffffff; margin-top: 1.4mm; font-weight: 600; }
+.metacell .v small { font-weight: 400; color: #9fb2be; font-size: 9pt; }
+.cover-note { font-family:"Lato",sans-serif; font-size: 7.8pt; color: #62798a; border-top: .5pt solid rgba(255,255,255,.1);
+  padding-top: 4mm; margin-top: 1mm; }
+.cover-note a { color: #4fbf9c; text-decoration: none; word-break: break-all; }
+
+/* ---------- BODY ---------- */
+h2 { font-size: 15pt; font-weight: 800; margin: 11mm 0 3.5mm; padding-bottom: 2mm;
+  border-bottom: 1.6pt solid #0f766e; break-after: avoid; }
+h2 .num { color: #0f766e; margin-right: 3mm; }
+h3 { font-size: 11.6pt; font-weight: 800; margin: 7mm 0 2.5mm; color: #14303c; break-after: avoid; }
+h4 { font-size: 10.2pt; font-weight: 700; margin: 5mm 0 1.8mm; color: #35505c; break-after: avoid; }
+p { margin: 0 0 3.2mm; text-align: justify; }
+ul, ol { margin: 0 0 3.5mm; padding-left: 6.5mm; }
+li { margin-bottom: 1.6mm; }
+strong { color: #0b2027; }
+code, .cmd { font-family: "DejaVu Sans Mono", monospace; font-size: 8.6pt;
+  background: #eef4f4; color: #0a4f47; padding: .3mm 1.3mm; border-radius: 1mm; }
+
+table { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 9pt;
+  font-family: "Lato", sans-serif; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th { background: #0f766e; color: #fff; text-align: left; padding: 2.2mm 2.8mm; font-weight: 700;
+  font-size: 8.6pt; letter-spacing: .3pt; }
+td { padding: 2mm 2.8mm; border-bottom: .5pt solid #dfe6e6; vertical-align: top; line-height: 1.45; }
+tbody tr:nth-child(even) td { background: #f6faf9; }
+td code { font-size: 8.4pt; background: transparent; padding: 0; color: #0a4f47; font-weight: 600; }
+.tbl-cmd td:first-child { white-space: nowrap; }
+
+.callout { border-left: 2.6pt solid #0f766e; background: #f2f8f7; padding: 3.2mm 4mm; margin: 4mm 0 5mm;
+  font-size: 9.4pt; break-inside: avoid; }
+.callout .ct { font-family:"Lato",sans-serif; font-weight: 800; font-size: 8.4pt; letter-spacing: 1.4pt;
+  text-transform: uppercase; color: #0f766e; display: block; margin-bottom: 1.5mm; }
+.warn { border-left-color: #b45309; background: #fdf7ef; }
+.warn .ct { color: #b45309; }
+
+.toc { font-family:"Lato",sans-serif; font-size: 9.8pt; line-height: 1.3; }
+.toc .t-main { display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: .4pt dotted #c9d3d3; padding: 1.7mm 0 1.4mm; margin-top: 2.2mm; }
+.toc .t-main a { color: #14303c; text-decoration: none; flex: 1; }
+.toc .t-main a::after { content: target-counter(attr(href), page); float: right;
+  font-weight: 700; color: #0f766e; }
+.toc .t-sub { padding: .55mm 0 .55mm 7mm; font-size: 8.9pt; color: #4a5b62; line-height: 1.25; }
+.toc b { font-weight: 700; }
+
+.decl { border: .8pt solid #cfd9d9; padding: 5mm 6mm; margin-top: 4mm; font-size: 9.6pt; break-inside: avoid; }
+.sigrow { display: flex; justify-content: space-between; margin-top: 16mm; }
+.sigbox { width: 62mm; border-top: .8pt solid #6b7a80; padding-top: 2mm;
+  font-family:"Lato",sans-serif; font-size: 9pt; color: #35505c; text-align: center; }
+
+.pb { break-before: page; }
+.avoid { break-inside: avoid; }
+.lead { font-size: 10.6pt; color: #33474f; }
+.small { font-size: 8.8pt; color: #56666d; }
+.tag-ok { display:inline-block; background:#0f766e; color:#fff; font-family:"Lato",sans-serif;
+  font-size:7.4pt; font-weight:700; padding:.6mm 2.2mm; border-radius:1.4mm; letter-spacing:.4pt; }
+.tag-prog { background:#b45309; }
+.refs { font-size: 9pt; }
+.refs li { margin-bottom: 2.4mm; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+ <div class="cover-inner">
+  <div class="brandrow">
+    <div class="mono-badge">MHB</div>
+    <div class="brandtext">
+      <div class="bt1">Mission Hacker Bangladesh</div>
+      <div class="bt2">Cyber Security Training</div>
+    </div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="cover-mid">
+    <div class="eyebrow">Assignment No. 01</div>
+    <h1>Ethical Hacking &amp;<br>Cybersecurity Practical</h1>
+    <div class="subtitle">Foundation Module — Cyber Law, Lab Setup &amp; Linux Fundamentals</div>
+    <div class="batchpill">BATCH — 11</div>
+  </div>
+
+  <div class="cover-foot">
+    <div class="metagrid">
+      <div class="metacell">
+        <div class="k">Submitted By</div>
+        <div class="v">Md. Abdur Razzaque</div>
+      </div>
+      <div class="metacell">
+        <div class="k">Course Mentor</div>
+        <div class="v">Sha Jalal</div>
+      </div>
+      <div class="metacell">
+        <div class="k">Course</div>
+        <div class="v">Ethical Hacking &amp; Cybersecurity Practical<br><small>Batch-11 &nbsp;|&nbsp; Class 01</small></div>
+      </div>
+      <div class="metacell">
+        <div class="k">Date of Submission</div>
+        <div class="v">28 August 2026</div>
+      </div>
+    </div>
+    <div class="cover-note">
+      Course page: <a href="https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w">https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w</a><br>
+      Submitted in partial fulfilment of the Class-01 requirements of the Ethical Hacking &amp; Cybersecurity Practical programme.
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ TOC ============ -->
+<h2><span class="num">—</span>Table of Contents</h2>
+<div class="toc">
+  <div class="t-main"><a href="#sec1"><b>1. Assignment Overview</b></a></div>
+  <div class="t-main"><a href="#sec2"><b>2. Task 01 — Cybersecurity and Cyber Law: A Short Note</b></a></div>
+  <div class="t-sub"><span>2.1 What is Cybersecurity</span></div>
+  <div class="t-sub"><span>2.2 The CIA Triad — the Core Principles</span></div>
+  <div class="t-sub"><span>2.3 Major Domains of Cybersecurity</span></div>
+  <div class="t-sub"><span>2.4 Common Cyber Threats and Attacks</span></div>
+  <div class="t-sub"><span>2.5 Classification of Hackers</span></div>
+  <div class="t-sub"><span>2.6 What is Cyber Law</span></div>
+  <div class="t-sub"><span>2.7 Cyber Law in Bangladesh</span></div>
+  <div class="t-sub"><span>2.8 International Legal Frameworks</span></div>
+  <div class="t-sub"><span>2.9 Legal Boundaries of an Ethical Hacker</span></div>
+  <div class="t-sub"><span>2.10 Summary of Task 01</span></div>
+  <div class="t-main"><a href="#sec3"><b>3. Task 02 — Installation of Kali Linux and VMware</b></a></div>
+  <div class="t-sub"><span>3.1 Why Kali Linux</span></div>
+  <div class="t-sub"><span>3.2 Virtualization and VMware</span></div>
+  <div class="t-sub"><span>3.3 Method A — Kali Linux on VMware Workstation Player</span></div>
+  <div class="t-sub"><span>3.4 Method B — Native Installation (Setup Used by Me)</span></div>
+  <div class="t-sub"><span>3.5 Installation Verification</span></div>
+  <div class="t-sub"><span>3.6 Post-Installation Configuration</span></div>
+  <div class="t-main"><a href="#sec4"><b>4. Task 03 — Linux Command Practice</b></a></div>
+  <div class="t-sub"><span>4.1 Navigation and Filesystem</span></div>
+  <div class="t-sub"><span>4.2 File and Directory Operations</span></div>
+  <div class="t-sub"><span>4.3 Viewing and Editing File Content</span></div>
+  <div class="t-sub"><span>4.4 Searching and Filtering</span></div>
+  <div class="t-sub"><span>4.5 Permissions and Ownership</span></div>
+  <div class="t-sub"><span>4.6 User and Group Management</span></div>
+  <div class="t-sub"><span>4.7 Process Management</span></div>
+  <div class="t-sub"><span>4.8 Package Management (APT)</span></div>
+  <div class="t-sub"><span>4.9 Networking</span></div>
+  <div class="t-sub"><span>4.10 System Information and Monitoring</span></div>
+  <div class="t-sub"><span>4.11 Archiving and Compression</span></div>
+  <div class="t-sub"><span>4.12 Shell Operators and Keyboard Shortcuts</span></div>
+  <div class="t-main"><a href="#sec5"><b>5. Task 04 — Joining Mission Hackers Bangladesh Communities</b></a></div>
+  <div class="t-main"><a href="#sec6"><b>6. Conclusion and Learning Outcome</b></a></div>
+  <div class="t-main"><a href="#sec7"><b>7. References</b></a></div>
+  <div class="t-main"><a href="#sec8"><b>8. Declaration</b></a></div>
+</div>
+
+<!-- ============ 1. OVERVIEW ============ -->
+<h2 id="sec1" class="pb"><span class="num">1.</span>Assignment Overview</h2>
+<p class="lead">This report is my submission for the first assignment of the <strong>Ethical Hacking &amp; Cybersecurity Practical (Batch-11)</strong> programme conducted by Mission Hacker Bangladesh under the guidance of mentor <strong>Sha Jalal</strong>. The assignment consists of four tasks covering theoretical understanding, practical laboratory setup, command-line practice and community participation. Each task is addressed in a dedicated section below.</p>
+
+<table>
+<thead><tr><th style="width:8%">Task</th><th style="width:52%">Requirement</th><th style="width:22%">Section</th><th style="width:18%">Status</th></tr></thead>
+<tbody>
+<tr><td>01</td><td>Learn about Cybersecurity and Cyber Law and write a short note</td><td>Section 2</td><td><span class="tag-ok">Completed</span></td></tr>
+<tr><td>02</td><td>Install Kali Linux and VMware</td><td>Section 3</td><td><span class="tag-ok">Completed</span></td></tr>
+<tr><td>03</td><td>Practise all Linux commands from the MHB YouTube channel</td><td>Section 4</td><td><span class="tag-ok">Completed</span></td></tr>
+<tr><td>04</td><td>Join all communities of Mission Hackers Bangladesh</td><td>Section 5</td><td><span class="tag-ok">Completed</span></td></tr>
+</tbody>
+</table>
+
+<!-- ============ 2. TASK 1 ============ -->
+<h2 id="sec2"><span class="num">2.</span>Task 01 — Cybersecurity and Cyber Law: A Short Note</h2>
+
+<h3>2.1 What is Cybersecurity</h3>
+<p><strong>Cybersecurity</strong> is the practice of protecting computer systems, networks, programs, devices and data from unauthorised access, damage, disruption, alteration or theft. As almost every part of modern life — banking, education, healthcare, government services, business and personal communication — now depends on digital systems, protecting those systems has become as important as protecting physical property.</p>
+<p>Cybersecurity is not a single product that can be purchased and installed. It is a continuous process built on three pillars: <strong>people</strong> (awareness and trained professionals), <strong>process</strong> (policies, standards and incident-response procedures) and <strong>technology</strong> (firewalls, encryption, monitoring and access control). A weakness in any one pillar can compromise the whole system, which is why attackers so often succeed through social engineering rather than through technical flaws.</p>
+
+<h3>2.2 The CIA Triad — the Core Principles</h3>
+<p>Every security control ultimately serves one or more of the three principles known as the <strong>CIA Triad</strong>. These three goals form the foundation of all cybersecurity work.</p>
+<table>
+<thead><tr><th style="width:22%">Principle</th><th style="width:44%">Meaning</th><th style="width:34%">Example of Protection</th></tr></thead>
+<tbody>
+<tr><td><strong>Confidentiality</strong></td><td>Information is accessible only to those who are authorised to see it.</td><td>Encryption, strong passwords, access control lists, multi-factor authentication</td></tr>
+<tr><td><strong>Integrity</strong></td><td>Information remains accurate, complete and unaltered by unauthorised parties.</td><td>Hashing (SHA-256), digital signatures, checksums, file-integrity monitoring</td></tr>
+<tr><td><strong>Availability</strong></td><td>Systems and data are accessible to authorised users whenever required.</td><td>Backups, redundancy, DDoS protection, disaster-recovery planning</td></tr>
+</tbody>
+</table>
+<p>Two further principles are frequently added in practice: <strong>Authentication</strong> (proving that a user is who they claim to be) and <strong>Non-repudiation</strong> (ensuring a party cannot later deny an action they performed).</p>
+
+<h3>2.3 Major Domains of Cybersecurity</h3>
+<table>
+<thead><tr><th style="width:30%">Domain</th><th>Focus Area</th></tr></thead>
+<tbody>
+<tr><td>Network Security</td><td>Protecting network traffic and infrastructure using firewalls, IDS/IPS, VPN and network segmentation.</td></tr>
+<tr><td>Application Security</td><td>Securing software against flaws such as SQL injection, XSS, CSRF and insecure authentication.</td></tr>
+<tr><td>Information / Data Security</td><td>Classifying, encrypting and controlling access to data at rest and in transit.</td></tr>
+<tr><td>Endpoint Security</td><td>Protecting laptops, desktops, servers and mobile devices with EDR, anti-malware and patching.</td></tr>
+<tr><td>Cloud Security</td><td>Securing cloud workloads, identity and access management, and shared-responsibility configuration.</td></tr>
+<tr><td>Operational Security (OpSec)</td><td>Handling of permissions, credentials and day-to-day procedures that expose or protect assets.</td></tr>
+<tr><td>Digital Forensics &amp; Incident Response</td><td>Detecting, containing, investigating and recovering from security incidents; preserving evidence.</td></tr>
+<tr><td>Business Continuity / DR</td><td>Ensuring the organisation can keep operating during and after a disruptive event.</td></tr>
+</tbody>
+</table>
+
+<h3>2.4 Common Cyber Threats and Attacks</h3>
+<table>
+<thead><tr><th style="width:26%">Attack / Threat</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Phishing</td><td>Fraudulent emails, SMS or web pages that trick a victim into revealing credentials or financial data. Still the single most common entry point for breaches.</td></tr>
+<tr><td>Malware</td><td>Malicious software including viruses, worms, trojans, spyware, keyloggers and rootkits.</td></tr>
+<tr><td>Ransomware</td><td>Malware that encrypts the victim's data and demands payment for the decryption key.</td></tr>
+<tr><td>Social Engineering</td><td>Manipulating human trust — pretexting, baiting, vishing, tailgating — to bypass technical controls.</td></tr>
+<tr><td>SQL Injection</td><td>Injecting crafted SQL through user input to read, modify or destroy database contents.</td></tr>
+<tr><td>Cross-Site Scripting (XSS)</td><td>Injecting malicious scripts into a trusted web page so they execute in another user's browser.</td></tr>
+<tr><td>Man-in-the-Middle (MITM)</td><td>Intercepting or altering communication between two parties, often on unsecured public Wi-Fi.</td></tr>
+<tr><td>DoS / DDoS</td><td>Flooding a service with traffic so that legitimate users can no longer reach it.</td></tr>
+<tr><td>Brute Force &amp; Credential Stuffing</td><td>Systematically guessing passwords, or reusing credentials leaked from other breaches.</td></tr>
+<tr><td>Zero-Day Exploit</td><td>Exploitation of a vulnerability before the vendor has released a patch.</td></tr>
+<tr><td>Insider Threat</td><td>Damage caused by an employee or contractor, whether malicious or simply negligent.</td></tr>
+</tbody>
+</table>
+
+<h3>2.5 Classification of Hackers</h3>
+<table>
+<thead><tr><th style="width:26%">Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>White Hat</strong> (Ethical Hacker)</td><td>Tests systems <em>with written permission</em> to find and help fix vulnerabilities. Works within a defined legal scope. This is the role this course trains for.</td></tr>
+<tr><td><strong>Black Hat</strong></td><td>Breaks into systems illegally for personal gain, damage or theft. Criminally liable.</td></tr>
+<tr><td><strong>Grey Hat</strong></td><td>Finds vulnerabilities without permission but usually without malicious intent. Still legally an offence in most jurisdictions, including Bangladesh.</td></tr>
+<tr><td><strong>Script Kiddie</strong></td><td>An unskilled attacker who runs ready-made tools and exploits written by others.</td></tr>
+<tr><td><strong>Hacktivist</strong></td><td>Attacks systems to promote a political, social or ideological message.</td></tr>
+<tr><td><strong>State-Sponsored / APT</strong></td><td>Well-funded groups conducting long-term espionage or sabotage on behalf of a nation state.</td></tr>
+</tbody>
+</table>
+
+<h3>2.6 What is Cyber Law</h3>
+<p><strong>Cyber law</strong> (also called IT law or digital law) is the body of legislation that governs the use of computers, the internet, digital data and electronic communication. It defines what constitutes a cyber offence, prescribes punishments, establishes investigative authority, and creates rights and obligations in the digital space.</p>
+<p>The main objectives of cyber law are to:</p>
+<ul>
+<li>Criminalise unauthorised access, data theft, hacking and digital fraud;</li>
+<li>Give legal recognition to electronic records, digital signatures and electronic contracts;</li>
+<li>Protect personal data, privacy and intellectual property online;</li>
+<li>Protect critical information infrastructure such as banking, power and telecommunication systems;</li>
+<li>Establish procedures for investigation, digital evidence and prosecution of cybercrime.</li>
+</ul>
+
+<div class="callout">
+<span class="ct">Why cyber law matters to an ethical hacker</span>
+The technical steps performed by a penetration tester and by a criminal attacker can be almost identical — scanning, enumeration, exploitation. <strong>The only thing that separates a professional from a criminal is documented authorisation and an agreed scope.</strong> Knowing the law is therefore not optional background knowledge; it is what makes the profession lawful.
+</div>
+
+<h3>2.7 Cyber Law in Bangladesh</h3>
+<p>Bangladesh has developed its cyber legislation in several stages. The table below summarises the main instruments and how they relate to one another.</p>
+<table>
+<thead><tr><th style="width:34%">Legislation</th><th style="width:14%">Year</th><th>Scope and Status</th></tr></thead>
+<tbody>
+<tr><td>Information &amp; Communication Technology (ICT) Act</td><td>2006<br><span class="small">(amended 2009, 2013)</span></td><td>Bangladesh's first comprehensive ICT statute. Gave legal recognition to electronic records and digital signatures and criminalised hacking, unauthorised access and digital forgery. Its controversial speech provisions (notably s. 57) were later removed and carried into subsequent laws.</td></tr>
+<tr><td>Pornography Control Act</td><td>2012</td><td>Prohibits production and distribution of pornographic material, including in digital form; frequently applied in online blackmail and revenge-content cases.</td></tr>
+<tr><td>Digital Security Act (DSA)</td><td>2018</td><td>Consolidated cybercrime offences, established the Digital Security Agency and a national CERT, and covered illegal access, identity fraud, cyber-terrorism and offences against critical information infrastructure. Widely criticised on freedom-of-expression grounds; subsequently repealed.</td></tr>
+<tr><td>Cyber Security Act (CSA)</td><td>2023</td><td>Enacted to replace the Digital Security Act 2018. Retained the core cybercrime offences while reducing several penalties and making some offences bailable.</td></tr>
+<tr><td>Cyber Protection / Cyber Security Ordinance</td><td>2025</td><td>Promulgated by the interim government to replace the Cyber Security Act 2023, repealing several speech-related provisions while retaining offences relating to hacking, unauthorised access, digital fraud and online harassment.</td></tr>
+<tr><td>Digital Commerce &amp; consumer protection rules</td><td>various</td><td>Supplementary instruments governing e-commerce, online payment and consumer redress.</td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<span class="ct">Note on currency of the law</span>
+Bangladesh's cyber legislation has changed repeatedly between 2018 and 2025. Before relying on any specific section number or penalty in professional work, the current consolidated text should be verified from the official gazette or from the Bangladesh Legislative and Parliamentary Affairs Division website (<span class="cmd">bdlaws.minlaw.gov.bd</span>).
+</div>
+
+<h4>Categories of offence recognised under Bangladeshi cyber legislation</h4>
+<ul>
+<li><strong>Illegal access</strong> — entering a computer, network or digital device without authorisation.</li>
+<li><strong>Damage to computer or computer system</strong> — deleting, altering or disabling data or systems.</li>
+<li><strong>Offences against Critical Information Infrastructure</strong> — attacks on systems declared critical by the government (banking, power, telecom); these attract the heaviest penalties.</li>
+<li><strong>Identity fraud and impersonation</strong> — using another person's identity or credentials online.</li>
+<li><strong>Digital forgery and digital fraud</strong> — falsifying electronic records for gain.</li>
+<li><strong>Cyber-terrorism</strong> — attacks intended to threaten sovereignty, public safety or national integrity.</li>
+<li><strong>Publication of defamatory, obscene or offensive material</strong> in electronic form.</li>
+<li><strong>Online harassment, cyber-bullying and blackmail</strong>, including non-consensual image sharing.</li>
+</ul>
+
+<h4>Where to report cybercrime in Bangladesh</h4>
+<table>
+<thead><tr><th style="width:40%">Authority</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td>BGD e-GOV CIRT</td><td>National Computer Incident Response Team — handles incident reporting and coordination.</td></tr>
+<tr><td>Cyber Crime Investigation Division, CID</td><td>Investigates cybercrime cases nationally under Bangladesh Police.</td></tr>
+<tr><td>Cyber Crime Unit, DMP (Counter Terrorism &amp; Transnational Crime)</td><td>Handles cybercrime complaints within the Dhaka Metropolitan area.</td></tr>
+<tr><td>National Emergency Service — 999</td><td>General emergency reporting line, including urgent online-crime situations.</td></tr>
+</tbody>
+</table>
+
+<h3>2.8 International Legal Frameworks</h3>
+<table>
+<thead><tr><th style="width:36%">Framework</th><th>Summary</th></tr></thead>
+<tbody>
+<tr><td>Budapest Convention on Cybercrime (2001)</td><td>The first international treaty on cybercrime; harmonises offences and enables cross-border cooperation and evidence sharing.</td></tr>
+<tr><td>GDPR — General Data Protection Regulation (EU, 2018)</td><td>Comprehensive data-protection law granting individuals rights over their personal data; applies to any organisation processing EU residents' data.</td></tr>
+<tr><td>Computer Fraud and Abuse Act (USA, 1986)</td><td>The principal US anti-hacking statute, criminalising access to a computer without or in excess of authorisation.</td></tr>
+<tr><td>Information Technology Act (India, 2000)</td><td>India's core cyber legislation covering electronic records, cyber offences and intermediary liability.</td></tr>
+<tr><td>ISO/IEC 27001</td><td>International standard for Information Security Management Systems (ISMS) — a compliance benchmark rather than a law.</td></tr>
+</tbody>
+</table>
+
+<h3>2.9 Legal Boundaries of an Ethical Hacker</h3>
+<p>An ethical hacker performs the same technical activities as an attacker, but under a legal framework. The following conditions must always be satisfied before any testing begins:</p>
+<ol>
+<li><strong>Written authorisation.</strong> A signed engagement letter, contract or "rules of engagement" document from the legitimate owner of the system. Verbal permission is never sufficient.</li>
+<li><strong>Defined scope.</strong> Exact IP addresses, domains, applications and time windows that may be tested. Anything outside the scope must not be touched.</li>
+<li><strong>Non-Disclosure Agreement (NDA).</strong> Any data discovered during testing is confidential and must not be copied, retained or disclosed.</li>
+<li><strong>No harm principle.</strong> Testing must avoid denial of service, data destruction or modification unless explicitly permitted in writing.</li>
+<li><strong>Responsible disclosure.</strong> Findings are reported privately to the owner with sufficient time to remediate before any public disclosure.</li>
+<li><strong>Accurate reporting.</strong> Full documentation of methodology, evidence, risk rating and remediation advice.</li>
+</ol>
+<p>Practising on systems that are not one's own and for which no permission exists is a criminal offence. For lawful practice, ethical hackers use their own laboratory environments (virtual machines such as Metasploitable, DVWA, OWASP Juice Shop) or authorised legal platforms such as TryHackMe, Hack The Box, PortSwigger Web Security Academy and public bug-bounty programmes operating under a published safe-harbour policy.</p>
+
+<h3>2.10 Summary of Task 01</h3>
+<p>Cybersecurity protects the confidentiality, integrity and availability of digital assets through a combination of people, process and technology. Cyber law supplies the legal structure that defines digital offences and legitimises defensive work. For a student of ethical hacking, the two subjects are inseparable: technical capability without legal authorisation is a crime, while legal knowledge without technical skill cannot defend a system. Understanding both is the foundation on which the rest of this course is built.</p>
+
+<!-- ============ 3. TASK 2 ============ -->
+<h2 id="sec3" class="pb"><span class="num">3.</span>Task 02 — Installation of Kali Linux and VMware</h2>
+
+<h3>3.1 Why Kali Linux</h3>
+<p><strong>Kali Linux</strong> is a Debian-based Linux distribution maintained by Offensive Security and built specifically for penetration testing, digital forensics and security auditing. It ships with several hundred pre-installed security tools — including Nmap, Metasploit Framework, Burp Suite, Wireshark, Aircrack-ng, John the Ripper, Hydra and sqlmap — which removes the need to install and configure each tool individually. It is the standard working environment for this course.</p>
+
+<h3>3.2 Virtualization and VMware</h3>
+<p><strong>Virtualization</strong> allows one physical computer (the <em>host</em>) to run one or more complete operating systems (<em>guests</em>) simultaneously inside isolated software containers called virtual machines. <strong>VMware Workstation Player</strong> is a widely used desktop hypervisor for this purpose.</p>
+<p>Running Kali Linux inside a virtual machine offers several advantages for a learner:</p>
+<ul>
+<li><strong>Isolation</strong> — testing activity is confined to the VM and cannot damage the host operating system.</li>
+<li><strong>Snapshots</strong> — the machine state can be saved before a risky operation and restored instantly if something breaks.</li>
+<li><strong>Coexistence</strong> — Kali runs alongside Windows without repartitioning the disk or dual-booting.</li>
+<li><strong>Lab networking</strong> — multiple VMs (for example Kali and a vulnerable target such as Metasploitable) can be placed on a private host-only network, allowing lawful practice against a target you own.</li>
+</ul>
+
+<h3>3.3 Method A — Kali Linux on VMware Workstation Player</h3>
+<p>The following is the standard procedure for building the virtual laboratory, as demonstrated in the class and on the Mission Hackers Bangladesh YouTube channel.</p>
+
+<h4>Step 1 — Verify hardware and enable virtualization</h4>
+<ul>
+<li>Minimum practical requirements: 64-bit processor, 8 GB RAM (4 GB absolute minimum), 40–60 GB free disk space.</li>
+<li>Reboot into BIOS/UEFI and enable <strong>Intel VT-x</strong> or <strong>AMD-V</strong>. Without this, the VM will not start or will run extremely slowly.</li>
+<li>On Windows hosts, disabling Hyper-V / "Memory Integrity" is often required for VMware to obtain hardware acceleration.</li>
+</ul>
+
+<h4>Step 2 — Install VMware Workstation Player</h4>
+<ul>
+<li>Download VMware Workstation Player from the official Broadcom/VMware website only.</li>
+<li>Run the installer, accept the licence, keep the default installation path and complete the setup.</li>
+<li>Reboot the host and launch the application, selecting the free non-commercial use option.</li>
+</ul>
+
+<h4>Step 3 — Obtain the Kali Linux image</h4>
+<ul>
+<li>Download from the official source: <span class="cmd">https://www.kali.org/get-kali/</span></li>
+<li>Two options are available:
+  <ul>
+    <li><strong>Pre-built VMware image</strong> (recommended) — a ready-made <span class="cmd">.7z</span> archive containing a <span class="cmd">.vmx</span> file. Extract it and open the <span class="cmd">.vmx</span> directly in VMware; no OS installation is needed.</li>
+    <li><strong>Installer ISO</strong> — a full <span class="cmd">.iso</span> image used to create and install a new virtual machine manually.</li>
+  </ul>
+</li>
+<li><strong>Verify the SHA-256 checksum</strong> of the download against the value published on kali.org before use. This confirms the image has not been corrupted or tampered with.</li>
+</ul>
+
+<h4>Step 4 — Create the virtual machine (ISO method)</h4>
+<ul>
+<li><em>Create a New Virtual Machine</em> → select <em>Installer disc image file (iso)</em> and browse to the Kali ISO.</li>
+<li>Guest operating system: <strong>Linux</strong> → version <strong>Debian 12.x 64-bit</strong>.</li>
+<li>Name the machine (e.g. <span class="cmd">Kali-Linux-Batch11</span>) and choose a storage location on a drive with sufficient free space.</li>
+<li>Disk size: 60 GB, stored as a single file.</li>
+<li><em>Customize Hardware</em>: Memory 4096 MB (8192 MB if the host has 16 GB), Processors 2 cores, Network Adapter set to <strong>NAT</strong> for internet access, or <strong>Host-only</strong> for an isolated lab.</li>
+<li>Finish and power on the virtual machine.</li>
+</ul>
+
+<h4>Step 5 — Install the Kali operating system</h4>
+<ul>
+<li>Select <em>Graphical Install</em> from the boot menu.</li>
+<li>Choose language, location and keyboard layout.</li>
+<li>Set the hostname (e.g. <span class="cmd">kali</span>), leave the domain blank.</li>
+<li>Create the user account and a strong password.</li>
+<li>Partitioning: <em>Guided — use entire disk</em> and <em>All files in one partition</em>. This affects only the virtual disk, not the host machine.</li>
+<li>Select the desktop environment (XFCE is the default and lightest) and the default tool collection.</li>
+<li>Install the GRUB boot loader to the virtual disk (<span class="cmd">/dev/sda</span>).</li>
+<li>Complete the installation and reboot into the new system.</li>
+</ul>
+
+<h4>Step 6 — Post-installation of the guest</h4>
+<ul>
+<li>Update the system: <span class="cmd">sudo apt update &amp;&amp; sudo apt full-upgrade -y</span></li>
+<li>Install guest tools for clipboard sharing and automatic screen resizing: <span class="cmd">sudo apt install -y open-vm-tools open-vm-tools-desktop</span></li>
+<li>Reboot, then take a clean <strong>snapshot</strong> named "Fresh Install" so the machine can always be restored to a working state.</li>
+</ul>
+
+<h3>3.4 Method B — Native Installation (Setup Used by Me)</h3>
+<p>In addition to studying the virtual-machine procedure described above, I have installed <strong>Kali Linux directly on my laptop as the primary operating system (bare-metal installation)</strong>. This gives full hardware access — which is particularly useful for wireless adapter work later in the course — at the cost of the snapshot and isolation benefits that a virtual machine provides.</p>
+<p>The native installation procedure I followed was:</p>
+<ol>
+<li>Downloaded the official Kali Linux Installer ISO from <span class="cmd">kali.org/get-kali</span> and verified its SHA-256 checksum.</li>
+<li>Wrote the ISO to a USB flash drive to create a bootable installation medium.</li>
+<li>Backed up all existing personal data before proceeding.</li>
+<li>Entered the UEFI/BIOS setup, disabled Secure Boot and set the USB device as the first boot option.</li>
+<li>Booted the installer and selected <em>Graphical Install</em>.</li>
+<li>Configured locale, keyboard layout, hostname and user account.</li>
+<li>Partitioned the internal disk and installed the base system together with the KDE Plasma desktop environment and the default Kali tool set.</li>
+<li>Installed the GRUB boot loader and rebooted into the installed system.</li>
+<li>Ran the first full update and configured the working environment.</li>
+</ol>
+
+<h3>3.5 Installation Verification</h3>
+<p>The table below records the actual configuration of my working Kali Linux installation, as reported by the system itself using <span class="cmd">uname</span>, <span class="cmd">lsb_release</span>, <span class="cmd">lscpu</span>, <span class="cmd">free -h</span> and <span class="cmd">df -h</span>.</p>
+<table>
+<thead><tr><th style="width:34%">Property</th><th>Value on my system</th></tr></thead>
+<tbody>
+<tr><td>Operating System</td><td>Kali GNU/Linux Rolling (2026.2)</td></tr>
+<tr><td>Kernel Version</td><td>6.19.14+kali-amd64</td></tr>
+<tr><td>Architecture</td><td>x86_64 (64-bit)</td></tr>
+<tr><td>Desktop Environment</td><td>KDE Plasma</td></tr>
+<tr><td>Processor</td><td>Intel Core i5-8265U @ 1.60 GHz</td></tr>
+<tr><td>Installed Memory</td><td>15 GiB</td></tr>
+<tr><td>Root Disk Capacity</td><td>221 GB</td></tr>
+<tr><td>Installation Type</td><td>Native / bare-metal installation</td></tr>
+</tbody>
+</table>
+<p class="small">Commands used for verification: <span class="cmd">uname -a</span> · <span class="cmd">cat /etc/os-release</span> · <span class="cmd">lscpu</span> · <span class="cmd">free -h</span> · <span class="cmd">df -h /</span> · <span class="cmd">systemd-detect-virt</span></p>
+
+<h3>3.6 Post-Installation Configuration</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:48%">Command</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td><code>sudo apt update</code></td><td>Refresh the package index from the Kali repositories</td></tr>
+<tr><td><code>sudo apt full-upgrade -y</code></td><td>Upgrade all installed packages to current versions</td></tr>
+<tr><td><code>sudo apt autoremove -y</code></td><td>Remove packages no longer required</td></tr>
+<tr><td><code>sudo apt install -y kali-linux-large</code></td><td>Install the extended Kali tool collection</td></tr>
+<tr><td><code>sudo apt install -y open-vm-tools-desktop</code></td><td>Guest tools — required only for VMware installations</td></tr>
+<tr><td><code>passwd</code></td><td>Set or change the user account password</td></tr>
+<tr><td><code>sudo systemctl enable ssh</code></td><td>Enable the SSH service if remote access is required</td></tr>
+<tr><td><code>ip a</code> / <code>ping -c 4 8.8.8.8</code></td><td>Confirm network interface configuration and internet connectivity</td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<span class="ct">Outcome of Task 02</span>
+A fully functional Kali Linux working environment has been installed, updated and verified. The VMware Workstation Player virtual-machine procedure has also been studied in full and is documented in Section 3.3, so that an isolated snapshot-capable lab VM can be built when required for exploitation exercises later in the course.
+</div>
+
+<!-- ============ 4. TASK 3 ============ -->
+<h2 id="sec4" class="pb"><span class="num">4.</span>Task 03 — Linux Command Practice</h2>
+<p>Following the Linux tutorial videos on the Mission Hackers Bangladesh YouTube channel, I practised the commands listed below in the Kali Linux terminal. They are grouped by function for clarity. Each command was executed and its behaviour observed on my own system.</p>
+
+<h3>4.1 Navigation and Filesystem</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>pwd</code></td><td>Print the full path of the current working directory</td></tr>
+<tr><td><code>ls</code></td><td>List the contents of a directory</td></tr>
+<tr><td><code>ls -l</code></td><td>Long listing — permissions, owner, size and modification time</td></tr>
+<tr><td><code>ls -a</code></td><td>Include hidden files (names beginning with a dot)</td></tr>
+<tr><td><code>ls -lah</code></td><td>Long listing, all files, human-readable sizes</td></tr>
+<tr><td><code>ls -R</code></td><td>List directories and all their contents recursively</td></tr>
+<tr><td><code>cd /path</code></td><td>Change to the specified directory</td></tr>
+<tr><td><code>cd ~</code></td><td>Return to the current user's home directory</td></tr>
+<tr><td><code>cd ..</code></td><td>Move up one level to the parent directory</td></tr>
+<tr><td><code>cd -</code></td><td>Switch back to the previous working directory</td></tr>
+<tr><td><code>tree</code></td><td>Display the directory structure as a tree</td></tr>
+</tbody>
+</table>
+
+<h3>4.2 File and Directory Operations</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>mkdir dirname</code></td><td>Create a new directory</td></tr>
+<tr><td><code>mkdir -p a/b/c</code></td><td>Create a full nested directory path in one step</td></tr>
+<tr><td><code>rmdir dirname</code></td><td>Remove an empty directory</td></tr>
+<tr><td><code>touch file.txt</code></td><td>Create an empty file, or update an existing file's timestamp</td></tr>
+<tr><td><code>cp source dest</code></td><td>Copy a file</td></tr>
+<tr><td><code>cp -r dir1 dir2</code></td><td>Copy a directory and everything inside it</td></tr>
+<tr><td><code>mv source dest</code></td><td>Move a file or directory, or rename it</td></tr>
+<tr><td><code>rm file</code></td><td>Delete a file</td></tr>
+<tr><td><code>rm -r dir</code></td><td>Delete a directory recursively</td></tr>
+<tr><td><code>rm -i file</code></td><td>Delete with a confirmation prompt (safer)</td></tr>
+<tr><td><code>ln -s target link</code></td><td>Create a symbolic link</td></tr>
+<tr><td><code>file name</code></td><td>Identify the actual type of a file</td></tr>
+<tr><td><code>stat file</code></td><td>Show detailed metadata: size, inode, access and modify times</td></tr>
+<tr><td><code>du -sh dir</code></td><td>Show the total size of a directory</td></tr>
+</tbody>
+</table>
+<div class="callout warn">
+<span class="ct">Caution</span>
+<code>rm -rf</code> deletes permanently and without confirmation — there is no recycle bin on the Linux command line. The path must always be checked before pressing Enter, and <code>rm -rf /</code> must never be run.
+</div>
+
+<h3>4.3 Viewing and Editing File Content</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>cat file</code></td><td>Display the entire contents of a file</td></tr>
+<tr><td><code>tac file</code></td><td>Display file contents in reverse line order</td></tr>
+<tr><td><code>less file</code></td><td>View a large file page by page (q to quit)</td></tr>
+<tr><td><code>more file</code></td><td>Simpler page-by-page viewer</td></tr>
+<tr><td><code>head -n 10 file</code></td><td>Show the first 10 lines</td></tr>
+<tr><td><code>tail -n 10 file</code></td><td>Show the last 10 lines</td></tr>
+<tr><td><code>tail -f logfile</code></td><td>Follow a log file live as new lines are written</td></tr>
+<tr><td><code>wc -l file</code></td><td>Count the lines in a file</td></tr>
+<tr><td><code>nano file</code></td><td>Simple terminal text editor (Ctrl+O save, Ctrl+X exit)</td></tr>
+<tr><td><code>vim file</code></td><td>Advanced modal editor (<code>:wq</code> to save and quit)</td></tr>
+<tr><td><code>echo "text" &gt; file</code></td><td>Write text to a file, overwriting existing content</td></tr>
+<tr><td><code>echo "text" &gt;&gt; file</code></td><td>Append text to the end of a file</td></tr>
+</tbody>
+</table>
+
+<h3>4.4 Searching and Filtering</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>grep "word" file</code></td><td>Search for a pattern inside a file</td></tr>
+<tr><td><code>grep -i "word" file</code></td><td>Case-insensitive search</td></tr>
+<tr><td><code>grep -r "word" /dir</code></td><td>Search recursively through a directory tree</td></tr>
+<tr><td><code>grep -v "word" file</code></td><td>Show only the lines that do <em>not</em> match</td></tr>
+<tr><td><code>find /path -name "*.txt"</code></td><td>Find files by name pattern</td></tr>
+<tr><td><code>find / -type d -name conf</code></td><td>Find directories by name</td></tr>
+<tr><td><code>locate filename</code></td><td>Fast filename lookup using a prebuilt index</td></tr>
+<tr><td><code>which command</code></td><td>Show the full path of an executable in <code>$PATH</code></td></tr>
+<tr><td><code>whereis command</code></td><td>Locate the binary, source and manual page for a command</td></tr>
+<tr><td><code>sort file</code> / <code>uniq</code></td><td>Sort lines; remove or count duplicate lines</td></tr>
+<tr><td><code>cut -d ":" -f 1 /etc/passwd</code></td><td>Extract a specific field from delimited text</td></tr>
+<tr><td><code>awk '{print $1}' file</code></td><td>Field-based text processing</td></tr>
+<tr><td><code>sed 's/old/new/g' file</code></td><td>Stream editing — find and replace text</td></tr>
+</tbody>
+</table>
+
+<h3>4.5 Permissions and Ownership</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>chmod 755 file</code></td><td>Set permissions numerically (owner rwx, group r-x, others r-x)</td></tr>
+<tr><td><code>chmod +x script.sh</code></td><td>Make a script executable</td></tr>
+<tr><td><code>chmod u+w,o-r file</code></td><td>Modify permissions symbolically</td></tr>
+<tr><td><code>chown user:group file</code></td><td>Change the owner and group of a file</td></tr>
+<tr><td><code>chgrp group file</code></td><td>Change only the group ownership</td></tr>
+<tr><td><code>umask</code></td><td>Show or set the default permission mask for new files</td></tr>
+<tr><td><code>sudo command</code></td><td>Execute a single command with administrative privileges</td></tr>
+<tr><td><code>su - user</code></td><td>Switch to another user account</td></tr>
+</tbody>
+</table>
+<p class="small"><strong>Permission values:</strong> read = 4, write = 2, execute = 1. The three digits apply to <em>owner</em>, <em>group</em> and <em>others</em> respectively — so <code>chmod 644</code> gives the owner read+write (6) and everyone else read-only (4).</p>
+
+<h3>4.6 User and Group Management</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>whoami</code></td><td>Display the current username</td></tr>
+<tr><td><code>id</code></td><td>Show user ID, group ID and group memberships</td></tr>
+<tr><td><code>who</code> / <code>w</code></td><td>List users currently logged in and what they are running</td></tr>
+<tr><td><code>sudo adduser name</code></td><td>Create a new user account</td></tr>
+<tr><td><code>sudo deluser name</code></td><td>Delete a user account</td></tr>
+<tr><td><code>sudo passwd name</code></td><td>Set or change a user's password</td></tr>
+<tr><td><code>sudo usermod -aG sudo name</code></td><td>Add a user to the sudo (administrator) group</td></tr>
+<tr><td><code>groups</code></td><td>List the groups the current user belongs to</td></tr>
+<tr><td><code>cat /etc/passwd</code></td><td>View the local user account database</td></tr>
+</tbody>
+</table>
+
+<h3>4.7 Process Management</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>ps aux</code></td><td>List all running processes with owner and resource usage</td></tr>
+<tr><td><code>top</code></td><td>Live, continuously updating process monitor</td></tr>
+<tr><td><code>htop</code></td><td>Interactive colour process viewer (easier than top)</td></tr>
+<tr><td><code>kill PID</code></td><td>Terminate a process by its process ID</td></tr>
+<tr><td><code>kill -9 PID</code></td><td>Force-terminate an unresponsive process</td></tr>
+<tr><td><code>killall name</code></td><td>Terminate all processes matching a name</td></tr>
+<tr><td><code>jobs</code> / <code>fg</code> / <code>bg</code></td><td>Manage background and foreground jobs in the shell</td></tr>
+<tr><td><code>command &amp;</code></td><td>Run a command in the background</td></tr>
+<tr><td><code>systemctl status service</code></td><td>Check the state of a system service</td></tr>
+<tr><td><code>sudo systemctl start|stop|restart service</code></td><td>Control a system service</td></tr>
+</tbody>
+</table>
+
+<h3>4.8 Package Management (APT)</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:38%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>sudo apt update</code></td><td>Refresh the list of available packages</td></tr>
+<tr><td><code>sudo apt upgrade</code></td><td>Upgrade installed packages</td></tr>
+<tr><td><code>sudo apt full-upgrade</code></td><td>Upgrade, allowing packages to be added or removed as needed</td></tr>
+<tr><td><code>sudo apt install package</code></td><td>Install a package</td></tr>
+<tr><td><code>sudo apt remove package</code></td><td>Remove a package, keeping its configuration files</td></tr>
+<tr><td><code>sudo apt purge package</code></td><td>Remove a package together with its configuration</td></tr>
+<tr><td><code>sudo apt autoremove</code></td><td>Remove orphaned dependencies</td></tr>
+<tr><td><code>apt search keyword</code></td><td>Search the repositories for a package</td></tr>
+<tr><td><code>apt show package</code></td><td>Display detailed information about a package</td></tr>
+<tr><td><code>dpkg -i file.deb</code></td><td>Install a local .deb package file</td></tr>
+<tr><td><code>dpkg -l</code></td><td>List all installed packages</td></tr>
+</tbody>
+</table>
+
+<h3>4.9 Networking</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:34%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>ip a</code> (or <code>ifconfig</code>)</td><td>Show network interfaces and assigned IP addresses</td></tr>
+<tr><td><code>ip route</code></td><td>Display the routing table and default gateway</td></tr>
+<tr><td><code>ping -c 4 host</code></td><td>Test reachability of a host</td></tr>
+<tr><td><code>traceroute host</code></td><td>Show the network path taken to reach a host</td></tr>
+<tr><td><code>netstat -tulnp</code> / <code>ss -tulnp</code></td><td>List listening ports and the processes bound to them</td></tr>
+<tr><td><code>nslookup domain</code> / <code>dig domain</code></td><td>Query DNS records for a domain</td></tr>
+<tr><td><code>whois domain</code></td><td>Retrieve domain registration information</td></tr>
+<tr><td><code>curl -I https://site</code></td><td>Fetch HTTP response headers from a web server</td></tr>
+<tr><td><code>wget URL</code></td><td>Download a file over HTTP/HTTPS</td></tr>
+<tr><td><code>hostname -I</code></td><td>Display the machine's IP address</td></tr>
+<tr><td><code>arp -a</code></td><td>Show the ARP cache of known hosts on the local network</td></tr>
+<tr><td><code>ssh user@host</code></td><td>Open an encrypted remote shell session</td></tr>
+<tr><td><code>scp file user@host:/path</code></td><td>Copy files securely between machines</td></tr>
+</tbody>
+</table>
+<div class="callout warn">
+<span class="ct">Legal reminder</span>
+Reconnaissance and scanning commands must only be pointed at systems you own or have written permission to test. Scanning third-party hosts without authorisation is an offence under Bangladeshi cyber legislation, as discussed in Section 2.9.
+</div>
+
+<h3>4.10 System Information and Monitoring</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:34%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>uname -a</code></td><td>Show kernel name, version and machine architecture</td></tr>
+<tr><td><code>cat /etc/os-release</code></td><td>Display distribution name and version</td></tr>
+<tr><td><code>lscpu</code></td><td>Show processor details</td></tr>
+<tr><td><code>free -h</code></td><td>Display memory and swap usage in readable units</td></tr>
+<tr><td><code>df -h</code></td><td>Show disk space usage per filesystem</td></tr>
+<tr><td><code>lsblk</code></td><td>List block devices and partitions</td></tr>
+<tr><td><code>uptime</code></td><td>Show how long the system has been running and its load average</td></tr>
+<tr><td><code>date</code></td><td>Display or set the system date and time</td></tr>
+<tr><td><code>history</code></td><td>List previously executed commands</td></tr>
+<tr><td><code>dmesg</code></td><td>Print kernel ring-buffer messages</td></tr>
+<tr><td><code>lsusb</code> / <code>lspci</code></td><td>List connected USB and PCI hardware devices</td></tr>
+</tbody>
+</table>
+
+<h3>4.11 Archiving and Compression</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:40%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>tar -cvf archive.tar dir/</code></td><td>Create an uncompressed tar archive</td></tr>
+<tr><td><code>tar -czvf archive.tar.gz dir/</code></td><td>Create a gzip-compressed archive</td></tr>
+<tr><td><code>tar -xzvf archive.tar.gz</code></td><td>Extract a gzip-compressed archive</td></tr>
+<tr><td><code>zip -r archive.zip dir/</code></td><td>Create a ZIP archive</td></tr>
+<tr><td><code>unzip archive.zip</code></td><td>Extract a ZIP archive</td></tr>
+<tr><td><code>gzip file</code> / <code>gunzip file.gz</code></td><td>Compress or decompress a single file</td></tr>
+<tr><td><code>md5sum</code> / <code>sha256sum file</code></td><td>Generate a checksum to verify file integrity</td></tr>
+</tbody>
+</table>
+
+<h3>4.12 Shell Operators and Keyboard Shortcuts</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:34%">Operator / Shortcut</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>|</code> (pipe)</td><td>Send the output of one command into another, e.g. <code>ls -l | grep ".txt"</code></td></tr>
+<tr><td><code>&gt;</code> / <code>&gt;&gt;</code></td><td>Redirect output to a file — overwrite / append</td></tr>
+<tr><td><code>&amp;&amp;</code> / <code>||</code></td><td>Run the next command only if the previous succeeded / only if it failed</td></tr>
+<tr><td><code>2&gt;/dev/null</code></td><td>Discard error messages</td></tr>
+<tr><td><code>man command</code></td><td>Open the manual page for a command</td></tr>
+<tr><td><code>command --help</code></td><td>Show a short usage summary</td></tr>
+<tr><td><code>clear</code> / <strong>Ctrl + L</strong></td><td>Clear the terminal screen</td></tr>
+<tr><td><strong>Tab</strong></td><td>Auto-complete a file, directory or command name</td></tr>
+<tr><td><strong>Ctrl + C</strong></td><td>Interrupt and stop the running command</td></tr>
+<tr><td><strong>Ctrl + Z</strong></td><td>Suspend the running command to the background</td></tr>
+<tr><td><strong>Ctrl + R</strong></td><td>Search backwards through command history</td></tr>
+<tr><td><strong>Ctrl + D</strong> / <code>exit</code></td><td>Close the terminal session</td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<span class="ct">Outcome of Task 03</span>
+All of the command categories above were practised directly in the Kali Linux terminal on my own machine. I am now comfortable with navigation, file handling, permissions, process control, package management and basic networking commands, which form the working foundation for the penetration-testing tools introduced later in the course.
+</div>
+
+<!-- ============ 5. TASK 4 ============ -->
+<h2 id="sec5" class="pb"><span class="num">5.</span>Task 04 — Joining Mission Hackers Bangladesh Communities</h2>
+<p>As required by the fourth task, I have joined the official Mission Hackers Bangladesh community channels. These platforms are used for class announcements, resource sharing, assignment submission notices and peer support among Batch-11 students.</p>
+<table>
+<thead><tr><th style="width:26%">Platform</th><th style="width:44%">Community</th><th style="width:30%">Status</th></tr></thead>
+<tbody>
+<tr><td>Facebook Group</td><td>Mission Hackers Bangladesh — official students' group</td><td><span class="tag-ok">Joined</span></td></tr>
+<tr><td>Facebook Page</td><td>Mission Hackers Bangladesh — official page</td><td><span class="tag-ok">Followed</span></td></tr>
+<tr><td>Telegram</td><td>Mission Hackers Bangladesh channel / group</td><td><span class="tag-ok">Joined</span></td></tr>
+<tr><td>WhatsApp</td><td>Batch-11 official student group</td><td><span class="tag-ok">Joined</span></td></tr>
+</tbody>
+</table>
+<p>I am following all announcements posted on these channels and will continue to participate actively throughout the course, including in discussion threads and doubt-clearing sessions with the mentor and fellow students.</p>
+
+<!-- ============ 6. CONCLUSION ============ -->
+<h2 id="sec6"><span class="num">6.</span>Conclusion and Learning Outcome</h2>
+<p>Completing this first assignment has given me a clear starting point for the Ethical Hacking &amp; Cybersecurity Practical programme. From the theoretical portion I have understood that cybersecurity rests on the CIA triad and is delivered through people, process and technology together, and that cyber law — particularly the evolving legislation in Bangladesh — is what separates a professional security tester from a criminal offender. The single most important lesson is that <strong>written authorisation and a defined scope are mandatory before any security testing.</strong></p>
+<p>On the practical side, I have set up a working Kali Linux environment, verified its configuration, and studied the VMware virtual-machine procedure required for isolated laboratory work. Practising the Linux command set has made me comfortable in the terminal, which is essential because nearly every tool used in this field is operated from the command line.</p>
+<p>I have joined all the Mission Hackers Bangladesh community channels and am ready to proceed to the next class.</p>
+
+<!-- ============ 7. REFERENCES ============ -->
+<h2 id="sec7"><span class="num">7.</span>References</h2>
+<ol class="refs">
+<li>Mission Hacker Bangladesh — Ethical Hacking &amp; Cybersecurity Practical (Batch-11) course portal and class recordings. <span class="cmd">https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w</span></li>
+<li>Mission Hackers Bangladesh — official YouTube channel, Linux command tutorial series.</li>
+<li>Offensive Security — <em>Kali Linux Official Documentation</em>. <span class="cmd">https://www.kali.org/docs/</span></li>
+<li>Bangladesh Legislative and Parliamentary Affairs Division — <em>Laws of Bangladesh</em>. <span class="cmd">http://bdlaws.minlaw.gov.bd/</span></li>
+<li>BGD e-GOV CIRT — Bangladesh Computer Incident Response Team. <span class="cmd">https://www.cirt.gov.bd/</span></li>
+<li>Council of Europe — <em>Convention on Cybercrime (Budapest Convention)</em>, ETS No. 185, 2001.</li>
+<li>NIST — <em>Framework for Improving Critical Infrastructure Cybersecurity</em>.</li>
+<li>VMware / Broadcom — <em>Workstation Player Documentation</em>.</li>
+</ol>
+
+<!-- ============ 8. DECLARATION ============ -->
+<h2 id="sec8"><span class="num">8.</span>Declaration</h2>
+<div class="decl">
+<p>I, <strong>Md. Abdur Razzaque</strong>, a student of the Ethical Hacking &amp; Cybersecurity Practical programme, <strong>Batch-11</strong>, conducted by Mission Hacker Bangladesh under mentor <strong>Sha Jalal</strong>, hereby declare that this assignment is my own work, prepared from the Class-01 lecture, the Mission Hackers Bangladesh YouTube tutorial series and the reference sources listed in Section 7.</p>
+<p>I further declare that I understand and accept the legal and ethical responsibilities of a security practitioner, and I undertake to apply the knowledge and tools learned in this course <strong>only on systems that I own or for which I hold explicit written authorisation</strong>, and never for any unlawful purpose.</p>
+<div class="sigrow">
+  <div class="sigbox">Md. Abdur Razzaque<br><span style="font-size:8pt;color:#6b7a80;">Student — Batch-11</span></div>
+  <div class="sigbox">Sha Jalal<br><span style="font-size:8pt;color:#6b7a80;">Course Mentor</span></div>
+</div>
+<p style="margin-top:8mm;font-size:9pt;color:#56666d;text-align:left;">Date of submission: <strong>28 August 2026</strong></p>
+</div>
+
+</body>
+</html>
