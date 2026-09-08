@@ -9,12 +9,13 @@ When a coding or assignment task in this repository is **finished** (files creat
 
 ## Required end-of-task sequence
 
-1. `git status` and `git diff` (staged + unstaged) to see what changed.
-2. `git log -5 --oneline` to match this repo’s commit message style.
-3. Stage relevant project files with `git add` (never stage secrets: `.env`, credentials, private keys).
-4. Commit with a concise message via HEREDOC (why over what).
-5. `git push -u origin HEAD` when the branch has a remote (this project uses `origin` → GitHub).
-6. Show `git status` after push to confirm a clean or expected state.
+1. If assignments or important files changed, update `README.md` first (see `update-readme` rule).
+2. `git status` and `git diff` (staged + unstaged) to see what changed.
+3. `git log -5 --oneline` to match this repo’s commit message style.
+4. Stage relevant project files with `git add` (never stage secrets: `.env`, credentials, private keys).
+5. Commit with a concise message via HEREDOC (why over what).
+6. `git push -u origin HEAD` when the branch has a remote (this project uses `origin` → GitHub).
+7. Show `git status` after push to confirm a clean or expected state.
 
 ## Commit message style
 

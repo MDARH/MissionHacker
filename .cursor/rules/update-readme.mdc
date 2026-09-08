@@ -1,0 +1,35 @@
+---
+description: Keep root README.md updated whenever assignments or important course files change.
+alwaysApply: true
+---
+
+# Update README.md on Assignment Changes
+
+Whenever you **add, rename, move, finish, or materially change** an assignment folder, PDF, HTML report, screenshot, LinkedIn/GitHub asset, or other important course file in this repo, **update `README.md` in the same task** before committing.
+
+## When this applies
+
+- New `assignment-N/` folder or new Class/Assignment deliverable
+- New or renamed PDF / HTML / `rebuild.sh` / screenshots / post drafts
+- Status change (e.g. Draft → Completed)
+- New related public links (GitHub repos, LinkedIn posts, course URLs)
+- New important root or shared assets that students/mentors should find quickly
+
+## What to update in README.md
+
+1. **Assignments table** — one row per assignment with: number, title, status, links to HTML, PDF, and folder.
+2. **Important files** — per-assignment tables listing every submission-critical file with a short description and relative markdown links (`./path/to/file`).
+3. **Project / course links** — keep profile, study-guide, and course URLs current.
+4. **Folder layout** — refresh the tree if top-level structure changes.
+5. **Last updated** date at the bottom (use today’s date from user context).
+
+## Conventions
+
+- Prefer **relative links** for in-repo files so GitHub renders them correctly.
+- Keep tables scannable; do not dump every temp file — only HTML, PDF, rebuild scripts, screenshots used in submissions, and key drafts (e.g. LinkedIn post text).
+- Mark draft PDFs clearly in the Status column and link text (e.g. `PDF (Draft)`).
+- Do not remove older assignment rows when adding new ones; append.
+
+## End of task
+
+After editing README, include it in the same git commit as the assignment/file changes (see `git-end-of-task` rule).
