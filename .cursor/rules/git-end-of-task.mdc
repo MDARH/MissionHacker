@@ -1,0 +1,32 @@
+---
+description: After finishing a task in this repo, run git status/add/commit/push so work is saved on GitHub.
+alwaysApply: true
+---
+
+# Git at End of Task
+
+When a coding or assignment task in this repository is **finished** (files created/updated and verified), always close out with git — do not leave completed work uncommitted.
+
+## Required end-of-task sequence
+
+1. `git status` and `git diff` (staged + unstaged) to see what changed.
+2. `git log -5 --oneline` to match this repo’s commit message style.
+3. Stage relevant project files with `git add` (never stage secrets: `.env`, credentials, private keys).
+4. Commit with a concise message via HEREDOC (why over what).
+5. `git push -u origin HEAD` when the branch has a remote (this project uses `origin` → GitHub).
+6. Show `git status` after push to confirm a clean or expected state.
+
+## Commit message style
+
+- Short, imperative subject (e.g. `Add assignment-3 draft with filesystem guide`).
+- Optional one-line body only if needed for context.
+
+## Do not
+
+- Skip commit/push after completing user-requested deliverables in this repo.
+- Use `--force`, `--no-verify`, amend of others’ commits, or rewrite history unless the user explicitly asks.
+- Commit generated junk (`node_modules/`, temp capture scripts, Playwright caches) unless they are intentional project assets.
+
+## Scope
+
+Applies to MissionHacker assignment folders, rules, READMEs, and related course materials. If the user says **not** to commit or push for a specific turn, follow that override for that turn only.

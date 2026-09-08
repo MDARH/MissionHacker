@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Md. Abdur Razzaque">
+<meta name="description" content="Assignment 03 DRAFT — Ethical Hacking &amp; Cybersecurity Practical, Batch-11, Mission Hacker Bangladesh.">
+<title>Assignment 03 (Draft) — Linux File System, GitHub Guide &amp; LinkedIn Post</title>
+<style>
+@page {
+  size: A4;
+  margin: 22mm 18mm 20mm 18mm;
+  @top-right {
+    content: "Assignment 03 (Draft)  •  Md. Abdur Razzaque  •  Batch-11";
+    font-family: "Lato", sans-serif; font-size: 7.5pt; color: #8a8f98;
+  }
+  @bottom-center {
+    content: "Page " counter(page) " of " counter(pages);
+    font-family: "Lato", sans-serif; font-size: 8pt; color: #8a8f98;
+  }
+  @bottom-right {
+    content: "Mission Hacker Bangladesh";
+    font-family: "Lato", sans-serif; font-size: 7.5pt; color: #b6bac1;
+  }
+}
+@page cover { margin: 0; @top-right { content: none; } @bottom-center { content: none; } @bottom-right { content: none; } }
+
+html { font-size: 10.5pt; }
+body {
+  font-family: "Noto Serif", "Liberation Serif", serif;
+  color: #1c2027; line-height: 1.62; margin: 0; hyphens: none;
+}
+h1,h2,h3,h4 { font-family: "Lato", "Liberation Sans", sans-serif; color: #0f1620; line-height: 1.25; }
+
+.cover { page: cover; height: 297mm; width: 210mm; position: relative; color: #fff;
+  background: linear-gradient(158deg, #071018 0%, #0d2233 42%, #10394a 72%, #0a1b26 100%); }
+.cover-inner { position: relative; z-index: 2; padding: 26mm 20mm 18mm; height: 297mm; box-sizing: border-box; }
+.brandrow { display: flex; align-items: center; gap: 5mm; }
+.mono-badge { width: 17mm; height: 17mm; border: 1.6pt solid #38d39f; border-radius: 3mm;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Lato", sans-serif; font-weight: 900; font-size: 15pt; color: #38d39f; letter-spacing: .5pt; }
+.brandtext .bt1 { font-family: "Lato", sans-serif; font-weight: 800; font-size: 13.5pt; letter-spacing: .6pt; color:#fff; }
+.brandtext .bt2 { font-family: "Lato", sans-serif; font-size: 8.5pt; letter-spacing: 2.6pt;
+  text-transform: uppercase; color: #7fd7c4; margin-top: 1.2mm; }
+.rule { height: 1.2pt; background: linear-gradient(90deg,#38d39f 0%, #38d39f 22%, rgba(255,255,255,.14) 22%); margin: 9mm 0 0; }
+.cover-mid { margin-top: 30mm; }
+.eyebrow { font-family:"Lato",sans-serif; font-size: 9pt; letter-spacing: 3.4pt; text-transform: uppercase;
+  color: #38d39f; font-weight: 700; }
+.cover h1 { font-size: 30pt; font-weight: 900; color: #fff; margin: 5mm 0 0; line-height: 1.1; letter-spacing: -.4pt; }
+.cover .subtitle { font-family:"Lato",sans-serif; font-size: 12.5pt; color: #b9c8d2; margin-top: 5mm; font-weight: 400; }
+.cover .batchpill { display: inline-block; margin-top: 7mm; padding: 2.2mm 6mm; border-radius: 20mm;
+  background: rgba(56,211,159,.13); border: .8pt solid rgba(56,211,159,.5);
+  font-family:"Lato",sans-serif; font-size: 10pt; font-weight: 700; color: #6fe3bd; letter-spacing: .8pt; }
+.draftpill { display: inline-block; margin-left: 3mm; padding: 2mm 5mm; border-radius: 20mm;
+  background: rgba(245,158,11,.18); border: .8pt solid rgba(245,158,11,.55);
+  font-family:"Lato",sans-serif; font-size: 9.5pt; font-weight: 700; color: #fbbf24; letter-spacing: .6pt; }
+.cover-foot { position: absolute; left: 20mm; right: 20mm; bottom: 16mm; }
+.metagrid { display: flex; flex-wrap: wrap; border-top: .8pt solid rgba(255,255,255,.18); padding-top: 7mm; }
+.metacell { width: 50%; margin-bottom: 6.5mm; box-sizing: border-box; padding-right: 6mm; }
+.metacell .k { font-family:"Lato",sans-serif; font-size: 7.5pt; letter-spacing: 2pt; text-transform: uppercase;
+  color: #6d8697; font-weight: 700; }
+.metacell .v { font-family:"Lato",sans-serif; font-size: 11.5pt; color: #ffffff; margin-top: 1.4mm; font-weight: 600; }
+.metacell .v small { font-weight: 400; color: #9fb2be; font-size: 9pt; }
+.cover-note { font-family:"Lato",sans-serif; font-size: 7.8pt; color: #62798a; border-top: .5pt solid rgba(255,255,255,.1);
+  padding-top: 4mm; margin-top: 1mm; }
+.cover-note a { color: #4fbf9c; text-decoration: none; word-break: break-all; }
+
+h2 { font-size: 15pt; font-weight: 800; margin: 11mm 0 3.5mm; padding-bottom: 2mm;
+  border-bottom: 1.6pt solid #0f766e; break-after: avoid; }
+h2 .num { color: #0f766e; margin-right: 3mm; }
+h3 { font-size: 11.6pt; font-weight: 800; margin: 7mm 0 2.5mm; color: #14303c; break-after: avoid; }
+p { margin: 0 0 3.2mm; text-align: justify; }
+ul, ol { margin: 0 0 3.5mm; padding-left: 6.5mm; }
+li { margin-bottom: 1.6mm; }
+strong { color: #0b2027; }
+code, .cmd { font-family: "DejaVu Sans Mono", monospace; font-size: 8.6pt;
+  background: #eef4f4; color: #0a4f47; padding: .3mm 1.3mm; border-radius: 1mm; }
+pre.tree { font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; background: #0f1620; color: #d7e6e2;
+  padding: 4mm; border-radius: 2mm; line-height: 1.45; white-space: pre; overflow: hidden; margin: 3mm 0 5mm; }
+
+table { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 9pt; font-family: "Lato", sans-serif; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th { background: #0f766e; color: #fff; text-align: left; padding: 2.2mm 2.8mm; font-weight: 700; font-size: 8.6pt; }
+td { padding: 2mm 2.8mm; border-bottom: .5pt solid #dfe6e6; vertical-align: top; line-height: 1.45; }
+tbody tr:nth-child(even) td { background: #f6faf9; }
+td code { font-size: 8.4pt; background: transparent; padding: 0; color: #0a4f47; font-weight: 600; }
+
+.callout { border-left: 2.6pt solid #0f766e; background: #f2f8f7; padding: 3.2mm 4mm; margin: 4mm 0 5mm;
+  font-size: 9.4pt; break-inside: avoid; }
+.callout .ct { font-family:"Lato",sans-serif; font-weight: 800; font-size: 8.4pt; letter-spacing: 1.4pt;
+  text-transform: uppercase; color: #0f766e; display: block; margin-bottom: 1.5mm; }
+.warn { border-left-color: #b45309; background: #fdf7ef; }
+.warn .ct { color: #b45309; }
+
+.toc { font-family:"Lato",sans-serif; font-size: 9.8pt; line-height: 1.3; }
+.toc .t-main { border-bottom: .4pt dotted #c9d3d3; padding: 1.7mm 0 1.4mm; margin-top: 2.2mm; }
+.toc .t-main a { color: #14303c; text-decoration: none; }
+.toc .t-main a::after { content: target-counter(attr(href), page); float: right; font-weight: 700; color: #0f766e; }
+.toc .t-sub { padding: .55mm 0 .55mm 7mm; font-size: 8.9pt; color: #4a5b62; }
+
+.pb { break-before: page; }
+.lead { font-size: 10.6pt; color: #33474f; }
+.small { font-size: 8.8pt; color: #56666d; }
+.tag-ok { display:inline-block; background:#0f766e; color:#fff; font-family:"Lato",sans-serif;
+  font-size:7.4pt; font-weight:700; padding:.6mm 2.2mm; border-radius:1.4mm; }
+.tag-draft { display:inline-block; background:#b45309; color:#fff; font-family:"Lato",sans-serif;
+  font-size:7.4pt; font-weight:700; padding:.6mm 2.2mm; border-radius:1.4mm; }
+
+.profile-card { border: .8pt solid #d5e0e0; border-radius: 2mm; padding: 4mm 5mm; margin: 4mm 0 6mm;
+  break-inside: avoid; background: #fbfdfd; }
+.profile-card .pname { font-family:"Lato",sans-serif; font-size: 12pt; font-weight: 800; margin: 0 0 1.5mm; }
+.profile-card .plink { font-family:"Lato",sans-serif; font-size: 9.2pt; margin: 0 0 2mm; }
+.profile-card .plink a { color: #0f766e; word-break: break-all; }
+.profile-card .pmeta { font-family:"Lato",sans-serif; font-size: 8.8pt; color: #4a5b62; margin: 0; }
+.shot { margin: 3mm 0 2mm; text-align: center; break-inside: avoid; }
+.shot img { max-width: 100%; max-height: 140mm; border: .6pt solid #c9d3d3; border-radius: 1.5mm; }
+.shot .cap { font-family:"Lato",sans-serif; font-size: 8pt; color: #56666d; margin-top: 2mm; }
+.postbox { font-family:"Lato",sans-serif; font-size: 9pt; background:#f7faf9; border:.8pt solid #d5e0e0;
+  padding: 4mm; border-radius: 2mm; white-space: pre-wrap; line-height: 1.5; margin: 3mm 0 5mm; }
+.decl { border: .8pt solid #cfd9d9; padding: 5mm 6mm; margin-top: 4mm; font-size: 9.6pt; break-inside: avoid; }
+.sigrow { display: flex; justify-content: space-between; margin-top: 16mm; }
+.sigbox { width: 62mm; border-top: .8pt solid #6b7a80; padding-top: 2mm;
+  font-family:"Lato",sans-serif; font-size: 9pt; color: #35505c; text-align: center; }
+.refs { font-size: 9pt; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+ <div class="cover-inner">
+  <div class="brandrow">
+    <div class="mono-badge">MHB</div>
+    <div class="brandtext">
+      <div class="bt1">Mission Hacker Bangladesh</div>
+      <div class="bt2">Cyber Security Training</div>
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="cover-mid">
+    <div class="eyebrow">Assignment No. 03</div>
+    <h1>Linux File System,<br>GitHub Guide &amp;<br>LinkedIn Post</h1>
+    <div class="subtitle">Hierarchy · Security-relevant directories · Public learning assets</div>
+    <div class="batchpill">BATCH — 11</div>
+    <div class="draftpill">DRAFT SUBMISSION</div>
+  </div>
+  <div class="cover-foot">
+    <div class="metagrid">
+      <div class="metacell"><div class="k">Submitted By</div><div class="v">Md. Abdur Razzaque</div></div>
+      <div class="metacell"><div class="k">Course Mentor</div><div class="v">Sha Jalal</div></div>
+      <div class="metacell"><div class="k">Course</div><div class="v">Ethical Hacking &amp; Cybersecurity Practical<br><small>Batch-11 &nbsp;|&nbsp; Class 03</small></div></div>
+      <div class="metacell"><div class="k">Date of Draft</div><div class="v">8 September 2026</div></div>
+    </div>
+    <div class="cover-note">
+      Course page: <a href="https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w">https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w</a><br>
+      This document is a <strong style="color:#9fb2be">draft</strong> for Assignment 03 requirements.
+    </div>
+  </div>
+ </div>
+</section>
+
+<h2><span class="num">—</span>Table of Contents</h2>
+<div class="toc">
+  <div class="t-main"><a href="#sec1"><b>1. Assignment Overview</b></a></div>
+  <div class="t-main"><a href="#sec2"><b>2. Task 01 — Linux File System Overview</b></a></div>
+  <div class="t-main"><a href="#sec3"><b>3. Task 02 — Important Directories for Ethical Hacking Practice</b></a></div>
+  <div class="t-main"><a href="#sec4"><b>4. Task 03 — GitHub Repository &amp; README</b></a></div>
+  <div class="t-main"><a href="#sec5"><b>5. Task 04 — LinkedIn Post</b></a></div>
+  <div class="t-main"><a href="#sec6"><b>6. Conclusion &amp; Declaration</b></a></div>
+</div>
+
+<h2 id="sec1" class="pb"><span class="num">1.</span>Assignment Overview</h2>
+<p class="lead">This draft covers Assignment 03 for the <strong>Ethical Hacking &amp; Cybersecurity Practical (Batch-11)</strong> programme. It explains the Linux file system, lists directories useful for ethical hacking labs, documents a public GitHub study guide, and includes a LinkedIn learning post with screenshots.</p>
+
+<table>
+<thead><tr><th style="width:12%">Task</th><th>Requirement</th><th style="width:22%">Section</th><th style="width:18%">Status</th></tr></thead>
+<tbody>
+<tr><td>01</td><td>Provide Linux file system overview</td><td>Section 2</td><td><span class="tag-ok">Draft ready</span></td></tr>
+<tr><td>02</td><td>List important directories for ethical hacking practice</td><td>Section 3</td><td><span class="tag-ok">Draft ready</span></td></tr>
+<tr><td>03</td><td>Create GitHub repository with educational README + screenshot</td><td>Section 4</td><td><span class="tag-ok">Completed</span></td></tr>
+<tr><td>04</td><td>Create LinkedIn post about filesystem &amp; commands + screenshot</td><td>Section 5</td><td><span class="tag-draft">Draft ready — publish live</span></td></tr>
+</tbody>
+</table>
+
+<h2 id="sec2" class="pb"><span class="num">2.</span>Task 01 — Linux File System Overview</h2>
+<p>Linux organises storage as a <strong>single hierarchical tree</strong>. The top of the tree is the root directory <code>/</code>. Disks are mounted into this tree (there are no Windows-style drive letters). Almost everything — including devices and process information — appears as a file somewhere under <code>/</code>.</p>
+
+<h3>2.1 Conceptual model</h3>
+<ul>
+  <li><strong>Absolute path</strong> — begins with <code>/</code> (example: <code>/etc/passwd</code>).</li>
+  <li><strong>Relative path</strong> — relative to the current working directory (example: <code>../lab/notes.txt</code>).</li>
+  <li><strong>Permissions</strong> — read/write/execute for owner, group and others (<code>chmod</code>, <code>chown</code>).</li>
+  <li><strong>Mount points</strong> — partitions and external media attach at directories such as <code>/mnt</code> or <code>/media</code>.</li>
+</ul>
+
+<h3>2.2 Top-level layout (FHS-style)</h3>
+<pre class="tree">/                       root of the entire filesystem
+├── bin/                essential user binaries
+├── boot/               bootloader &amp; kernel images
+├── dev/                device files
+├── etc/                system-wide configuration
+├── home/               ordinary user home directories
+├── lib/                shared libraries
+├── media/ / mnt/       removable &amp; temporary mounts
+├── opt/                optional / third-party software
+├── proc/ / sys/        virtual kernel interfaces
+├── root/               home directory of the root user
+├── run/                runtime data (PID files, sockets)
+├── sbin/               system administration binaries
+├── srv/                service data
+├── tmp/                temporary files (often cleared on reboot)
+├── usr/                userland programs &amp; shared data
+└── var/                variable data (logs, caches, spools)</pre>
+
+<div class="callout">
+<span class="ct">Why this matters for security</span>
+Knowing the hierarchy lets you find configs, logs, binaries and writable areas quickly during authorised lab work — before relying on automated tools.
+</div>
+
+<table>
+<thead><tr><th style="width:28%">Idea</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>Everything is a file</td><td>Devices, sockets and configs are accessed through filesystem paths.</td></tr>
+<tr><td><code>/etc</code> vs <code>/var</code></td><td>Configs are relatively static; logs and caches change frequently.</td></tr>
+<tr><td><code>/usr</code> vs <code>/opt</code></td><td>Distro packages vs manually installed third-party tools.</td></tr>
+<tr><td><code>/proc</code> &amp; <code>/sys</code></td><td>Live views of processes, networking and kernel state — not ordinary disk folders.</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec3" class="pb"><span class="num">3.</span>Task 02 — Important Directories for Ethical Hacking Practice</h2>
+<p>The directories below are especially useful when practising on a <strong>lab machine you own</strong> or have <strong>written authorisation</strong> to examine.</p>
+
+<table>
+<thead><tr><th style="width:22%">Directory</th><th>Why it helps ethical hacking practice</th></tr></thead>
+<tbody>
+<tr><td><code>/etc</code></td><td>Service and system configuration (SSH, web servers, network, cron).</td></tr>
+<tr><td><code>/etc/passwd</code>, <code>/etc/shadow</code></td><td>Account enumeration concepts (shadow requires root on real systems).</td></tr>
+<tr><td><code>/home</code></td><td>User files, shell history, SSH keys under <code>.ssh/</code>, personal configs.</td></tr>
+<tr><td><code>/root</code></td><td>Root user’s home — sensitive lab artefacts and admin tooling.</td></tr>
+<tr><td><code>/var/log</code></td><td>Auth, syslog, web and application logs for monitoring and forensics practice.</td></tr>
+<tr><td><code>/var/www</code></td><td>Common web document root for web-app labs.</td></tr>
+<tr><td><code>/tmp</code>, <code>/dev/shm</code></td><td>World-writable areas frequently used in post-exploitation lab scenarios.</td></tr>
+<tr><td><code>/usr/bin</code>, <code>/usr/sbin</code></td><td>Installed user and admin tools.</td></tr>
+<tr><td><code>/usr/share</code></td><td>Shared data — on Kali, wordlists and tool datasets often live here.</td></tr>
+<tr><td><code>/opt</code></td><td>Manually installed frameworks and security tool suites.</td></tr>
+<tr><td><code>/proc</code></td><td>Live process list, environment, network tables (<code>/proc/net</code>).</td></tr>
+<tr><td><code>/sys</code></td><td>Kernel/hardware interfaces useful for low-level system understanding.</td></tr>
+<tr><td><code>/boot</code></td><td>Kernel and bootloader files — boot-security awareness.</td></tr>
+<tr><td><code>/dev</code></td><td>Device nodes representing disks, terminals and other hardware.</td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<span class="ct">Legal reminder</span>
+Explore these paths only on systems you own or are explicitly authorised to test. Unauthorised access to someone else’s machine or data is illegal.
+</div>
+
+<h3>3.1 Useful inspection commands</h3>
+<p><span class="cmd">ls -lah /</span> · <span class="cmd">ls -lah /etc</span> · <span class="cmd">ls -lah /var/log</span> · <span class="cmd">df -h</span> · <span class="cmd">mount</span> · <span class="cmd">cat /etc/os-release</span> · <span class="cmd">find /home -type f -name ".*" 2&gt;/dev/null | head</span></p>
+
+<h2 id="sec4" class="pb"><span class="num">4.</span>Task 03 — GitHub Repository &amp; README</h2>
+<p>I created a public GitHub repository with a README that explains the Linux file system, important lab directories, and essential commands so others can learn with me.</p>
+
+<div class="profile-card">
+  <p class="pname">linux-filesystem-guide</p>
+  <p class="plink">Repository: <a href="https://github.com/MDARH/linux-filesystem-guide">https://github.com/MDARH/linux-filesystem-guide</a></p>
+  <p class="pmeta">Owner: @MDARH · Visibility: Public · Contains educational README for Linux commands &amp; filesystem hierarchy</p>
+</div>
+
+<div class="shot">
+  <img src="screenshots/github-repo.png" alt="Screenshot of GitHub repository linux-filesystem-guide">
+  <div class="cap">Figure 1 — Public repository README at https://github.com/MDARH/linux-filesystem-guide</div>
+</div>
+
+<h2 id="sec5" class="pb"><span class="num">5.</span>Task 04 — LinkedIn Post</h2>
+<p>I drafted and prepared a LinkedIn post summarising the Linux file system, important directories for ethical hacking practice, essential commands, and a link to the GitHub study guide.</p>
+
+<div class="profile-card">
+  <p class="pname">LinkedIn profile used for posting</p>
+  <p class="plink"><a href="https://www.linkedin.com/in/devhassan41">https://www.linkedin.com/in/devhassan41</a></p>
+  <p class="pmeta">Full post text is also saved in <code>assignment-3/linkedin-post.md</code> for reuse.</p>
+</div>
+
+<h3>5.1 Post text</h3>
+<div class="postbox">🐧 Linux File System &amp; Essential Commands — Learning Notes
+
+As part of my Ethical Hacking &amp; Cybersecurity Practical journey (Mission Hacker Bangladesh — Batch-11), I revisited one of the most important foundations of security work: the Linux file system.
+
+Everything in Linux lives under a single tree starting at / — configs, logs, binaries, devices, and user data.
+
+🔑 Directories I focus on for ethical hacking labs (authorised systems only):
+• /etc — configuration &amp; service settings
+• /var/log — authentication and application logs
+• /home &amp; /root — user environments and SSH keys
+• /tmp &amp; /dev/shm — writable spaces often used in labs
+• /proc &amp; /sys — live process and kernel information
+• /usr/share — wordlists and tool data on Kali
+
+💻 Daily commands: pwd · ls -lah · cd · find · grep · chmod · ps aux · ss -tulnp · ip a
+
+Study guide: https://github.com/MDARH/linux-filesystem-guide
+
+Reminder: only explore systems you own or have written permission to test.
+
+#Linux #CyberSecurity #EthicalHacking #MissionHacker #InfoSec #LearnInPublic #Batch11</div>
+
+<h3>5.2 Screenshot</h3>
+<div class="shot">
+  <img src="screenshots/linkedin-post.png" alt="Screenshot of LinkedIn post about Linux filesystem">
+  <div class="cap">Figure 2 — Prepared LinkedIn post preview (text ready to publish from https://www.linkedin.com/in/devhassan41). Replace with a live feed screenshot after clicking Post.</div>
+</div>
+<div class="callout">
+<span class="ct">Publish step</span>
+The full post text is on the clipboard and saved in <code>linkedin-post.md</code>. Open LinkedIn as <strong>Md. Abdur Razzaque</strong>, choose <em>Start a post</em>, paste (<strong>Ctrl+V</strong>), then <strong>Post</strong>. Re-capture the live feed and replace <code>screenshots/linkedin-post.png</code> for the final submission.
+</div>
+
+<h2 id="sec6" class="pb"><span class="num">6.</span>Conclusion &amp; Declaration</h2>
+<p>This draft completes the content requirements for Assignment 03: a clear Linux filesystem overview, a security-oriented directory list, a public GitHub README repository, and a LinkedIn learning post with supporting screenshots.</p>
+
+<div class="decl">
+<p>I, <strong>Md. Abdur Razzaque</strong>, declare that this Assignment 03 draft is my own work. The GitHub repository and LinkedIn materials linked above belong to me. I will only use security knowledge on systems I own or am authorised to test.</p>
+<div class="sigrow">
+  <div class="sigbox">Student Signature / Name<br>Md. Abdur Razzaque</div>
+  <div class="sigbox">Date<br>8 September 2026</div>
+</div>
+</div>
+
+<h2>References</h2>
+<ul class="refs">
+  <li>Mission Hackers Bangladesh — Batch-11, Class 03 assignment brief.</li>
+  <li>Filesystem Hierarchy Standard (FHS) concepts.</li>
+  <li>GitHub guide: <a href="https://github.com/MDARH/linux-filesystem-guide">https://github.com/MDARH/linux-filesystem-guide</a></li>
+  <li>LinkedIn: <a href="https://www.linkedin.com/in/devhassan41">https://www.linkedin.com/in/devhassan41</a></li>
+</ul>
+
+</body>
+</html>

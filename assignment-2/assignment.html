@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Md. Abdur Razzaque">
+<meta name="description" content="Assignment 02 — Ethical Hacking &amp; Cybersecurity Practical, Batch-11, Mission Hacker Bangladesh. Mentor: Sha Jalal.">
+<meta name="keywords" content="Cybersecurity, LinkedIn, GitHub, Linux Commands, Cheatsheet, Batch-11, Mission Hacker Bangladesh">
+<title>Assignment 02 — Ethical Hacking &amp; Cybersecurity Practical, Batch-11</title>
+<style>
+@page {
+  size: A4;
+  margin: 22mm 18mm 20mm 18mm;
+  @top-right {
+    content: "Assignment 02  •  Md. Abdur Razzaque  •  Batch-11";
+    font-family: "Lato", sans-serif; font-size: 7.5pt; color: #8a8f98;
+  }
+  @bottom-center {
+    content: "Page " counter(page) " of " counter(pages);
+    font-family: "Lato", sans-serif; font-size: 8pt; color: #8a8f98;
+  }
+  @bottom-right {
+    content: "Mission Hacker Bangladesh";
+    font-family: "Lato", sans-serif; font-size: 7.5pt; color: #b6bac1;
+  }
+}
+@page cover { margin: 0; @top-right { content: none; } @bottom-center { content: none; } @bottom-right { content: none; } }
+
+html { font-size: 10.5pt; }
+body {
+  font-family: "Noto Serif", "Liberation Serif", serif;
+  color: #1c2027; line-height: 1.62; margin: 0;
+  hyphens: none;
+}
+h1,h2,h3,h4 { font-family: "Lato", "Liberation Sans", sans-serif; color: #0f1620; line-height: 1.25; }
+
+.cover { page: cover; height: 297mm; width: 210mm; position: relative; color: #fff;
+  background: linear-gradient(158deg, #071018 0%, #0d2233 42%, #10394a 72%, #0a1b26 100%); }
+.cover-inner { position: relative; z-index: 2; padding: 26mm 20mm 18mm; height: 297mm; box-sizing: border-box; }
+.brandrow { display: flex; align-items: center; gap: 5mm; }
+.mono-badge { width: 17mm; height: 17mm; border: 1.6pt solid #38d39f; border-radius: 3mm;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Lato", sans-serif; font-weight: 900; font-size: 15pt; color: #38d39f; letter-spacing: .5pt; }
+.brandtext .bt1 { font-family: "Lato", sans-serif; font-weight: 800; font-size: 13.5pt; letter-spacing: .6pt; color:#fff; }
+.brandtext .bt2 { font-family: "Lato", sans-serif; font-size: 8.5pt; letter-spacing: 2.6pt;
+  text-transform: uppercase; color: #7fd7c4; margin-top: 1.2mm; }
+.rule { height: 1.2pt; background: linear-gradient(90deg,#38d39f 0%, #38d39f 22%, rgba(255,255,255,.14) 22%); margin: 9mm 0 0; }
+
+.cover-mid { margin-top: 34mm; }
+.eyebrow { font-family:"Lato",sans-serif; font-size: 9pt; letter-spacing: 3.4pt; text-transform: uppercase;
+  color: #38d39f; font-weight: 700; }
+.cover h1 { font-size: 33pt; font-weight: 900; color: #fff; margin: 5mm 0 0; line-height: 1.1; letter-spacing: -.4pt; }
+.cover .subtitle { font-family:"Lato",sans-serif; font-size: 13pt; color: #b9c8d2; margin-top: 5mm; font-weight: 400; }
+.cover .batchpill { display: inline-block; margin-top: 7mm; padding: 2.2mm 6mm; border-radius: 20mm;
+  background: rgba(56,211,159,.13); border: .8pt solid rgba(56,211,159,.5);
+  font-family:"Lato",sans-serif; font-size: 10pt; font-weight: 700; color: #6fe3bd; letter-spacing: .8pt; }
+
+.cover-foot { position: absolute; left: 20mm; right: 20mm; bottom: 16mm; }
+.metagrid { display: flex; flex-wrap: wrap; border-top: .8pt solid rgba(255,255,255,.18); padding-top: 7mm; }
+.metacell { width: 50%; margin-bottom: 6.5mm; box-sizing: border-box; padding-right: 6mm; }
+.metacell .k { font-family:"Lato",sans-serif; font-size: 7.5pt; letter-spacing: 2pt; text-transform: uppercase;
+  color: #6d8697; font-weight: 700; }
+.metacell .v { font-family:"Lato",sans-serif; font-size: 11.5pt; color: #ffffff; margin-top: 1.4mm; font-weight: 600; }
+.metacell .v small { font-weight: 400; color: #9fb2be; font-size: 9pt; }
+.cover-note { font-family:"Lato",sans-serif; font-size: 7.8pt; color: #62798a; border-top: .5pt solid rgba(255,255,255,.1);
+  padding-top: 4mm; margin-top: 1mm; }
+.cover-note a { color: #4fbf9c; text-decoration: none; word-break: break-all; }
+
+h2 { font-size: 15pt; font-weight: 800; margin: 11mm 0 3.5mm; padding-bottom: 2mm;
+  border-bottom: 1.6pt solid #0f766e; break-after: avoid; }
+h2 .num { color: #0f766e; margin-right: 3mm; }
+h3 { font-size: 11.6pt; font-weight: 800; margin: 7mm 0 2.5mm; color: #14303c; break-after: avoid; }
+h4 { font-size: 10.2pt; font-weight: 700; margin: 5mm 0 1.8mm; color: #35505c; break-after: avoid; }
+p { margin: 0 0 3.2mm; text-align: justify; }
+ul, ol { margin: 0 0 3.5mm; padding-left: 6.5mm; }
+li { margin-bottom: 1.6mm; }
+strong { color: #0b2027; }
+code, .cmd { font-family: "DejaVu Sans Mono", monospace; font-size: 8.6pt;
+  background: #eef4f4; color: #0a4f47; padding: .3mm 1.3mm; border-radius: 1mm; }
+
+table { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 9pt;
+  font-family: "Lato", sans-serif; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th { background: #0f766e; color: #fff; text-align: left; padding: 2.2mm 2.8mm; font-weight: 700;
+  font-size: 8.6pt; letter-spacing: .3pt; }
+td { padding: 2mm 2.8mm; border-bottom: .5pt solid #dfe6e6; vertical-align: top; line-height: 1.45; }
+tbody tr:nth-child(even) td { background: #f6faf9; }
+td code { font-size: 8.4pt; background: transparent; padding: 0; color: #0a4f47; font-weight: 600; }
+.tbl-cmd td:first-child { white-space: nowrap; }
+
+.callout { border-left: 2.6pt solid #0f766e; background: #f2f8f7; padding: 3.2mm 4mm; margin: 4mm 0 5mm;
+  font-size: 9.4pt; break-inside: avoid; }
+.callout .ct { font-family:"Lato",sans-serif; font-weight: 800; font-size: 8.4pt; letter-spacing: 1.4pt;
+  text-transform: uppercase; color: #0f766e; display: block; margin-bottom: 1.5mm; }
+.warn { border-left-color: #b45309; background: #fdf7ef; }
+.warn .ct { color: #b45309; }
+
+.toc { font-family:"Lato",sans-serif; font-size: 9.8pt; line-height: 1.3; }
+.toc .t-main { display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: .4pt dotted #c9d3d3; padding: 1.7mm 0 1.4mm; margin-top: 2.2mm; }
+.toc .t-main a { color: #14303c; text-decoration: none; flex: 1; }
+.toc .t-main a::after { content: target-counter(attr(href), page); float: right;
+  font-weight: 700; color: #0f766e; }
+.toc .t-sub { padding: .55mm 0 .55mm 7mm; font-size: 8.9pt; color: #4a5b62; line-height: 1.25; }
+.toc b { font-weight: 700; }
+
+.decl { border: .8pt solid #cfd9d9; padding: 5mm 6mm; margin-top: 4mm; font-size: 9.6pt; break-inside: avoid; }
+.sigrow { display: flex; justify-content: space-between; margin-top: 16mm; }
+.sigbox { width: 62mm; border-top: .8pt solid #6b7a80; padding-top: 2mm;
+  font-family:"Lato",sans-serif; font-size: 9pt; color: #35505c; text-align: center; }
+
+.pb { break-before: page; }
+.avoid { break-inside: avoid; }
+.lead { font-size: 10.6pt; color: #33474f; }
+.small { font-size: 8.8pt; color: #56666d; }
+.tag-ok { display:inline-block; background:#0f766e; color:#fff; font-family:"Lato",sans-serif;
+  font-size:7.4pt; font-weight:700; padding:.6mm 2.2mm; border-radius:1.4mm; letter-spacing:.4pt; }
+.tag-new { display:inline-block; background:#1d4ed8; color:#fff; font-family:"Lato",sans-serif;
+  font-size:7pt; font-weight:700; padding:.4mm 1.8mm; border-radius:1.2mm; letter-spacing:.3pt; margin-left:1.5mm; }
+.refs { font-size: 9pt; }
+.refs li { margin-bottom: 2.4mm; }
+
+.profile-card { border: .8pt solid #d5e0e0; border-radius: 2mm; padding: 4mm 5mm; margin: 4mm 0 6mm;
+  break-inside: avoid; background: #fbfdfd; }
+.profile-card .pname { font-family:"Lato",sans-serif; font-size: 12pt; font-weight: 800; color: #0f1620; margin: 0 0 1.5mm; }
+.profile-card .plink { font-family:"Lato",sans-serif; font-size: 9.2pt; margin: 0 0 2mm; }
+.profile-card .plink a { color: #0f766e; word-break: break-all; }
+.profile-card .pmeta { font-family:"Lato",sans-serif; font-size: 8.8pt; color: #4a5b62; margin: 0; }
+.shot { margin: 3mm 0 2mm; text-align: center; break-inside: avoid; }
+.shot img { max-width: 100%; max-height: 145mm; border: .6pt solid #c9d3d3; border-radius: 1.5mm; }
+.shot .cap { font-family:"Lato",sans-serif; font-size: 8pt; color: #56666d; margin-top: 2mm; }
+.newrow td:first-child::after { /* marker handled via badge in cell */ }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<section class="cover">
+ <div class="cover-inner">
+  <div class="brandrow">
+    <div class="mono-badge">MHB</div>
+    <div class="brandtext">
+      <div class="bt1">Mission Hacker Bangladesh</div>
+      <div class="bt2">Cyber Security Training</div>
+    </div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="cover-mid">
+    <div class="eyebrow">Assignment No. 02</div>
+    <h1>Professional Profiles<br>&amp; Linux Cheatsheet</h1>
+    <div class="subtitle">LinkedIn · GitHub · Personal Command Reference</div>
+    <div class="batchpill">BATCH — 11</div>
+  </div>
+
+  <div class="cover-foot">
+    <div class="metagrid">
+      <div class="metacell">
+        <div class="k">Submitted By</div>
+        <div class="v">Md. Abdur Razzaque</div>
+      </div>
+      <div class="metacell">
+        <div class="k">Course Mentor</div>
+        <div class="v">Sha Jalal</div>
+      </div>
+      <div class="metacell">
+        <div class="k">Course</div>
+        <div class="v">Ethical Hacking &amp; Cybersecurity Practical<br><small>Batch-11 &nbsp;|&nbsp; Class 02</small></div>
+      </div>
+      <div class="metacell">
+        <div class="k">Date of Submission</div>
+        <div class="v">8 September 2026</div>
+      </div>
+    </div>
+    <div class="cover-note">
+      Course page: <a href="https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w">https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w</a><br>
+      Submitted in partial fulfilment of the Class-02 requirements of the Ethical Hacking &amp; Cybersecurity Practical programme.
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ TOC ============ -->
+<h2><span class="num">—</span>Table of Contents</h2>
+<div class="toc">
+  <div class="t-main"><a href="#sec1"><b>1. Assignment Overview</b></a></div>
+  <div class="t-main"><a href="#sec2"><b>2. Task 01 — LinkedIn Profile</b></a></div>
+  <div class="t-sub"><span>2.1 Profile link and identity</span></div>
+  <div class="t-sub"><span>2.2 Screenshot of the live profile</span></div>
+  <div class="t-main"><a href="#sec3"><b>3. Task 02 — GitHub Profile</b></a></div>
+  <div class="t-sub"><span>3.1 Profile link and identity</span></div>
+  <div class="t-sub"><span>3.2 Screenshot of the live profile</span></div>
+  <div class="t-main"><a href="#sec4"><b>4. Task 03 — Complete Linux Commands Cheatsheet</b></a></div>
+  <div class="t-sub"><span>4.1–4.12 Core commands carried forward from Assignment 01</span></div>
+  <div class="t-sub"><span>4.13–4.17 Newly added common commands for personal use</span></div>
+  <div class="t-main"><a href="#sec5"><b>5. Conclusion</b></a></div>
+  <div class="t-main"><a href="#sec6"><b>6. Declaration</b></a></div>
+</div>
+
+<!-- ============ 1. OVERVIEW ============ -->
+<h2 id="sec1" class="pb"><span class="num">1.</span>Assignment Overview</h2>
+<p class="lead">This report is my submission for the second assignment of the <strong>Ethical Hacking &amp; Cybersecurity Practical (Batch-11)</strong> programme conducted by Mission Hacker Bangladesh under the guidance of mentor <strong>Sha Jalal</strong>. The assignment requires creating professional developer profiles, documenting them with screenshots, and maintaining a personal Linux command cheatsheet.</p>
+
+<table>
+<thead><tr><th style="width:12%">Task</th><th>Requirement</th><th style="width:22%">Section</th><th style="width:16%">Status</th></tr></thead>
+<tbody>
+<tr><td>01</td><td>Create LinkedIn profile and provide profile link with screenshot</td><td>Section 2</td><td><span class="tag-ok">Completed</span></td></tr>
+<tr><td>02</td><td>Create GitHub profile and provide profile link with screenshot</td><td>Section 3</td><td><span class="tag-ok">Completed</span></td></tr>
+<tr><td>03</td><td>Create a complete commands cheatsheet for personal use</td><td>Section 4</td><td><span class="tag-ok">Completed</span></td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<span class="ct">Cheatsheet approach</span>
+Section 4 keeps all basic Linux commands practised in Assignment 01, then adds further everyday commands (Git, environment/shell, text utilities, security-oriented helpers and system administration) so this document can serve as my ongoing personal reference.
+</div>
+
+<!-- ============ 2. LINKEDIN ============ -->
+<h2 id="sec2" class="pb"><span class="num">2.</span>Task 01 — LinkedIn Profile</h2>
+<p>I have created and maintained a professional LinkedIn profile for networking, career visibility and documenting my work in cybersecurity and full-stack development.</p>
+
+<div class="profile-card">
+  <p class="pname">Md. Abdur Razzaque</p>
+  <p class="plink">Profile URL: <a href="https://www.linkedin.com/in/devhassan41">https://www.linkedin.com/in/devhassan41</a></p>
+  <p class="pmeta">Headline: Cyber Security Specialist | Full Stack Laravel Developer · Location: Dhaka, Bangladesh · Custom public URL: <code>linkedin.com/in/devhassan41</code></p>
+</div>
+
+<h3>2.1 Why LinkedIn matters for this course</h3>
+<ul>
+  <li>Builds a verifiable professional identity alongside technical skills learned in class.</li>
+  <li>Makes it easier to connect with mentors, peers and the cybersecurity community.</li>
+  <li>Supports responsible career growth while studying ethical hacking and cyber law.</li>
+</ul>
+
+<h3>2.2 Screenshot of the live profile</h3>
+<div class="shot">
+  <img src="screenshots/linkedin-profile.png" alt="Screenshot of LinkedIn profile — Md. Abdur Razzaque (devhassan41)">
+  <div class="cap">Figure 1 — Live LinkedIn profile at https://www.linkedin.com/in/devhassan41 (captured 8 September 2026)</div>
+</div>
+
+<!-- ============ 3. GITHUB ============ -->
+<h2 id="sec3" class="pb"><span class="num">3.</span>Task 02 — GitHub Profile</h2>
+<p>I have created and maintained a GitHub profile for publishing code, documenting learning progress and collaborating on open-source and course-related work.</p>
+
+<div class="profile-card">
+  <p class="pname">AbdurRazzaque Hassan · @MDARH</p>
+  <p class="plink">Profile URL: <a href="https://github.com/MDARH">https://github.com/MDARH</a></p>
+  <p class="pmeta">Focus: Laravel, Vue, React, FilamentPHP, Linux/VPS · Repositories: 79 · Followers: 25 · Portfolio: mdarh.github.io</p>
+</div>
+
+<h3>3.1 Why GitHub matters for this course</h3>
+<ul>
+  <li>Version control is essential for labs, notes, scripts and future penetration-testing tooling.</li>
+  <li>A public profile demonstrates consistent practice and transparent learning history.</li>
+  <li>GitHub pairs naturally with the Linux and Git commands collected in the cheatsheet below.</li>
+</ul>
+
+<h3>3.2 Screenshot of the live profile</h3>
+<div class="shot">
+  <img src="screenshots/github-profile.png" alt="Screenshot of GitHub profile — MDARH">
+  <div class="cap">Figure 2 — Live GitHub profile at https://github.com/MDARH (captured 8 September 2026)</div>
+</div>
+
+<!-- ============ 4. CHEATSHEET ============ -->
+<h2 id="sec4" class="pb"><span class="num">4.</span>Task 03 — Complete Linux Commands Cheatsheet</h2>
+<p>This cheatsheet is for my personal daily use. Sections <strong>4.1–4.12</strong> carry forward the command set practised in Assignment 01. Sections <strong>4.13–4.17</strong> add further common commands I use for development, administration and security study. Newly added rows are marked <span class="tag-new">NEW</span>.</p>
+
+<h3>4.1 Navigation and Filesystem</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>pwd</code></td><td>Print the full path of the current working directory</td></tr>
+<tr><td><code>ls</code></td><td>List the contents of a directory</td></tr>
+<tr><td><code>ls -l</code></td><td>Long listing — permissions, owner, size and modification time</td></tr>
+<tr><td><code>ls -a</code></td><td>Include hidden files (names beginning with a dot)</td></tr>
+<tr><td><code>ls -lah</code></td><td>Long listing, all files, human-readable sizes</td></tr>
+<tr><td><code>ls -R</code></td><td>List directories and all their contents recursively</td></tr>
+<tr><td><code>cd /path</code></td><td>Change to the specified directory</td></tr>
+<tr><td><code>cd ~</code></td><td>Return to the current user's home directory</td></tr>
+<tr><td><code>cd ..</code></td><td>Move up one level to the parent directory</td></tr>
+<tr><td><code>cd -</code></td><td>Switch back to the previous working directory</td></tr>
+<tr><td><code>tree</code></td><td>Display the directory structure as a tree</td></tr>
+<tr><td><code>realpath file</code> <span class="tag-new">NEW</span></td><td>Resolve and print the absolute path of a file or directory</td></tr>
+<tr><td><code>basename /a/b/c</code> <span class="tag-new">NEW</span></td><td>Print only the final component of a path</td></tr>
+<tr><td><code>dirname /a/b/c</code> <span class="tag-new">NEW</span></td><td>Print the parent directory portion of a path</td></tr>
+</tbody>
+</table>
+
+<h3>4.2 File and Directory Operations</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>mkdir dirname</code></td><td>Create a new directory</td></tr>
+<tr><td><code>mkdir -p a/b/c</code></td><td>Create a full nested directory path in one step</td></tr>
+<tr><td><code>rmdir dirname</code></td><td>Remove an empty directory</td></tr>
+<tr><td><code>touch file.txt</code></td><td>Create an empty file, or update an existing file's timestamp</td></tr>
+<tr><td><code>cp source dest</code></td><td>Copy a file</td></tr>
+<tr><td><code>cp -r dir1 dir2</code></td><td>Copy a directory and everything inside it</td></tr>
+<tr><td><code>mv source dest</code></td><td>Move a file or directory, or rename it</td></tr>
+<tr><td><code>rm file</code></td><td>Delete a file</td></tr>
+<tr><td><code>rm -r dir</code></td><td>Delete a directory recursively</td></tr>
+<tr><td><code>rm -i file</code></td><td>Delete with a confirmation prompt (safer)</td></tr>
+<tr><td><code>ln -s target link</code></td><td>Create a symbolic link</td></tr>
+<tr><td><code>file name</code></td><td>Identify the actual type of a file</td></tr>
+<tr><td><code>stat file</code></td><td>Show detailed metadata: size, inode, access and modify times</td></tr>
+<tr><td><code>du -sh dir</code></td><td>Show the total size of a directory</td></tr>
+<tr><td><code>rsync -av src/ dest/</code> <span class="tag-new">NEW</span></td><td>Efficient sync/copy of files and directories (local or remote)</td></tr>
+<tr><td><code>install -m 755 src dest</code> <span class="tag-new">NEW</span></td><td>Copy a file and set permissions in one step</td></tr>
+</tbody>
+</table>
+<div class="callout warn">
+<span class="ct">Caution</span>
+<code>rm -rf</code> deletes permanently and without confirmation — there is no recycle bin on the Linux command line. The path must always be checked before pressing Enter, and <code>rm -rf /</code> must never be run.
+</div>
+
+<h3>4.3 Viewing and Editing File Content</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>cat file</code></td><td>Display the entire contents of a file</td></tr>
+<tr><td><code>tac file</code></td><td>Display file contents in reverse line order</td></tr>
+<tr><td><code>less file</code></td><td>View a large file page by page (q to quit)</td></tr>
+<tr><td><code>more file</code></td><td>Simpler page-by-page viewer</td></tr>
+<tr><td><code>head -n 10 file</code></td><td>Show the first 10 lines</td></tr>
+<tr><td><code>tail -n 10 file</code></td><td>Show the last 10 lines</td></tr>
+<tr><td><code>tail -f logfile</code></td><td>Follow a log file live as new lines are written</td></tr>
+<tr><td><code>wc -l file</code></td><td>Count the lines in a file</td></tr>
+<tr><td><code>nano file</code></td><td>Simple terminal text editor (Ctrl+O save, Ctrl+X exit)</td></tr>
+<tr><td><code>vim file</code></td><td>Advanced modal editor (<code>:wq</code> to save and quit)</td></tr>
+<tr><td><code>echo "text" &gt; file</code></td><td>Write text to a file, overwriting existing content</td></tr>
+<tr><td><code>echo "text" &gt;&gt; file</code></td><td>Append text to the end of a file</td></tr>
+<tr><td><code>tee file</code> <span class="tag-new">NEW</span></td><td>Write stdin to a file while also printing it to the terminal</td></tr>
+<tr><td><code>nl file</code> <span class="tag-new">NEW</span></td><td>Number the lines of a file while displaying it</td></tr>
+</tbody>
+</table>
+
+<h3>4.4 Searching and Filtering</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>grep "word" file</code></td><td>Search for a pattern inside a file</td></tr>
+<tr><td><code>grep -i "word" file</code></td><td>Case-insensitive search</td></tr>
+<tr><td><code>grep -r "word" /dir</code></td><td>Search recursively through a directory tree</td></tr>
+<tr><td><code>grep -v "word" file</code></td><td>Show only the lines that do <em>not</em> match</td></tr>
+<tr><td><code>find /path -name "*.txt"</code></td><td>Find files by name pattern</td></tr>
+<tr><td><code>find / -type d -name conf</code></td><td>Find directories by name</td></tr>
+<tr><td><code>locate filename</code></td><td>Fast filename lookup using a prebuilt index</td></tr>
+<tr><td><code>which command</code></td><td>Show the full path of an executable in <code>$PATH</code></td></tr>
+<tr><td><code>whereis command</code></td><td>Locate the binary, source and manual page for a command</td></tr>
+<tr><td><code>sort file</code> / <code>uniq</code></td><td>Sort lines; remove or count duplicate lines</td></tr>
+<tr><td><code>cut -d ":" -f 1 /etc/passwd</code></td><td>Extract a specific field from delimited text</td></tr>
+<tr><td><code>awk '{print $1}' file</code></td><td>Field-based text processing</td></tr>
+<tr><td><code>sed 's/old/new/g' file</code></td><td>Stream editing — find and replace text</td></tr>
+<tr><td><code>diff file1 file2</code> <span class="tag-new">NEW</span></td><td>Show line-by-line differences between two files</td></tr>
+<tr><td><code>xargs cmd</code> <span class="tag-new">NEW</span></td><td>Build and run commands from stdin items (often after <code>find</code>)</td></tr>
+</tbody>
+</table>
+
+<h3>4.5 Permissions and Ownership</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>chmod 755 file</code></td><td>Set permissions numerically (owner rwx, group r-x, others r-x)</td></tr>
+<tr><td><code>chmod +x script.sh</code></td><td>Make a script executable</td></tr>
+<tr><td><code>chmod u+w,o-r file</code></td><td>Modify permissions symbolically</td></tr>
+<tr><td><code>chown user:group file</code></td><td>Change the owner and group of a file</td></tr>
+<tr><td><code>chgrp group file</code></td><td>Change only the group ownership</td></tr>
+<tr><td><code>umask</code></td><td>Show or set the default permission mask for new files</td></tr>
+<tr><td><code>sudo command</code></td><td>Execute a single command with administrative privileges</td></tr>
+<tr><td><code>su - user</code></td><td>Switch to another user account</td></tr>
+<tr><td><code>getfacl file</code> <span class="tag-new">NEW</span></td><td>Display Access Control Lists (ACLs) on a file</td></tr>
+<tr><td><code>lsattr file</code> <span class="tag-new">NEW</span></td><td>List special file attributes (immutable, append-only, etc.)</td></tr>
+</tbody>
+</table>
+<p class="small"><strong>Permission values:</strong> read = 4, write = 2, execute = 1. The three digits apply to <em>owner</em>, <em>group</em> and <em>others</em> respectively — so <code>chmod 644</code> gives the owner read+write (6) and everyone else read-only (4).</p>
+
+<h3>4.6 User and Group Management</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>whoami</code></td><td>Display the current username</td></tr>
+<tr><td><code>id</code></td><td>Show user ID, group ID and group memberships</td></tr>
+<tr><td><code>who</code> / <code>w</code></td><td>List users currently logged in and what they are running</td></tr>
+<tr><td><code>sudo adduser name</code></td><td>Create a new user account</td></tr>
+<tr><td><code>sudo deluser name</code></td><td>Delete a user account</td></tr>
+<tr><td><code>sudo passwd name</code></td><td>Set or change a user's password</td></tr>
+<tr><td><code>sudo usermod -aG sudo name</code></td><td>Add a user to the sudo (administrator) group</td></tr>
+<tr><td><code>groups</code></td><td>List the groups the current user belongs to</td></tr>
+<tr><td><code>cat /etc/passwd</code></td><td>View the local user account database</td></tr>
+<tr><td><code>last</code> <span class="tag-new">NEW</span></td><td>Show recent login history</td></tr>
+<tr><td><code>sudo visudo</code> <span class="tag-new">NEW</span></td><td>Safely edit the sudoers file</td></tr>
+</tbody>
+</table>
+
+<h3>4.7 Process Management</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:32%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>ps aux</code></td><td>List all running processes with owner and resource usage</td></tr>
+<tr><td><code>top</code></td><td>Live, continuously updating process monitor</td></tr>
+<tr><td><code>htop</code></td><td>Interactive colour process viewer (easier than top)</td></tr>
+<tr><td><code>kill PID</code></td><td>Terminate a process by its process ID</td></tr>
+<tr><td><code>kill -9 PID</code></td><td>Force-terminate an unresponsive process</td></tr>
+<tr><td><code>killall name</code></td><td>Terminate all processes matching a name</td></tr>
+<tr><td><code>jobs</code> / <code>fg</code> / <code>bg</code></td><td>Manage background and foreground jobs in the shell</td></tr>
+<tr><td><code>command &amp;</code></td><td>Run a command in the background</td></tr>
+<tr><td><code>systemctl status service</code></td><td>Check the state of a system service</td></tr>
+<tr><td><code>sudo systemctl start|stop|restart service</code></td><td>Control a system service</td></tr>
+<tr><td><code>pgrep -a name</code> <span class="tag-new">NEW</span></td><td>Find process IDs (and command lines) by name</td></tr>
+<tr><td><code>nice -n 10 cmd</code> <span class="tag-new">NEW</span></td><td>Start a process with a modified CPU priority</td></tr>
+<tr><td><code>watch -n 2 cmd</code> <span class="tag-new">NEW</span></td><td>Re-run a command every 2 seconds and show output</td></tr>
+</tbody>
+</table>
+
+<h3>4.8 Package Management (APT)</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:38%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>sudo apt update</code></td><td>Refresh the list of available packages</td></tr>
+<tr><td><code>sudo apt upgrade</code></td><td>Upgrade installed packages</td></tr>
+<tr><td><code>sudo apt full-upgrade</code></td><td>Upgrade, allowing packages to be added or removed as needed</td></tr>
+<tr><td><code>sudo apt install package</code></td><td>Install a package</td></tr>
+<tr><td><code>sudo apt remove package</code></td><td>Remove a package, keeping its configuration files</td></tr>
+<tr><td><code>sudo apt purge package</code></td><td>Remove a package together with its configuration</td></tr>
+<tr><td><code>sudo apt autoremove</code></td><td>Remove orphaned dependencies</td></tr>
+<tr><td><code>apt search keyword</code></td><td>Search the repositories for a package</td></tr>
+<tr><td><code>apt show package</code></td><td>Display detailed information about a package</td></tr>
+<tr><td><code>dpkg -i file.deb</code></td><td>Install a local .deb package file</td></tr>
+<tr><td><code>dpkg -l</code></td><td>List all installed packages</td></tr>
+<tr><td><code>apt list --upgradable</code> <span class="tag-new">NEW</span></td><td>List packages that have updates available</td></tr>
+<tr><td><code>apt-cache depends pkg</code> <span class="tag-new">NEW</span></td><td>Show dependency tree for a package</td></tr>
+</tbody>
+</table>
+
+<h3>4.9 Networking</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:34%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>ip a</code> (or <code>ifconfig</code>)</td><td>Show network interfaces and assigned IP addresses</td></tr>
+<tr><td><code>ip route</code></td><td>Display the routing table and default gateway</td></tr>
+<tr><td><code>ping -c 4 host</code></td><td>Test reachability of a host</td></tr>
+<tr><td><code>traceroute host</code></td><td>Show the network path taken to reach a host</td></tr>
+<tr><td><code>netstat -tulnp</code> / <code>ss -tulnp</code></td><td>List listening ports and the processes bound to them</td></tr>
+<tr><td><code>nslookup domain</code> / <code>dig domain</code></td><td>Query DNS records for a domain</td></tr>
+<tr><td><code>whois domain</code></td><td>Retrieve domain registration information</td></tr>
+<tr><td><code>curl -I https://site</code></td><td>Fetch HTTP response headers from a web server</td></tr>
+<tr><td><code>wget URL</code></td><td>Download a file over HTTP/HTTPS</td></tr>
+<tr><td><code>hostname -I</code></td><td>Display the machine's IP address</td></tr>
+<tr><td><code>arp -a</code></td><td>Show the ARP cache of known hosts on the local network</td></tr>
+<tr><td><code>ssh user@host</code></td><td>Open an encrypted remote shell session</td></tr>
+<tr><td><code>scp file user@host:/path</code></td><td>Copy files securely between machines</td></tr>
+<tr><td><code>curl -O URL</code> <span class="tag-new">NEW</span></td><td>Download a file, keeping the remote filename</td></tr>
+<tr><td><code>wget -c URL</code> <span class="tag-new">NEW</span></td><td>Resume a partially downloaded file</td></tr>
+<tr><td><code>nc -zv host port</code> <span class="tag-new">NEW</span></td><td>Quick TCP port connectivity check (netcat)</td></tr>
+<tr><td><code>sudo ufw status</code> <span class="tag-new">NEW</span></td><td>Show Uncomplicated Firewall status (defensive)</td></tr>
+</tbody>
+</table>
+<div class="callout warn">
+<span class="ct">Legal reminder</span>
+Reconnaissance and scanning commands must only be pointed at systems you own or have written permission to test. Scanning third-party hosts without authorisation is an offence under Bangladeshi cyber legislation.
+</div>
+
+<h3>4.10 System Information and Monitoring</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:34%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>uname -a</code></td><td>Show kernel name, version and machine architecture</td></tr>
+<tr><td><code>cat /etc/os-release</code></td><td>Display distribution name and version</td></tr>
+<tr><td><code>lscpu</code></td><td>Show processor details</td></tr>
+<tr><td><code>free -h</code></td><td>Display memory and swap usage in readable units</td></tr>
+<tr><td><code>df -h</code></td><td>Show disk space usage per filesystem</td></tr>
+<tr><td><code>lsblk</code></td><td>List block devices and partitions</td></tr>
+<tr><td><code>uptime</code></td><td>Show how long the system has been running and its load average</td></tr>
+<tr><td><code>date</code></td><td>Display or set the system date and time</td></tr>
+<tr><td><code>history</code></td><td>List previously executed commands</td></tr>
+<tr><td><code>dmesg</code></td><td>Print kernel ring-buffer messages</td></tr>
+<tr><td><code>lsusb</code> / <code>lspci</code></td><td>List connected USB and PCI hardware devices</td></tr>
+<tr><td><code>journalctl -xe</code> <span class="tag-new">NEW</span></td><td>View recent systemd journal logs with explanations</td></tr>
+<tr><td><code>hostnamectl</code> <span class="tag-new">NEW</span></td><td>Show or set the system hostname and related metadata</td></tr>
+<tr><td><code>timedatectl</code> <span class="tag-new">NEW</span></td><td>Show or configure system timezone and clock sync</td></tr>
+</tbody>
+</table>
+
+<h3>4.11 Archiving and Compression</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:40%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>tar -cvf archive.tar dir/</code></td><td>Create an uncompressed tar archive</td></tr>
+<tr><td><code>tar -czvf archive.tar.gz dir/</code></td><td>Create a gzip-compressed archive</td></tr>
+<tr><td><code>tar -xzvf archive.tar.gz</code></td><td>Extract a gzip-compressed archive</td></tr>
+<tr><td><code>zip -r archive.zip dir/</code></td><td>Create a ZIP archive</td></tr>
+<tr><td><code>unzip archive.zip</code></td><td>Extract a ZIP archive</td></tr>
+<tr><td><code>gzip file</code> / <code>gunzip file.gz</code></td><td>Compress or decompress a single file</td></tr>
+<tr><td><code>md5sum</code> / <code>sha256sum file</code></td><td>Generate a checksum to verify file integrity</td></tr>
+<tr><td><code>xz -k file</code> <span class="tag-new">NEW</span></td><td>Compress a file with xz (keep original with <code>-k</code>)</td></tr>
+<tr><td><code>7z x archive.7z</code> <span class="tag-new">NEW</span></td><td>Extract a 7-Zip archive</td></tr>
+</tbody>
+</table>
+
+<h3>4.12 Shell Operators and Keyboard Shortcuts</h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:34%">Operator / Shortcut</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>|</code> (pipe)</td><td>Send the output of one command into another, e.g. <code>ls -l | grep ".txt"</code></td></tr>
+<tr><td><code>&gt;</code> / <code>&gt;&gt;</code></td><td>Redirect output to a file — overwrite / append</td></tr>
+<tr><td><code>&amp;&amp;</code> / <code>||</code></td><td>Run the next command only if the previous succeeded / only if it failed</td></tr>
+<tr><td><code>2&gt;/dev/null</code></td><td>Discard error messages</td></tr>
+<tr><td><code>man command</code></td><td>Open the manual page for a command</td></tr>
+<tr><td><code>command --help</code></td><td>Show a short usage summary</td></tr>
+<tr><td><code>clear</code> / <strong>Ctrl + L</strong></td><td>Clear the terminal screen</td></tr>
+<tr><td><strong>Tab</strong></td><td>Auto-complete a file, directory or command name</td></tr>
+<tr><td><strong>Ctrl + C</strong></td><td>Interrupt and stop the running command</td></tr>
+<tr><td><strong>Ctrl + Z</strong></td><td>Suspend the running command to the background</td></tr>
+<tr><td><strong>Ctrl + R</strong></td><td>Search backwards through command history</td></tr>
+<tr><td><strong>Ctrl + D</strong> / <code>exit</code></td><td>Close the terminal session</td></tr>
+<tr><td><strong>Ctrl + A</strong> / <strong>Ctrl + E</strong> <span class="tag-new">NEW</span></td><td>Jump to start / end of the current command line</td></tr>
+<tr><td><strong>Ctrl + U</strong> / <strong>Ctrl + K</strong> <span class="tag-new">NEW</span></td><td>Delete from cursor to start / to end of the line</td></tr>
+</tbody>
+</table>
+
+<h3 class="pb">4.13 Environment, Variables and Shell Helpers <span class="tag-new">NEW</span></h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:34%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>env</code> / <code>printenv</code></td><td>List environment variables</td></tr>
+<tr><td><code>export VAR=value</code></td><td>Set an environment variable for the current shell and child processes</td></tr>
+<tr><td><code>echo $PATH</code></td><td>Show the executable search path</td></tr>
+<tr><td><code>alias ll='ls -lah'</code></td><td>Create a short alias for a longer command</td></tr>
+<tr><td><code>unalias ll</code></td><td>Remove an alias</td></tr>
+<tr><td><code>source ~/.bashrc</code></td><td>Reload shell configuration without opening a new terminal</td></tr>
+<tr><td><code>type command</code></td><td>Show whether a name is an alias, builtin, function or binary</td></tr>
+<tr><td><code>time command</code></td><td>Measure how long a command takes to run</td></tr>
+<tr><td><code>sleep 5</code></td><td>Pause for 5 seconds</td></tr>
+<tr><td><code>history | grep ssh</code></td><td>Search previously used commands</td></tr>
+</tbody>
+</table>
+
+<h3>4.14 Git Version Control <span class="tag-new">NEW</span></h3>
+<p class="small">Essential for my GitHub workflow and course repositories.</p>
+<table class="tbl-cmd">
+<thead><tr><th style="width:38%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>git clone URL</code></td><td>Download a remote repository</td></tr>
+<tr><td><code>git status</code></td><td>Show changed, staged and untracked files</td></tr>
+<tr><td><code>git add .</code></td><td>Stage all changes in the working tree</td></tr>
+<tr><td><code>git commit -m "msg"</code></td><td>Record a snapshot with a message</td></tr>
+<tr><td><code>git push</code></td><td>Upload local commits to the remote</td></tr>
+<tr><td><code>git pull</code></td><td>Fetch and merge remote changes</td></tr>
+<tr><td><code>git branch</code></td><td>List local branches</td></tr>
+<tr><td><code>git checkout -b name</code></td><td>Create and switch to a new branch</td></tr>
+<tr><td><code>git log --oneline</code></td><td>Compact commit history</td></tr>
+<tr><td><code>git diff</code></td><td>Show unstaged changes</td></tr>
+<tr><td><code>git remote -v</code></td><td>List configured remotes</td></tr>
+<tr><td><code>git config --global user.name "Name"</code></td><td>Set your global Git username</td></tr>
+</tbody>
+</table>
+
+<h3>4.15 Text, Encoding and Quick Analysis <span class="tag-new">NEW</span></h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:38%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>base64 file</code> / <code>base64 -d</code></td><td>Encode or decode Base64 data</td></tr>
+<tr><td><code>xxd file</code> / <code>hexdump -C file</code></td><td>Hex dump of a binary or text file</td></tr>
+<tr><td><code>strings binary</code></td><td>Extract printable strings from a binary</td></tr>
+<tr><td><code>cmp file1 file2</code></td><td>Byte-compare two files (silent if identical)</td></tr>
+<tr><td><code>column -t file</code></td><td>Format text into neat columns</td></tr>
+<tr><td><code>tr 'a-z' 'A-Z'</code></td><td>Translate or delete characters from stdin</td></tr>
+<tr><td><code>rev</code></td><td>Reverse characters on each line</td></tr>
+<tr><td><code>shuf file</code></td><td>Shuffle lines randomly</td></tr>
+</tbody>
+</table>
+
+<h3>4.16 Session Multiplexing &amp; Remote Comfort <span class="tag-new">NEW</span></h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:38%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>tmux</code> / <code>tmux new -s lab</code></td><td>Start a persistent terminal multiplexer session</td></tr>
+<tr><td><code>tmux attach -t lab</code></td><td>Re-attach to a named tmux session</td></tr>
+<tr><td><code>screen -S name</code></td><td>Start a GNU screen session</td></tr>
+<tr><td><code>ssh-keygen -t ed25519</code></td><td>Generate a modern SSH key pair</td></tr>
+<tr><td><code>ssh-copy-id user@host</code></td><td>Install your public key on a remote host</td></tr>
+<tr><td><code>scp -r dir user@host:/path</code></td><td>Recursively copy a directory over SSH</td></tr>
+</tbody>
+</table>
+
+<h3>4.17 Security Study Helpers (Authorised Use Only) <span class="tag-new">NEW</span></h3>
+<table class="tbl-cmd">
+<thead><tr><th style="width:38%">Command</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><code>nmap -sn 192.168.1.0/24</code></td><td>Host discovery ping scan on a network you own / are authorised to test</td></tr>
+<tr><td><code>nmap -sV -p 22,80,443 host</code></td><td>Service/version scan on selected ports (authorised targets only)</td></tr>
+<tr><td><code>sudo tcpdump -i eth0 -n</code></td><td>Capture and display packets on an interface</td></tr>
+<tr><td><code>openssl s_client -connect host:443</code></td><td>Inspect a TLS/SSL handshake and certificate</td></tr>
+<tr><td><code>openssl rand -hex 16</code></td><td>Generate random hex bytes (tokens, lab passwords)</td></tr>
+<tr><td><code>sudo fail2ban-client status</code></td><td>Check Fail2ban protection status if installed</td></tr>
+</tbody>
+</table>
+<div class="callout warn">
+<span class="ct">Authorised use only</span>
+Tools such as Nmap and tcpdump are for learning and defensive work on systems I own or have explicit written permission to test. I will not scan or probe third-party networks without authorisation.
+</div>
+
+<div class="callout">
+<span class="ct">Outcome of Task 03</span>
+I now have a single personal cheatsheet that preserves the Assignment 01 command foundation and extends it with Git, shell environment, encoding, session and authorised security-study commands for ongoing class and VPS work.
+</div>
+
+<!-- ============ 5. CONCLUSION ============ -->
+<h2 id="sec5" class="pb"><span class="num">5.</span>Conclusion</h2>
+<p>For Assignment 02 I completed all three required tasks:</p>
+<ol>
+  <li><strong>LinkedIn</strong> — profile created and documented with live link and screenshot: <a href="https://www.linkedin.com/in/devhassan41">https://www.linkedin.com/in/devhassan41</a></li>
+  <li><strong>GitHub</strong> — profile created and documented with live link and screenshot: <a href="https://github.com/MDARH">https://github.com/MDARH</a></li>
+  <li><strong>Commands cheatsheet</strong> — complete personal reference built from Assignment 01 basics plus newly added common commands for daily use.</li>
+</ol>
+<p>These profiles and the cheatsheet will support my continued learning throughout the Ethical Hacking &amp; Cybersecurity Practical programme.</p>
+
+<!-- ============ 6. DECLARATION ============ -->
+<h2 id="sec6"><span class="num">6.</span>Declaration</h2>
+<div class="decl">
+<p>I, <strong>Md. Abdur Razzaque</strong>, hereby declare that this Assignment 02 submission is my own work. The LinkedIn and GitHub profiles linked above belong to me, and the screenshots were taken from those live profiles. The commands cheatsheet expands my Assignment 01 practice notes for personal study use.</p>
+<p>I further undertake to apply security tools and reconnaissance commands <strong>only on systems that I own or for which I hold explicit written authorisation</strong>.</p>
+<div class="sigrow">
+  <div class="sigbox">Student Signature / Name<br>Md. Abdur Razzaque</div>
+  <div class="sigbox">Date<br>8 September 2026</div>
+</div>
+</div>
+
+<h2>References</h2>
+<ul class="refs">
+  <li>Mission Hackers Bangladesh — Ethical Hacking &amp; Cybersecurity Practical (Batch-11), Class 02 assignment brief.</li>
+  <li>My Assignment 01 Linux command practice notes (foundation for this cheatsheet).</li>
+  <li>LinkedIn profile: <a href="https://www.linkedin.com/in/devhassan41">https://www.linkedin.com/in/devhassan41</a></li>
+  <li>GitHub profile: <a href="https://github.com/MDARH">https://github.com/MDARH</a></li>
+  <li>GNU Coreutils and man-pages documentation for command behaviour reference.</li>
+</ul>
+
+</body>
+</html>

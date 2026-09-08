@@ -1,0 +1,8 @@
+# Nested clone of the published study-guide repo (has its own .git)
+linux-filesystem-guide/
+
+# Temp capture helpers
+**/capture-*.ps1
+**/node_modules/
+**/package-lock.json
+**/package.json
