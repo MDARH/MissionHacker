@@ -177,7 +177,7 @@ Packet captures and location labs in this assignment use <strong>my own device /
 
 <!-- ========== WIRESHARK ========== -->
 <h2 id="sec3" class="pb"><span class="num">3.</span>Task 02 — Packet Capture with Wireshark</h2>
-<p><strong>Wireshark</strong> is a protocol analyser: it records packets from a network interface and lets us inspect each header field. For this draft I prepared a lab capture file <code>assets/lab-capture.pcap</code> based on traffic patterns from my host (private LAN IP <code>192.168.68.122</code>) and opened it in a Wireshark-style packet view for the report screenshot.</p>
+<p><strong>Wireshark</strong> is a protocol analyser: it records packets from a network interface and lets us inspect each header field. For this draft I created lab capture file <code>assets/lab-capture.pcap</code> (traffic from my host private LAN IP <code>192.168.68.122</code>) and opened it in <strong>Wireshark 4.6.8</strong> for the report screenshot.</p>
 
 <h3>3.1 What the capture shows</h3>
 <table>
@@ -192,7 +192,7 @@ Packet captures and location labs in this assignment use <strong>my own device /
 
 <div class="shot">
   <img src="screenshots/wireshark-capture.png" alt="Wireshark packet capture screenshot">
-  <div class="cap">Figure 2 — Packet list / details / bytes view of <code>lab-capture.pcap</code> (filter: <code>ip.addr == 192.168.68.122</code>)</div>
+  <div class="cap">Figure 2 — Live Wireshark 4.6.8 view of <code>lab-capture.pcap</code> (DNS, TCP/443 SYN, ICMP echo from <code>192.168.68.122</code>)</div>
 </div>
 
 <h3>3.2 How to repeat a live Wireshark capture (Kali / Windows)</h3>
