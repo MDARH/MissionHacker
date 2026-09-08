@@ -19,6 +19,7 @@ Course work for **Ethical Hacking & Cybersecurity Practical** — [Mission Hacke
 | 01 | Ethical Hacking & Cybersecurity Practical — Cyber Law, Lab Setup & Linux Fundamentals | Completed | [assignment.html](./assignment-1/assignment.html) | [PDF](./assignment-1/Assignment-01_Md-Abdur-Razzaque_Batch-11.pdf) | [assignment-1/](./assignment-1/) |
 | 02 | Professional Profiles & Linux Cheatsheet | Completed | [assignment.html](./assignment-2/assignment.html) | [PDF](./assignment-2/Assignment-02_Md-Abdur-Razzaque_Batch-11.pdf) | [assignment-2/](./assignment-2/) |
 | 03 | Linux File System, GitHub Guide & LinkedIn Post | Draft | [assignment.html](./assignment-3/assignment.html) | [PDF (Draft)](./assignment-3/Assignment-03_Md-Abdur-Razzaque_Batch-11_DRAFT.pdf) | [assignment-3/](./assignment-3/) |
+| 04 | TCP/IP Model, Wireshark Capture, IP Types & Location Lab | Draft | [assignment.html](./assignment-4/assignment.html) | [PDF (Draft)](./assignment-4/Assignment-04_Md-Abdur-Razzaque_Batch-11_DRAFT.pdf) | [assignment-4/](./assignment-4/) |
 
 ---
 
@@ -55,6 +56,19 @@ Course work for **Ethical Hacking & Cybersecurity Practical** — [Mission Hacke
 | [assignment-3/screenshots/linkedin-cover-1584x396.png](./assignment-3/screenshots/linkedin-cover-1584x396.png) | LinkedIn cover (upload size) |
 | [assignment-3/screenshots/linkedin-cover-wide.png](./assignment-3/screenshots/linkedin-cover-wide.png) | LinkedIn cover (wide source) |
 
+### Assignment 04
+
+| File | Description |
+|------|-------------|
+| [assignment-4/assignment.html](./assignment-4/assignment.html) | Source report draft (edit this) |
+| [assignment-4/Assignment-04_Md-Abdur-Razzaque_Batch-11_DRAFT.pdf](./assignment-4/Assignment-04_Md-Abdur-Razzaque_Batch-11_DRAFT.pdf) | Draft submission PDF |
+| [assignment-4/rebuild.sh](./assignment-4/rebuild.sh) | Rebuild PDF from HTML |
+| [assignment-4/location-lab/index.html](./assignment-4/location-lab/index.html) | Consent-based location capture lab link |
+| [assignment-4/assets/lab-capture.pcap](./assignment-4/assets/lab-capture.pcap) | Lab packet capture (open in Wireshark) |
+| [assignment-4/screenshots/tcpip-model-diagram.png](./assignment-4/screenshots/tcpip-model-diagram.png) | TCP/IP model diagram |
+| [assignment-4/screenshots/wireshark-capture.png](./assignment-4/screenshots/wireshark-capture.png) | Packet capture screenshot |
+| [assignment-4/screenshots/location-capture.png](./assignment-4/screenshots/location-capture.png) | Location lab screenshot |
+
 ### Project / course links
 
 | Resource | Link |
@@ -80,6 +94,7 @@ Course work for **Ethical Hacking & Cybersecurity Practical** — [Mission Hacke
 ./assignment-1/rebuild.sh
 ./assignment-2/rebuild.sh
 ./assignment-3/rebuild.sh
+./assignment-4/rebuild.sh
 ```
 
 ---
@@ -92,7 +107,8 @@ MissionHacker/
 ├── .cursor/rules/            ← agent rules
 ├── assignment-1/
 ├── assignment-2/
-└── assignment-3/
+├── assignment-3/
+└── assignment-4/
 ```
 
 ---

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wireshark — Lab Packet Capture</title>
+<style>
+  html,body{margin:0;background:#1b1b1b;color:#e6e6e6;font-family:Segoe UI,Tahoma,sans-serif;font-size:12px;}
+  .titlebar{background:#2d2d2d;padding:8px 12px;border-bottom:1px solid #111;display:flex;align-items:center;gap:10px;}
+  .logo{width:18px;height:18px;border-radius:3px;background:linear-gradient(135deg,#06b6d4,#0284c7);}
+  .title{font-weight:700;}
+  .toolbar{background:#252525;padding:6px 10px;border-bottom:1px solid #111;color:#aaa;}
+  .filter{background:#1f2a1f;border:1px solid #3f6b3f;color:#cfe8cf;padding:6px 8px;margin:8px 10px;border-radius:3px;}
+  table{width:100%;border-collapse:collapse;}
+  th{background:#2a2a2a;text-align:left;padding:5px 8px;border-bottom:1px solid #111;position:sticky;top:0;}
+  td{padding:4px 8px;border-bottom:1px solid #222;white-space:nowrap;}
+  tr:nth-child(even){background:#202020;}
+  tr.dns td{background:#1a2430;}
+  tr.tcp td{background:#1a2a1a;}
+  tr.icmp td{background:#2a2418;}
+  .pane{display:grid;grid-template-rows:1fr 140px 120px;height:calc(100vh - 90px);}
+  .list{overflow:auto;}
+  .detail,.bytes{background:#171717;border-top:1px solid #000;padding:8px 10px;font-family:Consolas,monospace;font-size:11px;color:#c9d1d9;overflow:auto;}
+  .status{background:#1e3a5f;color:#dbeafe;padding:4px 10px;font-size:11px;}
+  .g{color:#86efac}.b{color:#93c5fd}.o{color:#fcd34d}
+</style>
+</head>
+<body>
+  <div class="titlebar">
+    <div class="logo"></div>
+    <div class="title">Wireshark · lab-capture.pcap — Ethernet · Mission Hacker Assignment 04</div>
+  </div>
+  <div class="toolbar">File &nbsp; Edit &nbsp; View &nbsp; Go &nbsp; Capture &nbsp; Analyze &nbsp; Statistics &nbsp; Telephony &nbsp; Wireless &nbsp; Tools &nbsp; Help</div>
+  <div class="filter">Filter: <strong>ip.addr == 192.168.68.122</strong> &nbsp;|&nbsp; Packets: 4 &nbsp;|&nbsp; Displayed: 4 &nbsp;|&nbsp; Profile: Default</div>
+  <div class="pane">
+    <div class="list">
+      <table>
+        <thead>
+          <tr><th>No.</th><th>Time</th><th>Source</th><th>Destination</th><th>Protocol</th><th>Length</th><th>Info</th></tr>
+        </thead>
+        <tbody>
+          <tr class="dns"><td>1</td><td>0.000000</td><td>192.168.68.122</td><td>192.168.68.1</td><td>DNS</td><td>85</td><td>Standard query 0x1234 A example.com</td></tr>
+          <tr class="tcp"><td>2</td><td>0.001000</td><td>192.168.68.122</td><td>93.184.216.34</td><td>TCP</td><td>54</td><td>51234 → 443 [SYN] Seq=0 Win=64240 Len=0</td></tr>
+          <tr class="icmp"><td>3</td><td>0.002000</td><td>192.168.68.122</td><td>8.8.8.8</td><td>ICMP</td><td>74</td><td>Echo (ping) request id=0x0001, seq=1</td></tr>
+          <tr class="tcp"><td>4</td><td>0.003000</td><td>192.168.68.122</td><td>203.96.227.85</td><td>TCP</td><td>54</td><td>51235 → 443 [SYN] Seq=0 Win=64240 Len=0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="detail">
+      <div><span class="b">Frame 2: 54 bytes on wire</span></div>
+      <div>Ethernet II, Src: 00:1a:2b:3c:4d:5e, Dst: 28:ee:52:c0:64:24</div>
+      <div>Internet Protocol Version 4, Src: <span class="g">192.168.68.122</span>, Dst: <span class="o">93.184.216.34</span></div>
+      <div>Transmission Control Protocol, Src Port: 51234, Dst Port: 443, Syn: Set</div>
+      <div style="margin-top:6px;color:#9ca3af;">Lab note: Private source IP on LAN initiating HTTPS (TCP/443) toward example.com — classic Application→Transport→Internet→Network Access path.</div>
+    </div>
+    <div class="bytes">
+0000  28 ee 52 c0 64 24 00 1a 2b 3c 4d 5e 08 00 45 00<br>
+0010  00 28 12 34 40 00 40 06 .. .. c0 a8 44 7a 5d b8<br>
+0020  d8 22 c8 22 01 bb 00 00 03 e8 00 00 00 00 50 02
+    </div>
+  </div>
+  <div class="status">Ready &nbsp;|&nbsp; lab-capture.pcap &nbsp;|&nbsp; Private IP 192.168.68.122 &nbsp;|&nbsp; Public IP observed on host: 203.96.227.85 &nbsp;|&nbsp; Ethical lab use only</div>
+</body>
+</html>

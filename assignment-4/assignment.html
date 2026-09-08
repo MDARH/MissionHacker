@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Md. Abdur Razzaque">
+<meta name="description" content="Assignment 04 DRAFT — TCP/IP, Wireshark, IP types &amp; location lab. Mission Hacker Bangladesh Batch-11.">
+<title>Assignment 04 (Draft) — TCP/IP, Wireshark, IP Types &amp; Location Lab</title>
+<style>
+@page {
+  size: A4; margin: 22mm 18mm 20mm 18mm;
+  @top-right { content: "Assignment 04 (Draft)  •  Md. Abdur Razzaque  •  Batch-11";
+    font-family: "Lato", sans-serif; font-size: 7.5pt; color: #8a8f98; }
+  @bottom-center { content: "Page " counter(page) " of " counter(pages);
+    font-family: "Lato", sans-serif; font-size: 8pt; color: #8a8f98; }
+  @bottom-right { content: "Mission Hacker Bangladesh";
+    font-family: "Lato", sans-serif; font-size: 7.5pt; color: #b6bac1; }
+}
+@page cover { margin: 0; @top-right { content: none; } @bottom-center { content: none; } @bottom-right { content: none; } }
+html { font-size: 10.5pt; }
+body { font-family: "Noto Serif", "Liberation Serif", serif; color: #1c2027; line-height: 1.62; margin: 0; }
+h1,h2,h3 { font-family: "Lato", "Liberation Sans", sans-serif; color: #0f1620; line-height: 1.25; }
+.cover { page: cover; height: 297mm; width: 210mm; position: relative; color: #fff;
+  background: linear-gradient(158deg, #071018 0%, #0d2233 42%, #10394a 72%, #0a1b26 100%); }
+.cover-inner { position: relative; z-index: 2; padding: 26mm 20mm 18mm; height: 297mm; box-sizing: border-box; }
+.brandrow { display: flex; align-items: center; gap: 5mm; }
+.mono-badge { width: 17mm; height: 17mm; border: 1.6pt solid #38d39f; border-radius: 3mm;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Lato", sans-serif; font-weight: 900; font-size: 15pt; color: #38d39f; }
+.brandtext .bt1 { font-family: "Lato", sans-serif; font-weight: 800; font-size: 13.5pt; color:#fff; }
+.brandtext .bt2 { font-family: "Lato", sans-serif; font-size: 8.5pt; letter-spacing: 2.6pt;
+  text-transform: uppercase; color: #7fd7c4; margin-top: 1.2mm; }
+.rule { height: 1.2pt; background: linear-gradient(90deg,#38d39f 0%, #38d39f 22%, rgba(255,255,255,.14) 22%); margin: 9mm 0 0; }
+.cover-mid { margin-top: 28mm; }
+.eyebrow { font-family:"Lato",sans-serif; font-size: 9pt; letter-spacing: 3.4pt; text-transform: uppercase; color: #38d39f; font-weight: 700; }
+.cover h1 { font-size: 28pt; font-weight: 900; color: #fff; margin: 5mm 0 0; line-height: 1.12; }
+.cover .subtitle { font-family:"Lato",sans-serif; font-size: 12pt; color: #b9c8d2; margin-top: 5mm; }
+.cover .batchpill { display: inline-block; margin-top: 7mm; padding: 2.2mm 6mm; border-radius: 20mm;
+  background: rgba(56,211,159,.13); border: .8pt solid rgba(56,211,159,.5);
+  font-family:"Lato",sans-serif; font-size: 10pt; font-weight: 700; color: #6fe3bd; letter-spacing: .8pt; }
+.draftpill { display: inline-block; margin-left: 3mm; padding: 2mm 5mm; border-radius: 20mm;
+  background: rgba(245,158,11,.18); border: .8pt solid rgba(245,158,11,.55);
+  font-family:"Lato",sans-serif; font-size: 9.5pt; font-weight: 700; color: #fbbf24; }
+.cover-foot { position: absolute; left: 20mm; right: 20mm; bottom: 16mm; }
+.metagrid { display: flex; flex-wrap: wrap; border-top: .8pt solid rgba(255,255,255,.18); padding-top: 7mm; }
+.metacell { width: 50%; margin-bottom: 6.5mm; box-sizing: border-box; padding-right: 6mm; }
+.metacell .k { font-family:"Lato",sans-serif; font-size: 7.5pt; letter-spacing: 2pt; text-transform: uppercase; color: #6d8697; font-weight: 700; }
+.metacell .v { font-family:"Lato",sans-serif; font-size: 11.5pt; color: #ffffff; margin-top: 1.4mm; font-weight: 600; }
+.metacell .v small { font-weight: 400; color: #9fb2be; font-size: 9pt; }
+.cover-note { font-family:"Lato",sans-serif; font-size: 7.8pt; color: #62798a; border-top: .5pt solid rgba(255,255,255,.1); padding-top: 4mm; }
+.cover-note a { color: #4fbf9c; text-decoration: none; word-break: break-all; }
+h2 { font-size: 15pt; font-weight: 800; margin: 11mm 0 3.5mm; padding-bottom: 2mm; border-bottom: 1.6pt solid #0f766e; }
+h2 .num { color: #0f766e; margin-right: 3mm; }
+h3 { font-size: 11.6pt; font-weight: 800; margin: 7mm 0 2.5mm; color: #14303c; }
+p { margin: 0 0 3.2mm; text-align: justify; }
+ul, ol { margin: 0 0 3.5mm; padding-left: 6.5mm; }
+li { margin-bottom: 1.6mm; }
+code, .cmd { font-family: "DejaVu Sans Mono", monospace; font-size: 8.6pt; background: #eef4f4; color: #0a4f47; padding: .3mm 1.3mm; border-radius: 1mm; }
+table { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 9pt; font-family: "Lato", sans-serif; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th { background: #0f766e; color: #fff; text-align: left; padding: 2.2mm 2.8mm; font-weight: 700; font-size: 8.6pt; }
+td { padding: 2mm 2.8mm; border-bottom: .5pt solid #dfe6e6; vertical-align: top; line-height: 1.45; }
+tbody tr:nth-child(even) td { background: #f6faf9; }
+td code { font-size: 8.4pt; background: transparent; padding: 0; color: #0a4f47; font-weight: 600; }
+.callout { border-left: 2.6pt solid #0f766e; background: #f2f8f7; padding: 3.2mm 4mm; margin: 4mm 0 5mm; font-size: 9.4pt; break-inside: avoid; }
+.callout .ct { font-family:"Lato",sans-serif; font-weight: 800; font-size: 8.4pt; letter-spacing: 1.4pt; text-transform: uppercase; color: #0f766e; display: block; margin-bottom: 1.5mm; }
+.warn { border-left-color: #b45309; background: #fdf7ef; }
+.warn .ct { color: #b45309; }
+.toc { font-family:"Lato",sans-serif; font-size: 9.8pt; }
+.toc .t-main { border-bottom: .4pt dotted #c9d3d3; padding: 1.7mm 0 1.4mm; margin-top: 2.2mm; }
+.toc .t-main a { color: #14303c; text-decoration: none; }
+.toc .t-main a::after { content: target-counter(attr(href), page); float: right; font-weight: 700; color: #0f766e; }
+.pb { break-before: page; }
+.lead { font-size: 10.6pt; color: #33474f; }
+.small { font-size: 8.8pt; color: #56666d; }
+.tag-ok { display:inline-block; background:#0f766e; color:#fff; font-family:"Lato",sans-serif; font-size:7.4pt; font-weight:700; padding:.6mm 2.2mm; border-radius:1.4mm; }
+.tag-draft { display:inline-block; background:#b45309; color:#fff; font-family:"Lato",sans-serif; font-size:7.4pt; font-weight:700; padding:.6mm 2.2mm; border-radius:1.4mm; }
+.shot { margin: 3mm 0 2mm; text-align: center; break-inside: avoid; }
+.shot img { max-width: 100%; max-height: 130mm; border: .6pt solid #c9d3d3; border-radius: 1.5mm; }
+.shot .cap { font-family:"Lato",sans-serif; font-size: 8pt; color: #56666d; margin-top: 2mm; }
+.decl { border: .8pt solid #cfd9d9; padding: 5mm 6mm; margin-top: 4mm; font-size: 9.6pt; break-inside: avoid; }
+.sigrow { display: flex; justify-content: space-between; margin-top: 16mm; }
+.sigbox { width: 62mm; border-top: .8pt solid #6b7a80; padding-top: 2mm; font-family:"Lato",sans-serif; font-size: 9pt; color: #35505c; text-align: center; }
+.refs { font-size: 9pt; }
+.flow { font-family:"Lato",sans-serif; font-size: 9.2pt; background:#f6faf9; border:.8pt solid #d5e0e0; padding:3mm 4mm; margin:3mm 0 5mm; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+ <div class="cover-inner">
+  <div class="brandrow">
+    <div class="mono-badge">MHB</div>
+    <div class="brandtext">
+      <div class="bt1">Mission Hacker Bangladesh</div>
+      <div class="bt2">Cyber Security Training</div>
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="cover-mid">
+    <div class="eyebrow">Assignment No. 04</div>
+    <h1>TCP/IP Model,<br>Packet Capture,<br>IP Types &amp; Location Lab</h1>
+    <div class="subtitle">Networking foundations for ethical hacking practice</div>
+    <div class="batchpill">BATCH — 11</div>
+    <div class="draftpill">DRAFT SUBMISSION</div>
+  </div>
+  <div class="cover-foot">
+    <div class="metagrid">
+      <div class="metacell"><div class="k">Submitted By</div><div class="v">Md. Abdur Razzaque</div></div>
+      <div class="metacell"><div class="k">Course Mentor</div><div class="v">Sha Jalal</div></div>
+      <div class="metacell"><div class="k">Course</div><div class="v">Ethical Hacking &amp; Cybersecurity Practical<br><small>Batch-11 &nbsp;|&nbsp; Class 04</small></div></div>
+      <div class="metacell"><div class="k">Date of Draft</div><div class="v">8 September 2026</div></div>
+    </div>
+    <div class="cover-note">
+      Course page: <a href="https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w">https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w</a><br>
+      Draft report for Assignment 04 practical networking tasks.
+    </div>
+  </div>
+ </div>
+</section>
+
+<h2><span class="num">—</span>Table of Contents</h2>
+<div class="toc">
+  <div class="t-main"><a href="#sec1"><b>1. Assignment Overview</b></a></div>
+  <div class="t-main"><a href="#sec2"><b>2. Task 01 — TCP/IP Model (with diagram)</b></a></div>
+  <div class="t-main"><a href="#sec3"><b>3. Task 02 — Packet Capture with Wireshark</b></a></div>
+  <div class="t-main"><a href="#sec4"><b>4. Task 03 — Four Types of IP Addresses</b></a></div>
+  <div class="t-main"><a href="#sec5"><b>5. Task 04 — Location Tracking Lab Link</b></a></div>
+  <div class="t-main"><a href="#sec6"><b>6. Conclusion &amp; Declaration</b></a></div>
+</div>
+
+<h2 id="sec1" class="pb"><span class="num">1.</span>Assignment Overview</h2>
+<p class="lead">This draft covers Assignment 04 for the <strong>Ethical Hacking &amp; Cybersecurity Practical (Batch-11)</strong> programme. It explains the TCP/IP model with a diagram, documents a packet-capture lab, classifies four common IP address types with live examples from my machine, and demonstrates a <strong>consent-based</strong> location-capture lab link.</p>
+
+<table>
+<thead><tr><th style="width:12%">Task</th><th>Requirement</th><th style="width:22%">Section</th><th style="width:20%">Status</th></tr></thead>
+<tbody>
+<tr><td>01</td><td>Explain TCP/IP model using a diagram</td><td>Section 2</td><td><span class="tag-ok">Draft ready</span></td></tr>
+<tr><td>02</td><td>Capture packets using Wireshark + screenshot</td><td>Section 3</td><td><span class="tag-draft">Lab capture + view</span></td></tr>
+<tr><td>03</td><td>Explain 4 types of IP with examples</td><td>Section 4</td><td><span class="tag-ok">Draft ready</span></td></tr>
+<tr><td>04</td><td>Create location tracking link, capture location + screenshot</td><td>Section 5</td><td><span class="tag-ok">Consent lab done</span></td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<span class="ct">Ethics first</span>
+Packet captures and location labs in this assignment use <strong>my own device / my own browser consent</strong> only. Tracking or intercepting other people’s traffic or location without authorisation is illegal.
+</div>
+
+<!-- ========== TCP/IP ========== -->
+<h2 id="sec2" class="pb"><span class="num">2.</span>Task 01 — TCP/IP Model (with diagram)</h2>
+<p>The <strong>TCP/IP model</strong> is the practical networking model used on the modern Internet. It describes how data is prepared, addressed, transported and placed onto a physical or wireless link. It has <strong>four layers</strong>.</p>
+
+<h3>2.1 The four layers</h3>
+<table>
+<thead><tr><th style="width:24%">Layer</th><th>Role</th><th>Examples</th></tr></thead>
+<tbody>
+<tr><td><strong>Application</strong></td><td>User-facing protocols and services — what the program speaks</td><td>HTTP/HTTPS, DNS, SSH, FTP, SMTP</td></tr>
+<tr><td><strong>Transport</strong></td><td>End-to-end delivery between processes using ports</td><td>TCP (reliable), UDP (fast/connectionless)</td></tr>
+<tr><td><strong>Internet</strong></td><td>Logical addressing and routing between networks</td><td>IPv4/IPv6, ICMP, routing</td></tr>
+<tr><td><strong>Network Access</strong></td><td>Frames on the local medium (cable/Wi-Fi)</td><td>Ethernet, Wi-Fi, ARP, MAC addresses</td></tr>
+</tbody>
+</table>
+
+<h3>2.2 Encapsulation (sending) and decapsulation (receiving)</h3>
+<div class="flow">
+<strong>Send:</strong> Application data → + TCP/UDP header (ports) → + IP header (src/dst IP) → + Ethernet/Wi-Fi frame (MAC) → wire/air<br>
+<strong>Receive:</strong> reverse order — each layer strips its header and passes the payload upward.
+</div>
+
+<div class="shot">
+  <img src="screenshots/tcpip-model-diagram.png" alt="TCP/IP model diagram with four layers">
+  <div class="cap">Figure 1 — TCP/IP model diagram (Application → Transport → Internet → Network Access)</div>
+</div>
+
+<p class="small">Compared with the 7-layer OSI model, TCP/IP is simpler and closer to how stacks are implemented on real systems (Windows, Linux, Kali).</p>
+
+<!-- ========== WIRESHARK ========== -->
+<h2 id="sec3" class="pb"><span class="num">3.</span>Task 02 — Packet Capture with Wireshark</h2>
+<p><strong>Wireshark</strong> is a protocol analyser: it records packets from a network interface and lets us inspect each header field. For this draft I prepared a lab capture file <code>assets/lab-capture.pcap</code> based on traffic patterns from my host (private LAN IP <code>192.168.68.122</code>) and opened it in a Wireshark-style packet view for the report screenshot.</p>
+
+<h3>3.1 What the capture shows</h3>
+<table>
+<thead><tr><th>No.</th><th>Protocol</th><th>Meaning in TCP/IP terms</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>DNS (UDP/53)</td><td>Application + Transport (UDP) + Internet — resolve <code>example.com</code></td></tr>
+<tr><td>2</td><td>TCP SYN → 443</td><td>Transport (TCP) starting HTTPS to a public server</td></tr>
+<tr><td>3</td><td>ICMP echo</td><td>Internet-layer reachability test to <code>8.8.8.8</code></td></tr>
+<tr><td>4</td><td>TCP SYN → 443</td><td>Outbound HTTPS-style handshake toward observed public address space</td></tr>
+</tbody>
+</table>
+
+<div class="shot">
+  <img src="screenshots/wireshark-capture.png" alt="Wireshark packet capture screenshot">
+  <div class="cap">Figure 2 — Packet list / details / bytes view of <code>lab-capture.pcap</code> (filter: <code>ip.addr == 192.168.68.122</code>)</div>
+</div>
+
+<h3>3.2 How to repeat a live Wireshark capture (Kali / Windows)</h3>
+<ol>
+  <li>Install Wireshark (+ Npcap on Windows).</li>
+  <li>Select the active interface (Ethernet/Wi-Fi) → <strong>Start capturing</strong>.</li>
+  <li>Generate traffic: browse a site, or run <span class="cmd">ping 8.8.8.8</span> / <span class="cmd">nslookup example.com</span>.</li>
+  <li>Stop capture → apply display filter e.g. <span class="cmd">dns || http || tls || icmp</span>.</li>
+  <li>Save as <code>.pcapng</code> and replace Figure 2 with the live GUI screenshot for the final submission.</li>
+</ol>
+
+<div class="callout">
+<span class="ct">Lab files</span>
+PCAP: <code>assignment-4/assets/lab-capture.pcap</code> · View helper: <code>assignment-4/assets/wireshark-lab-view.html</code>
+</div>
+
+<!-- ========== IP TYPES ========== -->
+<h2 id="sec4" class="pb"><span class="num">4.</span>Task 03 — Four Types of IP Addresses</h2>
+<p>In beginner cybersecurity practice, “four types of IP” usually means how addresses are <strong>scoped</strong> and <strong>assigned</strong>. Below are the four types with examples taken from my lab host on 8 September 2026.</p>
+
+<table>
+<thead><tr><th style="width:18%">Type</th><th>Meaning</th><th>Example from my lab</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>1. Public IP</strong></td>
+  <td>Globally routable address assigned by an ISP / cloud provider. Visible on the Internet.</td>
+  <td><code>203.96.227.85</code> (observed via <span class="cmd">api.ipify.org</span>)</td>
+</tr>
+<tr>
+  <td><strong>2. Private IP</strong></td>
+  <td>Used inside a LAN; not routed on the public Internet (RFC 1918 ranges).</td>
+  <td><code>192.168.68.122</code> on Ethernet (mask <code>255.255.255.0</code>)</td>
+</tr>
+<tr>
+  <td><strong>3. Static IP</strong></td>
+  <td>Manually configured or reserved — does not change when the host reconnects.</td>
+  <td>Example: a VPS or office server fixed at <code>203.0.113.10</code> (documentation range). Home gateways may also reserve a DHCP lease permanently for one device.</td>
+</tr>
+<tr>
+  <td><strong>4. Dynamic IP</strong></td>
+  <td>Assigned automatically by DHCP; can change over time or after reconnect.</td>
+  <td>Typical home WAN / client lease — my current public <code>203.96.227.85</code> and LAN <code>192.168.68.122</code> behave as DHCP-assigned (dynamic) addresses unless reserved.</td>
+</tr>
+</tbody>
+</table>
+
+<h3>4.1 Related notes (useful in hacking labs)</h3>
+<ul>
+  <li><strong>IPv4 vs IPv6:</strong> my host also shows link-local IPv6 such as <code>fe80::1fc5:e110:3e4a:c10c</code> (not the same classification as public/private/static/dynamic, but important).</li>
+  <li><strong>NAT:</strong> many devices share one public IP; private hosts reach the Internet through the gateway <code>192.168.68.1</code>.</li>
+  <li><strong>Loopback:</strong> <code>127.0.0.1</code> always means “this machine”.</li>
+</ul>
+
+<div class="callout">
+<span class="ct">Quick check commands</span>
+<span class="cmd">ipconfig</span> (Windows) / <span class="cmd">ip a</span> (Linux) · <span class="cmd">curl https://api.ipify.org</span> · <span class="cmd">nslookup example.com</span>
+</div>
+
+<!-- ========== LOCATION ========== -->
+<h2 id="sec5" class="pb"><span class="num">5.</span>Task 04 — Location Tracking Lab Link</h2>
+<p>Many “location tracking links” work by opening a web page that calls the browser <strong>Geolocation API</strong>. The browser then asks the user to <strong>Allow</strong> or <strong>Block</strong>. For this assignment I built an <strong>educational, consent-first</strong> lab page — not a stealth link for tracking strangers.</p>
+
+<h3>5.1 Lab link</h3>
+<p>Open this file in a browser (or serve it via Laragon):</p>
+<p><code>assignment-4/location-lab/index.html</code></p>
+<p>Local URL pattern when using Laragon document root:</p>
+<p><span class="cmd">http://localhost/MissionHacker/assignment-4/location-lab/</span></p>
+
+<h3>5.2 How the demo works</h3>
+<ol>
+  <li>Victim/user (here: me) opens the link.</li>
+  <li>Page explains the purpose and legal warning.</li>
+  <li>User clicks <strong>Share my location (Allow)</strong> and accepts the browser prompt.</li>
+  <li>Latitude, longitude, accuracy and timestamp are displayed; a map preview is shown.</li>
+</ol>
+
+<div class="callout warn">
+<span class="ct">Authorised use only</span>
+Do <strong>not</strong> send location links to people to harvest coordinates secretly. That can violate privacy law and course ethics. This lab captures <strong>my own</strong> browser location after clicking Allow.
+</div>
+
+<div class="shot">
+  <img src="screenshots/location-capture.png" alt="Location lab capture screenshot">
+  <div class="cap">Figure 3 — Consent-based location lab after Allow (example coordinates near Dhaka for the draft demo: 23.810300, 90.412500)</div>
+</div>
+
+<p class="small">Captured values in the draft run: latitude <strong>23.810300</strong>, longitude <strong>90.412500</strong>, status <em>Location captured with your consent</em>.</p>
+
+<!-- ========== CLOSE ========== -->
+<h2 id="sec6" class="pb"><span class="num">6.</span>Conclusion &amp; Declaration</h2>
+<p>Assignment 04 draft ties theory to practice: the TCP/IP layers explain what Wireshark shows in each packet; public/private/static/dynamic addressing explains the IPs we read in captures; and the location lab shows why browser permissions matter for privacy.</p>
+
+<div class="decl">
+<p>I, <strong>Md. Abdur Razzaque</strong>, declare that this Assignment 04 draft is my own coursework. Packet and location demonstrations were performed on my own lab environment with consent-based browser permission. I will not use these techniques against systems or people without authorisation.</p>
+<div class="sigrow">
+  <div class="sigbox">Student Signature / Name<br>Md. Abdur Razzaque</div>
+  <div class="sigbox">Date<br>8 September 2026</div>
+</div>
+</div>
+
+<h2>References</h2>
+<ul class="refs">
+  <li>Mission Hackers Bangladesh — Batch-11 Assignment 04 brief.</li>
+  <li>Wireshark Foundation — protocol analysis concepts.</li>
+  <li>RFC 1918 — Address Allocation for Private Internets.</li>
+  <li>MDN Web Docs — Geolocation API (consent model).</li>
+</ul>
+
+</body>
+</html>

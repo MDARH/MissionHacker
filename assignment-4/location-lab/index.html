@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Location Lab — Educational Demo (Consent Required)</title>
+<style>
+  :root { --bg:#0b1220; --card:#121a2b; --line:#243049; --teal:#2dd4bf; --text:#e8eef7; --muted:#93a4bd; --warn:#fbbf24; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"Segoe UI", system-ui, sans-serif; background:linear-gradient(160deg,#071018,#0d2233 50%,#10283a); color:var(--text); min-height:100vh; }
+  .wrap { max-width:720px; margin:0 auto; padding:28px 18px 48px; }
+  .badge { display:inline-block; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:#083344; background:var(--teal); font-weight:800; padding:6px 10px; border-radius:999px; }
+  h1 { font-size:28px; margin:14px 0 8px; }
+  p { color:var(--muted); line-height:1.55; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; margin-top:16px; }
+  .warn { border-color:#92400e; background:#1c1408; color:#fde68a; }
+  .warn strong { color:var(--warn); }
+  button { appearance:none; border:0; background:var(--teal); color:#042f2e; font-weight:800; font-size:15px; padding:12px 18px; border-radius:10px; cursor:pointer; }
+  button.secondary { background:#1e293b; color:var(--text); border:1px solid var(--line); margin-left:8px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .kv { background:#0b1322; border:1px solid var(--line); border-radius:10px; padding:10px 12px; }
+  .k { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+  .v { font-size:15px; font-weight:700; margin-top:4px; word-break:break-all; }
+  #map { margin-top:12px; height:280px; border-radius:12px; border:1px solid var(--line); overflow:hidden; background:#0b1322; }
+  #map iframe { width:100%; height:100%; border:0; }
+  .linkbox { font-family:ui-monospace, Consolas, monospace; font-size:12px; background:#0b1322; padding:10px; border-radius:8px; border:1px dashed var(--line); word-break:break-all; }
+  .ok { color:var(--teal); font-weight:700; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">Mission Hacker · Assignment 04 · Lab only</span>
+    <h1>Educational location capture link</h1>
+    <p>This page demonstrates how a website can request your device location <strong>after you click Allow</strong>. It is for learning on your own browser only — not for tracking other people without consent.</p>
+
+    <div class="card warn">
+      <strong>Legal / ethics:</strong> Capturing someone’s location without clear informed consent can be unlawful and unethical. Use this lab only on your own device or with explicit written permission.
+    </div>
+
+    <div class="card">
+      <div class="k">Shareable lab link (open on your phone/PC)</div>
+      <div class="linkbox" id="labLink">loading…</div>
+      <p style="margin:12px 0 0;font-size:13px;">When opened, the visitor must press the button below and accept the browser permission prompt.</p>
+      <div style="margin-top:14px;">
+        <button id="btn">Share my location (Allow)</button>
+        <button class="secondary" id="copy">Copy lab link</button>
+      </div>
+      <p id="status" style="margin-top:12px;font-size:14px;">Status: waiting for permission…</p>
+      <div class="grid">
+        <div class="kv"><div class="k">Latitude</div><div class="v" id="lat">—</div></div>
+        <div class="kv"><div class="k">Longitude</div><div class="v" id="lng">—</div></div>
+        <div class="kv"><div class="k">Accuracy (m)</div><div class="v" id="acc">—</div></div>
+        <div class="kv"><div class="k">Captured at</div><div class="v" id="ts">—</div></div>
+      </div>
+      <div id="map"></div>
+    </div>
+  </div>
+<script>
+const linkEl = document.getElementById('labLink');
+linkEl.textContent = location.href;
+document.getElementById('copy').onclick = async () => {
+  await navigator.clipboard.writeText(location.href);
+  document.getElementById('status').innerHTML = '<span class="ok">Lab link copied.</span>';
+};
+document.getElementById('btn').onclick = () => {
+  const st = document.getElementById('status');
+  if (!navigator.geolocation) {
+    st.textContent = 'Geolocation is not supported in this browser.';
+    return;
+  }
+  st.textContent = 'Requesting permission…';
+  navigator.geolocation.getCurrentPosition((pos) => {
+    const { latitude, longitude, accuracy } = pos.coords;
+    document.getElementById('lat').textContent = latitude.toFixed(6);
+    document.getElementById('lng').textContent = longitude.toFixed(6);
+    document.getElementById('acc').textContent = accuracy.toFixed(1);
+    document.getElementById('ts').textContent = new Date().toLocaleString();
+    st.innerHTML = '<span class="ok">Location captured with your consent.</span>';
+    const q = encodeURIComponent(latitude + ',' + longitude);
+    document.getElementById('map').innerHTML =
+      '<iframe title="map" src="https://www.openstreetmap.org/export/embed.html?bbox=' +
+      (longitude-0.02) + '%2C' + (latitude-0.02) + '%2C' + (longitude+0.02) + '%2C' + (latitude+0.02) +
+      '&layer=mapnik&marker=' + latitude + '%2C' + longitude + '"></iframe>';
+    // persist for screenshot/report
+    localStorage.setItem('mh_loc_lab', JSON.stringify({ latitude, longitude, accuracy, at: Date.now() }));
+  }, (err) => {
+    st.textContent = 'Error: ' + err.message;
+  }, { enableHighAccuracy: true, timeout: 15000 });
+};
+</script>
+</body>
+</html>
