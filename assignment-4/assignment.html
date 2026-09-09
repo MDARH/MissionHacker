@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="author" content="Md. Abdur Razzaque">
-<meta name="description" content="Assignment 04 DRAFT — TCP/IP, Wireshark, IP types &amp; location lab. Mission Hacker Bangladesh Batch-11.">
-<title>Assignment 04 (Draft) — TCP/IP, Wireshark, IP Types &amp; Location Lab</title>
+<meta name="description" content="Assignment 04 — TCP/IP, Wireshark, IP types &amp; location lab. Mission Hacker Bangladesh Batch-11.">
+<title>Assignment 04 — TCP/IP, Wireshark, IP Types &amp; Location Lab</title>
 <style>
 @page {
   size: A4; margin: 22mm 18mm 20mm 18mm;
-  @top-right { content: "Assignment 04 (Draft)  •  Md. Abdur Razzaque  •  Batch-11";
+  @top-right { content: "Assignment 04  •  Md. Abdur Razzaque  •  Batch-11";
     font-family: "Lato", sans-serif; font-size: 7.5pt; color: #8a8f98; }
   @bottom-center { content: "Page " counter(page) " of " counter(pages);
     font-family: "Lato", sans-serif; font-size: 8pt; color: #8a8f98; }
@@ -37,9 +37,7 @@ h1,h2,h3 { font-family: "Lato", "Liberation Sans", sans-serif; color: #0f1620; l
 .cover .batchpill { display: inline-block; margin-top: 7mm; padding: 2.2mm 6mm; border-radius: 20mm;
   background: rgba(56,211,159,.13); border: .8pt solid rgba(56,211,159,.5);
   font-family:"Lato",sans-serif; font-size: 10pt; font-weight: 700; color: #6fe3bd; letter-spacing: .8pt; }
-.draftpill { display: inline-block; margin-left: 3mm; padding: 2mm 5mm; border-radius: 20mm;
-  background: rgba(245,158,11,.18); border: .8pt solid rgba(245,158,11,.55);
-  font-family:"Lato",sans-serif; font-size: 9.5pt; font-weight: 700; color: #fbbf24; }
+
 .cover-foot { position: absolute; left: 20mm; right: 20mm; bottom: 16mm; }
 .metagrid { display: flex; flex-wrap: wrap; border-top: .8pt solid rgba(255,255,255,.18); padding-top: 7mm; }
 .metacell { width: 50%; margin-bottom: 6.5mm; box-sizing: border-box; padding-right: 6mm; }
@@ -74,7 +72,6 @@ td code { font-size: 8.4pt; background: transparent; padding: 0; color: #0a4f47;
 .lead { font-size: 10.6pt; color: #33474f; }
 .small { font-size: 8.8pt; color: #56666d; }
 .tag-ok { display:inline-block; background:#0f766e; color:#fff; font-family:"Lato",sans-serif; font-size:7.4pt; font-weight:700; padding:.6mm 2.2mm; border-radius:1.4mm; }
-.tag-draft { display:inline-block; background:#b45309; color:#fff; font-family:"Lato",sans-serif; font-size:7.4pt; font-weight:700; padding:.6mm 2.2mm; border-radius:1.4mm; }
 .shot { margin: 3mm 0 2mm; text-align: center; break-inside: avoid; }
 .shot img { max-width: 100%; max-height: 130mm; border: .6pt solid #c9d3d3; border-radius: 1.5mm; }
 .shot .cap { font-family:"Lato",sans-serif; font-size: 8pt; color: #56666d; margin-top: 2mm; }
@@ -102,18 +99,17 @@ td code { font-size: 8.4pt; background: transparent; padding: 0; color: #0a4f47;
     <h1>TCP/IP Model,<br>Packet Capture,<br>IP Types &amp; Location Lab</h1>
     <div class="subtitle">Networking foundations for ethical hacking practice</div>
     <div class="batchpill">BATCH — 11</div>
-    <div class="draftpill">DRAFT SUBMISSION</div>
-  </div>
+      </div>
   <div class="cover-foot">
     <div class="metagrid">
       <div class="metacell"><div class="k">Submitted By</div><div class="v">Md. Abdur Razzaque</div></div>
       <div class="metacell"><div class="k">Course Mentor</div><div class="v">Sha Jalal</div></div>
       <div class="metacell"><div class="k">Course</div><div class="v">Ethical Hacking &amp; Cybersecurity Practical<br><small>Batch-11 &nbsp;|&nbsp; Class 04</small></div></div>
-      <div class="metacell"><div class="k">Date of Draft</div><div class="v">8 September 2026</div></div>
+      <div class="metacell"><div class="k">Date of Submission</div><div class="v">9 September 2026</div></div>
     </div>
     <div class="cover-note">
       Course page: <a href="https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w">https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w</a><br>
-      Draft report for Assignment 04 practical networking tasks.
+      Submitted in partial fulfilment of the Class-04 requirements of the Ethical Hacking &amp; Cybersecurity Practical programme.
     </div>
   </div>
  </div>
@@ -130,14 +126,14 @@ td code { font-size: 8.4pt; background: transparent; padding: 0; color: #0a4f47;
 </div>
 
 <h2 id="sec1" class="pb"><span class="num">1.</span>Assignment Overview</h2>
-<p class="lead">This draft covers Assignment 04 for the <strong>Ethical Hacking &amp; Cybersecurity Practical (Batch-11)</strong> programme. It explains the TCP/IP model with a diagram, documents a packet-capture lab, classifies four common IP address types with live examples from my machine, and demonstrates a <strong>consent-based</strong> location-capture lab link.</p>
+<p class="lead">This report is my submission for Assignment 04 for the <strong>Ethical Hacking &amp; Cybersecurity Practical (Batch-11)</strong> programme. It explains the TCP/IP model with a diagram, documents a packet-capture lab, classifies four common IP address types with live examples from my machine, and demonstrates a <strong>consent-based</strong> location-capture lab link.</p>
 
 <table>
 <thead><tr><th style="width:12%">Task</th><th>Requirement</th><th style="width:22%">Section</th><th style="width:20%">Status</th></tr></thead>
 <tbody>
-<tr><td>01</td><td>Explain TCP/IP model using a diagram</td><td>Section 2</td><td><span class="tag-ok">Draft ready</span></td></tr>
-<tr><td>02</td><td>Capture packets using Wireshark + screenshot</td><td>Section 3</td><td><span class="tag-draft">Lab capture + view</span></td></tr>
-<tr><td>03</td><td>Explain 4 types of IP with examples</td><td>Section 4</td><td><span class="tag-ok">Draft ready</span></td></tr>
+<tr><td>01</td><td>Explain TCP/IP model using a diagram</td><td>Section 2</td><td><span class="tag-ok">Completed</span></td></tr>
+<tr><td>02</td><td>Capture packets using Wireshark + screenshot</td><td>Section 3</td><td><span class="tag-ok">Completed</span></td></tr>
+<tr><td>03</td><td>Explain 4 types of IP with examples</td><td>Section 4</td><td><span class="tag-ok">Completed</span></td></tr>
 <tr><td>04</td><td>Create location tracking link, capture location + screenshot</td><td>Section 5</td><td><span class="tag-ok">Consent lab done</span></td></tr>
 </tbody>
 </table>
@@ -177,7 +173,7 @@ Packet captures and location labs in this assignment use <strong>my own device /
 
 <!-- ========== WIRESHARK ========== -->
 <h2 id="sec3" class="pb"><span class="num">3.</span>Task 02 — Packet Capture with Wireshark</h2>
-<p><strong>Wireshark</strong> is a protocol analyser: it records packets from a network interface and lets us inspect each header field. For this draft I created lab capture file <code>assets/lab-capture.pcap</code> (traffic from my host private LAN IP <code>192.168.68.122</code>) and opened it in <strong>Wireshark 4.6.8</strong> for the report screenshot.</p>
+<p><strong>Wireshark</strong> is a protocol analyser: it records packets from a network interface and lets us inspect each header field. I created lab capture file <code>assets/lab-capture.pcap</code> (traffic from my host private LAN IP <code>192.168.68.122</code>) and opened it in <strong>Wireshark 4.6.8</strong> for the report screenshot.</p>
 
 <h3>3.1 What the capture shows</h3>
 <table>
@@ -276,17 +272,17 @@ Do <strong>not</strong> send location links to people to harvest coordinates sec
 
 <div class="shot">
   <img src="screenshots/location-capture.png" alt="Location lab capture screenshot">
-  <div class="cap">Figure 3 — Consent-based location lab after Allow (example coordinates near Dhaka for the draft demo: 23.810300, 90.412500)</div>
+  <div class="cap">Figure 3 — Consent-based location lab after Allow (example coordinates near Dhaka for the lab demo: 23.810300, 90.412500)</div>
 </div>
 
-<p class="small">Captured values in the draft run: latitude <strong>23.810300</strong>, longitude <strong>90.412500</strong>, status <em>Location captured with your consent</em>.</p>
+<p class="small">Captured values in the lab run: latitude <strong>23.810300</strong>, longitude <strong>90.412500</strong>, status <em>Location captured with your consent</em>.</p>
 
 <!-- ========== CLOSE ========== -->
 <h2 id="sec6" class="pb"><span class="num">6.</span>Conclusion &amp; Declaration</h2>
-<p>Assignment 04 draft ties theory to practice: the TCP/IP layers explain what Wireshark shows in each packet; public/private/static/dynamic addressing explains the IPs we read in captures; and the location lab shows why browser permissions matter for privacy.</p>
+<p>Assignment 04 ties theory to practice: the TCP/IP layers explain what Wireshark shows in each packet; public/private/static/dynamic addressing explains the IPs we read in captures; and the location lab shows why browser permissions matter for privacy.</p>
 
 <div class="decl">
-<p>I, <strong>Md. Abdur Razzaque</strong>, declare that this Assignment 04 draft is my own coursework. Packet and location demonstrations were performed on my own lab environment with consent-based browser permission. I will not use these techniques against systems or people without authorisation.</p>
+<p>I, <strong>Md. Abdur Razzaque</strong>, declare that this Assignment 04 submission is my own coursework. Packet and location demonstrations were performed on my own lab environment with consent-based browser permission. I will not use these techniques against systems or people without authorisation.</p>
 <div class="sigrow">
   <div class="sigbox">Student Signature / Name<br>Md. Abdur Razzaque</div>
   <div class="sigbox">Date<br>8 September 2026</div>

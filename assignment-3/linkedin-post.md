@@ -1,4 +1,4 @@
-# LinkedIn Post Draft — Assignment 03
+# LinkedIn Post — Assignment 03
 
 **Suggested post text (copy into LinkedIn):**
 
