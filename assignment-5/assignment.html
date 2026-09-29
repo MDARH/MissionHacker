@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="Md. Abdur Razzaque">
+<meta name="description" content="Assignment 05 — Metasploitable-2 setup, full port &amp; service scan, port/protocol explanation and public exploit mapping. Mission Hacker Bangladesh Batch-11.">
+<title>Assignment 05 — Metasploitable-2 Port Scan, Protocols &amp; Public Exploits</title>
+<style>
+@page {
+  size: A4; margin: 22mm 18mm 20mm 18mm;
+  @top-right { content: "Assignment 05  •  Md. Abdur Razzaque  •  Batch-11";
+    font-family: "Lato", sans-serif; font-size: 7.5pt; color: #8a8f98; }
+  @bottom-center { content: "Page " counter(page) " of " counter(pages);
+    font-family: "Lato", sans-serif; font-size: 8pt; color: #8a8f98; }
+  @bottom-right { content: "Mission Hacker Bangladesh";
+    font-family: "Lato", sans-serif; font-size: 7.5pt; color: #b6bac1; }
+}
+@page cover { margin: 0; @top-right { content: none; } @bottom-center { content: none; } @bottom-right { content: none; } }
+html { font-size: 10.5pt; }
+body { font-family: "Noto Serif", "Liberation Serif", serif; color: #1c2027; line-height: 1.62; margin: 0; }
+h1,h2,h3 { font-family: "Lato", "Liberation Sans", sans-serif; color: #0f1620; line-height: 1.25; }
+.cover { page: cover; height: 297mm; width: 210mm; position: relative; color: #fff;
+  background: linear-gradient(158deg, #071018 0%, #0d2233 42%, #10394a 72%, #0a1b26 100%); }
+.cover-inner { position: relative; z-index: 2; padding: 26mm 20mm 18mm; height: 297mm; box-sizing: border-box; }
+.brandrow { display: flex; align-items: center; gap: 5mm; }
+.mono-badge { width: 17mm; height: 17mm; border: 1.6pt solid #38d39f; border-radius: 3mm;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Lato", sans-serif; font-weight: 900; font-size: 15pt; color: #38d39f; }
+.brandtext .bt1 { font-family: "Lato", sans-serif; font-weight: 800; font-size: 13.5pt; color:#fff; }
+.brandtext .bt2 { font-family: "Lato", sans-serif; font-size: 8.5pt; letter-spacing: 2.6pt;
+  text-transform: uppercase; color: #7fd7c4; margin-top: 1.2mm; }
+.rule { height: 1.2pt; background: linear-gradient(90deg,#38d39f 0%, #38d39f 22%, rgba(255,255,255,.14) 22%); margin: 9mm 0 0; }
+.cover-mid { margin-top: 28mm; }
+.eyebrow { font-family:"Lato",sans-serif; font-size: 9pt; letter-spacing: 3.4pt; text-transform: uppercase; color: #38d39f; font-weight: 700; }
+.cover h1 { font-size: 28pt; font-weight: 900; color: #fff; margin: 5mm 0 0; line-height: 1.12; }
+.cover .subtitle { font-family:"Lato",sans-serif; font-size: 12pt; color: #b9c8d2; margin-top: 5mm; }
+.cover .batchpill { display: inline-block; margin-top: 7mm; padding: 2.2mm 6mm; border-radius: 20mm;
+  background: rgba(56,211,159,.13); border: .8pt solid rgba(56,211,159,.5);
+  font-family:"Lato",sans-serif; font-size: 10pt; font-weight: 700; color: #6fe3bd; letter-spacing: .8pt; }
+.cover-foot { position: absolute; left: 20mm; right: 20mm; bottom: 16mm; }
+.metagrid { display: flex; flex-wrap: wrap; border-top: .8pt solid rgba(255,255,255,.18); padding-top: 7mm; }
+.metacell { width: 50%; margin-bottom: 6.5mm; box-sizing: border-box; padding-right: 6mm; }
+.metacell .k { font-family:"Lato",sans-serif; font-size: 7.5pt; letter-spacing: 2pt; text-transform: uppercase; color: #6d8697; font-weight: 700; }
+.metacell .v { font-family:"Lato",sans-serif; font-size: 11.5pt; color: #ffffff; margin-top: 1.4mm; font-weight: 600; }
+.metacell .v small { font-weight: 400; color: #9fb2be; font-size: 9pt; }
+.cover-note { font-family:"Lato",sans-serif; font-size: 7.8pt; color: #62798a; border-top: .5pt solid rgba(255,255,255,.1); padding-top: 4mm; }
+.cover-note a { color: #4fbf9c; text-decoration: none; word-break: break-all; }
+h2 { font-size: 15pt; font-weight: 800; margin: 11mm 0 3.5mm; padding-bottom: 2mm; border-bottom: 1.6pt solid #0f766e; }
+h2 .num { color: #0f766e; margin-right: 3mm; }
+h3 { font-size: 11.6pt; font-weight: 800; margin: 7mm 0 2.5mm; color: #14303c; }
+p { margin: 0 0 3.2mm; text-align: justify; }
+ul, ol { margin: 0 0 3.5mm; padding-left: 6.5mm; }
+li { margin-bottom: 1.6mm; }
+code, .cmd { font-family: "DejaVu Sans Mono", monospace; font-size: 8.6pt; background: #eef4f4; color: #0a4f47; padding: .3mm 1.3mm; border-radius: 1mm; }
+pre { background: #0d1b26; color: #d7e6e2; font-family: "DejaVu Sans Mono", monospace; font-size: 8pt;
+  line-height: 1.5; padding: 4mm 5mm; border-radius: 2mm; overflow-x: auto; white-space: pre-wrap; word-break: break-word;
+  break-inside: avoid; margin: 3mm 0 4mm; }
+pre .c { color: #6fe3bd; }
+table { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 9pt; font-family: "Lato", sans-serif; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th { background: #0f766e; color: #fff; text-align: left; padding: 2.2mm 2.8mm; font-weight: 700; font-size: 8.6pt; }
+td { padding: 2mm 2.8mm; border-bottom: .5pt solid #dfe6e6; vertical-align: top; line-height: 1.45; }
+tbody tr:nth-child(even) td { background: #f6faf9; }
+td code { font-size: 8.2pt; background: transparent; padding: 0; color: #0a4f47; font-weight: 600; }
+.callout { border-left: 2.6pt solid #0f766e; background: #f2f8f7; padding: 3.2mm 4mm; margin: 4mm 0 5mm; font-size: 9.4pt; break-inside: avoid; }
+.callout .ct { font-family:"Lato",sans-serif; font-weight: 800; font-size: 8.4pt; letter-spacing: 1.4pt; text-transform: uppercase; color: #0f766e; display: block; margin-bottom: 1.5mm; }
+.warn { border-left-color: #b45309; background: #fdf7ef; }
+.warn .ct { color: #b45309; }
+.crit { border-left-color: #b91c1c; background: #fdf1f1; }
+.crit .ct { color: #b91c1c; }
+.toc { font-family:"Lato",sans-serif; font-size: 9.8pt; }
+.toc .t-main { border-bottom: .4pt dotted #c9d3d3; padding: 1.7mm 0 1.4mm; margin-top: 2.2mm; }
+.toc .t-main a { color: #14303c; text-decoration: none; }
+.toc .t-main a::after { content: target-counter(attr(href), page); float: right; font-weight: 700; color: #0f766e; }
+.pb { break-before: page; }
+.lead { font-size: 10.6pt; color: #33474f; }
+.small { font-size: 8.8pt; color: #56666d; }
+.tag-ok { display:inline-block; background:#0f766e; color:#fff; font-family:"Lato",sans-serif; font-size:7.4pt; font-weight:700; padding:.6mm 2.2mm; border-radius:1.4mm; }
+.sev-c { display:inline-block; background:#b91c1c; color:#fff; font-family:"Lato",sans-serif; font-size:7.2pt; font-weight:700; padding:.5mm 2mm; border-radius:1.4mm; }
+.sev-h { display:inline-block; background:#c2410c; color:#fff; font-family:"Lato",sans-serif; font-size:7.2pt; font-weight:700; padding:.5mm 2mm; border-radius:1.4mm; }
+.sev-m { display:inline-block; background:#a16207; color:#fff; font-family:"Lato",sans-serif; font-size:7.2pt; font-weight:700; padding:.5mm 2mm; border-radius:1.4mm; }
+.shot { margin: 3mm 0 2mm; text-align: center; break-inside: avoid; }
+.shot img { max-width: 100%; max-height: 130mm; border: .6pt solid #c9d3d3; border-radius: 1.5mm; }
+.shot .cap { font-family:"Lato",sans-serif; font-size: 8pt; color: #56666d; margin-top: 2mm; }
+.ph { border: 1pt dashed #b8c4c4; border-radius: 2mm; background: #f7fafa; color: #6b7a80;
+  font-family:"Lato",sans-serif; font-size: 8.6pt; padding: 12mm 6mm; text-align: center; margin: 3mm 0 2mm; }
+.decl { border: .8pt solid #cfd9d9; padding: 5mm 6mm; margin-top: 4mm; font-size: 9.6pt; break-inside: avoid; }
+.sigrow { display: flex; justify-content: space-between; margin-top: 16mm; }
+.sigbox { width: 62mm; border-top: .8pt solid #6b7a80; padding-top: 2mm; font-family:"Lato",sans-serif; font-size: 9pt; color: #35505c; text-align: center; }
+.refs { font-size: 9pt; }
+.flow { font-family:"Lato",sans-serif; font-size: 9.2pt; background:#f6faf9; border:.8pt solid #d5e0e0; padding:3mm 4mm; margin:3mm 0 5mm; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+ <div class="cover-inner">
+  <div class="brandrow">
+    <div class="mono-badge">MHB</div>
+    <div class="brandtext">
+      <div class="bt1">Mission Hacker Bangladesh</div>
+      <div class="bt2">Cyber Security Training</div>
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="cover-mid">
+    <div class="eyebrow">Assignment No. 05</div>
+    <h1>Metasploitable-2:<br>Full Port Scan,<br>Protocols &amp; Public Exploits</h1>
+    <div class="subtitle">Enumeration and vulnerability mapping in an isolated lab</div>
+    <div class="batchpill">BATCH — 11</div>
+  </div>
+  <div class="cover-foot">
+    <div class="metagrid">
+      <div class="metacell"><div class="k">Submitted By</div><div class="v">Md. Abdur Razzaque</div></div>
+      <div class="metacell"><div class="k">Course Mentor</div><div class="v">Sha Jalal</div></div>
+      <div class="metacell"><div class="k">Course</div><div class="v">Ethical Hacking &amp; Cybersecurity Practical<br><small>Batch-11 &nbsp;|&nbsp; Class 05</small></div></div>
+      <div class="metacell"><div class="k">Date of Submission</div><div class="v">29 September 2026</div></div>
+    </div>
+    <div class="cover-note">
+      Course page: <a href="https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w">https://www.missionhacker.com/course/GrcIDZrQQKFboLbXKW5w</a><br>
+      Submitted in partial fulfilment of the Class-05 requirements of the Ethical Hacking &amp; Cybersecurity Practical programme.
+    </div>
+  </div>
+ </div>
+</section>
+
+<h2><span class="num">—</span>Table of Contents</h2>
+<div class="toc">
+  <div class="t-main"><a href="#sec1"><b>1. Assignment Overview</b></a></div>
+  <div class="t-main"><a href="#sec2"><b>2. Task 01 — Metasploitable-2 Setup &amp; Full Port/Service Scan</b></a></div>
+  <div class="t-main"><a href="#sec3"><b>3. Task 02 — Ports &amp; Protocols Explained</b></a></div>
+  <div class="t-main"><a href="#sec4"><b>4. Task 03 — Public Exploits (Exploit-DB / searchsploit)</b></a></div>
+  <div class="t-main"><a href="#sec5"><b>5. Priority Findings Summary</b></a></div>
+  <div class="t-main"><a href="#sec6"><b>6. Conclusion &amp; Declaration</b></a></div>
+</div>
+
+<!-- ========== OVERVIEW ========== -->
+<h2 id="sec1" class="pb"><span class="num">1.</span>Assignment Overview</h2>
+<p class="lead">This report is my submission for Assignment 05 of the <strong>Ethical Hacking &amp; Cybersecurity Practical (Batch-11)</strong> programme. It documents setting up the intentionally vulnerable <strong>Metasploitable-2</strong> virtual machine, running a full TCP port and service-version scan with Nmap, explaining every open port and its protocol, and then mapping the vulnerable service versions to publicly available exploits using <strong>Exploit-DB</strong> and <strong>searchsploit</strong>.</p>
+
+<table>
+<thead><tr><th style="width:12%">Task</th><th>Requirement</th><th style="width:20%">Section</th><th style="width:18%">Status</th></tr></thead>
+<tbody>
+<tr><td>01</td><td>Set up Metasploitable-2 and scan all ports with service version</td><td>Section 2</td><td><span class="tag-ok">Completed</span></td></tr>
+<tr><td>02</td><td>Explain ports and protocols from the Nmap scan</td><td>Section 3</td><td><span class="tag-ok">Completed</span></td></tr>
+<tr><td>03</td><td>Find public exploits for vulnerable versions (Exploit-DB, searchsploit)</td><td>Section 4</td><td><span class="tag-ok">Completed</span></td></tr>
+</tbody>
+</table>
+
+<h3>1.1 Lab environment</h3>
+<table>
+<thead><tr><th style="width:32%">Item</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Attacker machine</td><td>Kali Linux (VMware)</td></tr>
+<tr><td>Target machine</td><td>Metasploitable-2 (Ubuntu 8.04-based), MAC <code>00:0C:29:15:C2:E2</code> (VMware)</td></tr>
+<tr><td>Target IP</td><td><code>192.168.28.128</code></td></tr>
+<tr><td>Network mode</td><td>Host-only / NAT (isolated lab, no Internet exposure)</td></tr>
+<tr><td>Scanner</td><td>Nmap 7.99</td></tr>
+<tr><td>Scan date</td><td>28 September 2026, 15:08 (-0400)</td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<span class="ct">Ethics &amp; authorisation</span>
+Metasploitable-2 is a deliberately vulnerable VM designed for training. Every scan and exploit reference in this report is against <strong>my own isolated lab VM only</strong>. Running these techniques against systems you do not own or have written permission to test is illegal.
+</div>
+
+<!-- ========== TASK 1 ========== -->
+<h2 id="sec2" class="pb"><span class="num">2.</span>Task 01 — Metasploitable-2 Setup &amp; Full Port/Service Scan</h2>
+
+<h3>2.1 Setting up Metasploitable-2</h3>
+<ol>
+  <li>Downloaded the official Metasploitable-2 image and imported it into VMware.</li>
+  <li>Set the network adapter to an isolated <strong>host-only / NAT</strong> segment shared with the Kali attacker VM.</li>
+  <li>Powered on and logged in with the default credentials <code>msfadmin</code> / <code>msfadmin</code>.</li>
+  <li>Confirmed the target IP with <span class="cmd">ifconfig</span> on the VM: <code>192.168.28.128</code>.</li>
+  <li>Verified reachability from Kali with <span class="cmd">ping 192.168.28.128</span>.</li>
+</ol>
+
+<h3>2.2 Full port + service-version scan</h3>
+<p>I scanned <strong>all 65,535 TCP ports</strong> with service/version detection. The <code>-p-</code> flag scans every port and <code>-sV</code> probes each open port for its running service and version.</p>
+<pre><span class="c">┌──(kali㉿kali)-[~]</span>
+└─$ nmap -p- -sV 192.168.28.128</pre>
+
+<h3>2.3 Scan output</h3>
+<pre>Starting Nmap 7.99 ( https://nmap.org ) at 2026-09-28 15:08 -0400
+Nmap scan report for 192.168.28.128
+Host is up (0.0017s latency).
+Not shown: 65505 closed tcp ports (reset)
+PORT      STATE SERVICE     VERSION
+21/tcp    open  ftp         vsftpd 2.3.4
+22/tcp    open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+23/tcp    open  telnet      Linux telnetd
+25/tcp    open  smtp        Postfix smtpd
+53/tcp    open  domain      ISC BIND 9.4.2
+80/tcp    open  http        Apache httpd 2.2.8 ((Ubuntu) DAV/2)
+111/tcp   open  rpcbind     2 (RPC #100000)
+139/tcp   open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp   open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+512/tcp   open  exec        netkit-rsh rexecd
+513/tcp   open  login       OpenBSD or Solaris rlogind
+514/tcp   open  tcpwrapped
+1099/tcp  open  java-rmi    GNU Classpath grmiregistry
+1524/tcp  open  bindshell   Metasploitable root shell
+2049/tcp  open  nfs         2-4 (RPC #100003)
+2121/tcp  open  ftp         ProFTPD 1.3.1
+3306/tcp  open  mysql       MySQL 5.0.51a-3ubuntu5
+3632/tcp  open  distccd     distccd v1 ((GNU) 4.2.4 (Ubuntu 4.2.4-1ubuntu4))
+5432/tcp  open  postgresql  PostgreSQL DB 8.3.0 - 8.3.7
+5900/tcp  open  vnc         VNC (protocol 3.3)
+6000/tcp  open  X11         (access denied)
+6667/tcp  open  irc         UnrealIRCd
+6697/tcp  open  irc         UnrealIRCd
+8009/tcp  open  ajp13       Apache Jserv (Protocol v1.3)
+8180/tcp  open  http        Apache Tomcat/Coyote JSP engine 1.1
+8787/tcp  open  drb         Ruby DRb RMI (Ruby 1.8; path /usr/lib/ruby/1.8/drb)
+40114/tcp open  mountd      1-3 (RPC #100005)
+44217/tcp open  status      1 (RPC #100024)
+44377/tcp open  nlockmgr    1-4 (RPC #100021)
+60559/tcp open  java-rmi    GNU Classpath grmiregistry
+MAC Address: 00:0C:29:15:C2:E2 (VMware)
+Service Info: Hosts: metasploitable.localdomain, irc.Metasploitable.LAN;
+  OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 140.18 seconds</pre>
+
+<div class="shot"><img src="screenshots/nmap-full-scan.png" alt="nmap -p- -sV full port and service scan of 192.168.28.128"><div class="cap">Figure 1 — Full TCP port + service-version scan (<code>nmap -p- -sV 192.168.28.128</code>) run from Kali, showing all 30 open ports and their detected service versions.</div></div>
+<p class="small">30 open TCP ports were found. The scan completed in 140.18 seconds. The next section explains each port and protocol.</p>
+
+<!-- ========== TASK 2 ========== -->
+<h2 id="sec3" class="pb"><span class="num">3.</span>Task 02 — Ports &amp; Protocols Explained</h2>
+<p>Below every open port from the scan is explained: the service, whether it uses <strong>TCP</strong> as a transport, what the protocol does, and why it matters to an attacker. All ports here are TCP (Nmap scanned TCP with <code>-p-</code>).</p>
+
+<h3>3.1 Well-known service ports</h3>
+<table>
+<thead><tr><th style="width:9%">Port</th><th style="width:15%">Service</th><th>Protocol &amp; purpose</th></tr></thead>
+<tbody>
+<tr><td><code>21</code></td><td>FTP (vsftpd 2.3.4)</td><td>File Transfer Protocol — uploads/downloads files. Credentials and data travel in cleartext. This exact version ships a backdoor.</td></tr>
+<tr><td><code>22</code></td><td>SSH (OpenSSH 4.7p1)</td><td>Secure Shell — encrypted remote login and command execution. Old version with known weaknesses.</td></tr>
+<tr><td><code>23</code></td><td>Telnet</td><td>Legacy remote login. Fully cleartext — usernames, passwords and commands are visible to anyone sniffing the network.</td></tr>
+<tr><td><code>25</code></td><td>SMTP (Postfix)</td><td>Simple Mail Transfer Protocol — sends email. Can be abused for user enumeration (<code>VRFY</code>/<code>EXPN</code>) and relay testing.</td></tr>
+<tr><td><code>53</code></td><td>DNS (ISC BIND 9.4.2)</td><td>Domain Name System — resolves names to IPs. Old BIND versions have DoS and cache-related CVEs; zone transfers may leak records.</td></tr>
+<tr><td><code>80</code></td><td>HTTP (Apache 2.2.8, DAV/2)</td><td>Web server hosting the vulnerable web apps (DVWA, Mutillidae, etc.). WebDAV (DAV/2) can allow file upload. Old Apache with many CVEs.</td></tr>
+<tr><td><code>111</code></td><td>rpcbind</td><td>ONC RPC portmapper — maps RPC programs to dynamic ports. Lets an attacker enumerate NFS, mountd and other RPC services.</td></tr>
+<tr><td><code>139</code> / <code>445</code></td><td>Samba (SMB 3.x)</td><td>Windows-style file/printer sharing on Linux. Enables share enumeration; this version is vulnerable to command injection.</td></tr>
+</tbody>
+</table>
+
+<h3>3.2 The r-services and backdoor ports</h3>
+<table>
+<thead><tr><th style="width:9%">Port</th><th style="width:15%">Service</th><th>Protocol &amp; purpose</th></tr></thead>
+<tbody>
+<tr><td><code>512</code></td><td>exec (rexecd)</td><td>Berkeley r-service for remote command execution with cleartext credentials. Insecure by design.</td></tr>
+<tr><td><code>513</code></td><td>login (rlogind)</td><td>Remote login r-service. Trusts <code>.rhosts</code>/host-based auth, easily abused.</td></tr>
+<tr><td><code>514</code></td><td>shell (rsh, tcpwrapped)</td><td>Remote shell r-service. With trust misconfiguration an attacker gets a shell with no password.</td></tr>
+<tr><td><code>1524</code></td><td>bindshell</td><td>An intentional <strong>root backdoor</strong> — connecting with <code>nc 192.168.28.128 1524</code> drops straight into a root shell.</td></tr>
+</tbody>
+</table>
+
+<h3>3.3 Application, database and RPC ports</h3>
+<table>
+<thead><tr><th style="width:9%">Port</th><th style="width:16%">Service</th><th>Protocol &amp; purpose</th></tr></thead>
+<tbody>
+<tr><td><code>1099</code></td><td>Java RMI (grmiregistry)</td><td>Java Remote Method Invocation registry. Default insecure config allows loading a remote class → code execution.</td></tr>
+<tr><td><code>2049</code></td><td>NFS</td><td>Network File System — shares directories over the network. Weak exports (e.g. <code>no_root_squash</code>) let an attacker read/write files or plant an SSH key.</td></tr>
+<tr><td><code>2121</code></td><td>FTP (ProFTPD 1.3.1)</td><td>A second FTP daemon. This version has known vulnerabilities and possible cleartext exposure.</td></tr>
+<tr><td><code>3306</code></td><td>MySQL 5.0.51a</td><td>Database service. Often has a blank/weak <code>root</code> password on Metasploitable, allowing direct DB access.</td></tr>
+<tr><td><code>3632</code></td><td>distccd</td><td>Distributed C/C++ compiler daemon. Accepts compile jobs — a classic remote command-execution vector.</td></tr>
+<tr><td><code>5432</code></td><td>PostgreSQL 8.3</td><td>Database service. Default <code>postgres</code>/<code>postgres</code> credentials can lead to file read and code execution.</td></tr>
+<tr><td><code>5900</code></td><td>VNC (protocol 3.3)</td><td>Remote desktop. Weak/default password (<code>password</code>) gives full graphical control.</td></tr>
+<tr><td><code>6000</code></td><td>X11</td><td>X Window server. If access is open, an attacker can capture keystrokes and screenshots (here it showed <em>access denied</em>).</td></tr>
+<tr><td><code>6667</code> / <code>6697</code></td><td>IRC (UnrealIRCd)</td><td>Chat server. This build of UnrealIRCd contains a backdoor in the source tarball.</td></tr>
+<tr><td><code>8009</code></td><td>AJP13 (Apache JServ)</td><td>Tomcat AJP connector. Can be abused to read files / include content (Ghostcat-style attacks).</td></tr>
+<tr><td><code>8180</code></td><td>Apache Tomcat/Coyote 1.1</td><td>Java web server with a Manager app. Default <code>tomcat</code>/<code>tomcat</code> creds let you deploy a malicious WAR for code execution.</td></tr>
+<tr><td><code>8787</code></td><td>Ruby DRb</td><td>Distributed Ruby remote object service — allows remote code execution by design when exposed.</td></tr>
+<tr><td><code>40114</code></td><td>mountd (RPC)</td><td>NFS mount daemon on a dynamic RPC port — used with NFS to mount exported shares.</td></tr>
+<tr><td><code>44217</code></td><td>status (RPC)</td><td>NSM/rpc.statd status monitor for NFS lock recovery.</td></tr>
+<tr><td><code>44377</code></td><td>nlockmgr (RPC)</td><td>NFS lock manager on a dynamic RPC port.</td></tr>
+<tr><td><code>60559</code></td><td>Java RMI (grmiregistry)</td><td>A second RMI registry endpoint on a high port, same RMI code-execution risk as 1099.</td></tr>
+</tbody>
+</table>
+
+<div class="callout">
+<span class="ct">TCP vs UDP note</span>
+This scan used <code>-p-</code> which is TCP only, so every port above is TCP. A UDP scan (<span class="cmd">nmap -sU</span>) would additionally reveal services such as DNS (53/udp) and NFS-related daemons that also listen on UDP.
+</div>
+
+<!-- ========== TASK 3 ========== -->
+<h2 id="sec4" class="pb"><span class="num">4.</span>Task 03 — Public Exploits (Exploit-DB / searchsploit)</h2>
+<p>Using <strong>searchsploit</strong> (the offline Exploit-DB CLI on Kali) and the Exploit-DB website, I mapped the vulnerable service versions to publicly available exploits. The workflow for each service was:</p>
+<pre><span class="c">┌──(kali㉿kali)-[~]</span>
+└─$ searchsploit vsftpd 2.3.4
+└─$ searchsploit unrealircd
+└─$ searchsploit samba 3.0
+└─$ searchsploit distcc
+└─$ searchsploit tomcat manager
+└─$ searchsploit proftpd 1.3</pre>
+
+<h3>4.1 Exploit mapping table</h3>
+<table>
+<thead><tr><th style="width:10%">Port</th><th style="width:18%">Service / Version</th><th>Public exploit &amp; reference</th><th style="width:12%">Severity</th></tr></thead>
+<tbody>
+<tr>
+  <td><code>21</code></td><td>vsftpd 2.3.4</td>
+  <td>vsftpd 2.3.4 smiley-face backdoor — <strong>CVE-2011-2523</strong>. searchsploit: <code>unix/remote/17491.rb</code> (Metasploit) and <code>unix/remote/49757.py</code>; Metasploit module <code>exploit/unix/ftp/vsftpd_234_backdoor</code>. A username ending in <code>:)</code> opens a root shell on port 6200.</td>
+  <td><span class="sev-c">Critical</span></td>
+</tr>
+<tr>
+  <td><code>139</code>/<code>445</code></td><td>Samba 3.0.20 (smbd 3.x)</td>
+  <td>Samba "username map script" command execution — <strong>CVE-2007-2447</strong>. searchsploit: <code>unix/remote/16320.rb</code> ("Samba 3.0.20 &lt; 3.0.25rc3 - Username map script"); Metasploit <code>exploit/multi/samba/usermap_script</code>. Unauthenticated root RCE.</td>
+  <td><span class="sev-c">Critical</span></td>
+</tr>
+<tr>
+  <td><code>6667</code>/<code>6697</code></td><td>UnrealIRCd 3.2.8.1</td>
+  <td>UnrealIRCd 3.2.8.1 backdoor — <strong>CVE-2010-2075</strong>. searchsploit: <code>linux/remote/16922.rb</code> and <code>linux/remote/13853.pl</code>; Metasploit <code>exploit/unix/irc/unreal_ircd_3281_backdoor</code>. Trojaned tarball yields RCE.</td>
+  <td><span class="sev-c">Critical</span></td>
+</tr>
+<tr>
+  <td><code>3632</code></td><td>distccd v1 (GCC 4.2.4)</td>
+  <td>distcc daemon command execution — <strong>CVE-2004-2687</strong>. Note: <code>searchsploit distccd</code> gives <em>No Results</em>; use Metasploit <code>exploit/unix/misc/distcc_exec</code> (no standalone EDB script). Remote command execution as the daemon user.</td>
+  <td><span class="sev-c">Critical</span></td>
+</tr>
+<tr>
+  <td><code>1099</code>/<code>60559</code></td><td>Java RMI (grmiregistry)</td>
+  <td>Java RMI Server insecure default configuration — Metasploit <code>exploit/multi/misc/java_rmi_server</code> (based on CVE-2011-3556 class-loading behaviour). Remote code execution.</td>
+  <td><span class="sev-h">High</span></td>
+</tr>
+<tr>
+  <td><code>8180</code></td><td>Apache Tomcat/Coyote 1.1</td>
+  <td>Tomcat Manager default/weak credentials (<code>tomcat</code>/<code>tomcat</code>) → WAR deploy. Metasploit <code>exploit/multi/http/tomcat_mgr_deploy</code> / <code>tomcat_mgr_upload</code>; many Exploit-DB entries under "Apache Tomcat manager".</td>
+  <td><span class="sev-c">Critical</span></td>
+</tr>
+<tr>
+  <td><code>8787</code></td><td>Ruby DRb (Ruby 1.8)</td>
+  <td>Distributed Ruby (dRuby) remote code execution — Metasploit <code>exploit/linux/misc/drb_remote_codeexec</code>. Executes arbitrary Ruby/OS commands.</td>
+  <td><span class="sev-c">Critical</span></td>
+</tr>
+<tr>
+  <td><code>1524</code></td><td>Metasploitable root bindshell</td>
+  <td>Intentional backdoor — no exploit needed: <code>nc 192.168.28.128 1524</code> gives an immediate root shell.</td>
+  <td><span class="sev-c">Critical</span></td>
+</tr>
+<tr>
+  <td><code>2049</code></td><td>NFS (with mountd/nlockmgr)</td>
+  <td>World-readable/writable exports (<code>showmount -e</code>) with <code>no_root_squash</code> — mount the share and plant an SSH key or read <code>/etc/shadow</code>. Manual technique, no single EDB ID.</td>
+  <td><span class="sev-h">High</span></td>
+</tr>
+<tr>
+  <td><code>512</code>/<code>513</code>/<code>514</code></td><td>r-services (rexec/rlogin/rsh)</td>
+  <td>Trust-based / cleartext auth. With <code>rlogin -l root 192.168.28.128</code> or a permissive <code>.rhosts</code>, remote access without a password. Metasploit <code>auxiliary/scanner/rservices/*</code>.</td>
+  <td><span class="sev-h">High</span></td>
+</tr>
+<tr>
+  <td><code>5900</code></td><td>VNC (protocol 3.3)</td>
+  <td>Weak default password (<code>password</code>). Metasploit <code>auxiliary/scanner/vnc/vnc_login</code> then a VNC client for full desktop control.</td>
+  <td><span class="sev-h">High</span></td>
+</tr>
+<tr>
+  <td><code>3306</code></td><td>MySQL 5.0.51a</td>
+  <td>Blank/weak <code>root</code> password. Metasploit <code>auxiliary/scanner/mysql/mysql_login</code>; direct login <code>mysql -h 192.168.28.128 -u root</code>.</td>
+  <td><span class="sev-m">Medium</span></td>
+</tr>
+<tr>
+  <td><code>5432</code></td><td>PostgreSQL 8.3</td>
+  <td>Default <code>postgres</code>/<code>postgres</code>. Metasploit <code>auxiliary/scanner/postgres/postgres_login</code> and <code>postgres_payload</code> for code execution.</td>
+  <td><span class="sev-m">Medium</span></td>
+</tr>
+<tr>
+  <td><code>2121</code></td><td>ProFTPD 1.3.1</td>
+  <td><code>searchsploit "ProFTPD 1.3.1"</code> returned <em>No Results</em> offline. Check Exploit-DB online for ProFTPD 1.3.x (e.g. mod_copy in 1.3.5) and CVEs for manual testing.</td>
+  <td><span class="sev-m">Medium</span></td>
+</tr>
+<tr>
+  <td><code>80</code></td><td>Apache 2.2.8 + web apps</td>
+  <td>Hosts DVWA, Mutillidae, phpMyAdmin, etc. Web-app exploitation (SQLi, command injection, file upload via WebDAV). <code>searchsploit apache 2.2</code> for server-level CVEs.</td>
+  <td><span class="sev-h">High</span></td>
+</tr>
+<tr>
+  <td><code>23</code></td><td>Telnet (Linux telnetd)</td>
+  <td>Cleartext credentials — capture with a sniffer, or brute-force with <code>auxiliary/scanner/telnet/telnet_login</code>. No encryption.</td>
+  <td><span class="sev-m">Medium</span></td>
+</tr>
+<tr>
+  <td><code>25</code></td><td>Postfix SMTP</td>
+  <td>User enumeration via <code>VRFY</code>/<code>EXPN</code> — Metasploit <code>auxiliary/scanner/smtp/smtp_enum</code>.</td>
+  <td><span class="sev-m">Medium</span></td>
+</tr>
+<tr>
+  <td><code>22</code></td><td>OpenSSH 4.7p1</td>
+  <td>Outdated; primarily credential brute-force (<code>auxiliary/scanner/ssh/ssh_login</code>) and username enumeration. <code>searchsploit openssh</code> for version-specific notes.</td>
+  <td><span class="sev-m">Medium</span></td>
+</tr>
+<tr>
+  <td><code>53</code></td><td>ISC BIND 9.4.2</td>
+  <td>Old BIND with DoS CVEs; attempt zone transfer <code>dig axfr @192.168.28.128</code>. <code>searchsploit bind 9.4</code> for references.</td>
+  <td><span class="sev-m">Medium</span></td>
+</tr>
+</tbody>
+</table>
+
+<div class="shot"><img src="screenshots/searchsploit-services.png" alt="searchsploit results for vsftpd, UnrealIRCd, ProFTPD and distccd"><div class="cap">Figure 2 — <code>searchsploit</code> lookups for the key services: vsftpd 2.3.4 and UnrealIRCd returned public exploits, while ProFTPD 1.3.1 and distccd returned no local results.</div></div>
+<div class="shot"><img src="screenshots/searchsploit-samba.png" alt="searchsploit Samba 3 results"><div class="cap">Figure 3 — <code>searchsploit Samba 3</code> — among the many entries, the &ldquo;Samba 3.0.20 &lt; 3.0.25rc3 - 'Username' map script' Command Execution (Metasploit)&rdquo; entry (<code>unix/remote/16320.rb</code>, CVE-2007-2447) matches this target.</div></div>
+
+<h3>4.2 Example — confirming an exploit exists offline</h3>
+<pre><span class="c">┌──(kali㉿kali)-[~]</span>
+└─$ searchsploit vsftpd 2.3.4
+------------------------------------------- ---------------------------------
+ Exploit Title                             |  Path
+------------------------------------------- ---------------------------------
+vsftpd 2.3.4 - Backdoor Command Execution  | unix/remote/17491.rb
+vsftpd 2.3.4 - Backdoor Command Execution  | unix/remote/49757.py
+------------------------------------------- ---------------------------------
+Shellcodes: No Results
+
+<span class="c">┌──(kali㉿kali)-[~]</span>
+└─$ searchsploit -m unix/remote/49757.py   <span class="c"># copy exploit into current folder</span></pre>
+
+<div class="callout warn">
+<span class="ct">Offline vs online note</span>
+Some services (ProFTPD 1.3.1, distccd) returned <em>No Results</em> in the local <code>searchsploit</code> database. That does not mean they are safe — their exploits live in Metasploit modules or on the Exploit-DB website. Always cross-check <a href="https://www.exploit-db.com">exploit-db.com</a> and <code>msfconsole</code>.
+</div>
+
+<div class="callout crit">
+<span class="ct">Do not weaponise outside the lab</span>
+The exploits above are referenced for the assignment only and were tested against my isolated Metasploitable-2 VM. I will not run them against any system I do not own or have explicit written authorisation to test.
+</div>
+
+<h3>4.3 Version confirmation — banner grab &amp; SMB OS discovery</h3>
+<p>Before mapping exploits it is important to <strong>confirm</strong> the exact service versions, because an exploit that works on one version may fail on another. Two targeted NSE (Nmap Scripting Engine) scans confirmed the two most exploitable services.</p>
+
+<h4 style="font-family:'Lato',sans-serif;font-size:10.5pt;margin:3mm 0 1mm;">UnrealIRCd banner grab (ports 6667 / 6697)</h4>
+<pre><span class="c">┌──(kali㉿kali)-[~]</span>
+└─$ nmap -sV --script=banner -p6667,6697 192.168.28.128</pre>
+<div class="shot"><img src="screenshots/nmap-banner-grab.png" alt="nmap banner grab of UnrealIRCd on ports 6667 and 6697"><div class="cap">Figure 4 — The banner script confirms both IRC ports are served by <strong>UnrealIRCd</strong> (<code>irc.Metasploitable.LAN</code>), the service carrying the 3.2.8.1 backdoor (CVE-2010-2075).</div></div>
+
+<h4 style="font-family:'Lato',sans-serif;font-size:10.5pt;margin:4mm 0 1mm;">Samba OS discovery (ports 139 / 445)</h4>
+<pre><span class="c">┌──(kali㉿kali)-[~]</span>
+└─$ nmap -sV --script=smb-os-discovery -p139,445 192.168.28.128</pre>
+<div class="shot"><img src="screenshots/nmap-smb-os-discovery.png" alt="nmap smb-os-discovery confirming Samba 3.0.20-Debian"><div class="cap">Figure 5 — <code>smb-os-discovery</code> reports the exact build <strong>Samba 3.0.20-Debian</strong> on <code>metasploitable.localdomain</code>. This precisely matches the vulnerable range for the &ldquo;username map script&rdquo; command-execution exploit (CVE-2007-2447), confirming the mapping in section 4.1.</div></div>
+
+<div class="callout ok">
+<span class="ct">Why this matters</span>
+Fingerprinting to the exact build (<code>Samba 3.0.20-Debian</code>, <code>UnrealIRCd 3.2.8.1</code>) turns a probable finding into a confirmed one, so the exploit chosen from Exploit-DB / Metasploit is the correct one for this target rather than a guess.
+</div>
+
+<!-- ========== SUMMARY ========== -->
+<h2 id="sec5" class="pb"><span class="num">5.</span>Priority Findings Summary</h2>
+<p>Ranked by ease of exploitation and impact, these are the fastest paths to root on this target:</p>
+<table>
+<thead><tr><th style="width:8%">#</th><th style="width:22%">Vector</th><th>Why it is top priority</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>vsftpd 2.3.4 backdoor (21)</td><td>Single command → root shell. CVE-2011-2523.</td></tr>
+<tr><td>2</td><td>UnrealIRCd backdoor (6667)</td><td>Trojaned tarball → RCE. CVE-2010-2075.</td></tr>
+<tr><td>3</td><td>Samba usermap_script (139/445)</td><td>Unauthenticated root RCE. CVE-2007-2447.</td></tr>
+<tr><td>4</td><td>distccd (3632)</td><td>Remote command execution. CVE-2004-2687.</td></tr>
+<tr><td>5</td><td>Tomcat Manager (8180)</td><td>Default creds → WAR deploy → shell.</td></tr>
+<tr><td>6</td><td>1524 bindshell</td><td>Direct root shell, no exploit required.</td></tr>
+</tbody>
+</table>
+
+<h3>5.1 What I learned</h3>
+<ul>
+  <li>A full <code>-p-</code> scan is essential: high dynamic ports (40114, 44217, 44377, 60559) would be missed by a default top-1000 scan.</li>
+  <li>Service-version detection (<code>-sV</code>) is what makes exploit mapping possible — the version string is the bridge to Exploit-DB.</li>
+  <li>Most Metasploitable-2 wins come from outdated versions and default/weak credentials, not exotic 0-days.</li>
+  <li><code>searchsploit</code> lets you confirm and copy a working exploit entirely offline before touching the target.</li>
+</ul>
+
+<!-- ========== CLOSE ========== -->
+<h2 id="sec6" class="pb"><span class="num">6.</span>Conclusion &amp; Declaration</h2>
+<p>Assignment 05 walked through the first phases of a penetration test against Metasploitable-2: setup, full-port enumeration with Nmap, protocol-level understanding of every open service, and mapping vulnerable versions to public exploits via Exploit-DB and searchsploit. The exercise shows how quickly an unpatched host with default configurations can be fully compromised, and why version hygiene, disabling legacy services (Telnet, r-services), and strong credentials matter.</p>
+
+<div class="decl">
+<p>I, <strong>Md. Abdur Razzaque</strong>, declare that this Assignment 05 submission is my own coursework. All scanning and exploit research was performed against my own isolated Metasploitable-2 lab VM. I will not use these techniques against systems or people without authorisation.</p>
+<div class="sigrow">
+  <div class="sigbox">Student Signature / Name<br>Md. Abdur Razzaque</div>
+  <div class="sigbox">Date<br>29 September 2026</div>
+</div>
+</div>
+
+<h2>References</h2>
+<ul class="refs">
+  <li>Mission Hacker Bangladesh — Batch-11 Assignment 05 brief.</li>
+  <li>Rapid7 — Metasploitable 2 exploitability guide.</li>
+  <li>Exploit-DB / searchsploit — <a href="https://www.exploit-db.com">https://www.exploit-db.com</a>.</li>
+  <li>Nmap Reference Guide — <a href="https://nmap.org/book/man.html">https://nmap.org/book/man.html</a>.</li>
+  <li>CVE records: CVE-2011-2523, CVE-2010-2075, CVE-2007-2447, CVE-2004-2687.</li>
+</ul>
+
+</body>
+</html>
